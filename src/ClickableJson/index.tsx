@@ -3,34 +3,12 @@ import {useT} from 'use-t';
 import Svg from 'iconista';
 import {theme} from 'nano-theme';
 import {escapeComponent} from 'json-joy/lib/json-pointer';
-import type {Operation} from 'json-joy/lib/json-patch';
 import useClickAway from 'react-use/lib/useClickAway';
 import useMountedState from 'react-use/lib/useMountedState';
 import AutosizeInput from '../AutosizeInput';
+import {context} from './context';
 import * as css from '../css';
-
-export type OnChange = (patch: Operation[]) => void;
-
-interface JsonEditorContext {
-  /** JSON Pointer specifying which element to color with hover effect. */
-  hoverPointer: null | string;
-  setHoverPointer: (newHoverPointer: null | string) => void;
-  activePointer: null | string;
-  setActivePointer: (newActivePointer: null | string) => void;
-  formal?: boolean;
-  keepOrder?: boolean;
-  compact?: boolean;
-  onChange?: OnChange;
-  isInputFocused: boolean;
-}
-
-const context = React.createContext<JsonEditorContext>({
-  hoverPointer: null,
-  setHoverPointer: () => {},
-  activePointer: null,
-  setActivePointer: () => {},
-  isInputFocused: false,
-});
+import type {OnChange} from './types';
 
 interface JsonValueProps {
   pointer: string;
