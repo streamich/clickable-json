@@ -27,15 +27,27 @@ export const quote = rule({
 });
 
 export const bool = rule({
-  col: '#812878',
+  col: '#512898',
+});
+
+export const boolDark = rule({
+  col: '#9168c8',
 });
 
 export const num = rule({
-  col: '#0F9F4F',
+  col: '#0a8F3F',
+});
+
+export const numDark = rule({
+  col: '#0FaF4F',
 });
 
 export const float = rule({
-  col: '#015823',
+  col: '#015833',
+});
+
+export const floatDark = rule({
+  col: '#51a883',
 });
 
 export const property = rule({

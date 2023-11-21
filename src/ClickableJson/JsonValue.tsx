@@ -3,6 +3,7 @@ import AutosizeInput from '../AutosizeInput';
 import * as css from '../css';
 import {JsonProperty} from './JsonProperty';
 import type {OnChange} from './types';
+import {useTheme} from 'nano-theme';
 
 export interface JsonValueProps {
   pointer: string;
@@ -15,17 +16,18 @@ export interface JsonValueProps {
 export const JsonValue: React.FC<JsonValueProps> = (props) => {
   const {pointer, property, doc, comma, onChange} = props;
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const theme = useTheme();
   const className = React.useMemo(
     () =>
       doc === null
         ? css.nil
         : typeof doc === 'boolean'
-          ? css.bool
+          ? (theme.isLight ? css.bool : css.boolDark)
           : typeof doc === 'string'
             ? css.str
             : doc === Math.round(Number(doc))
-              ? css.num
-              : css.float,
+              ? (theme.isLight ? css.num : css.numDark)
+              : (theme.isLight ? css.float : css.floatDark),
     [doc],
   );
   const value = React.useMemo(

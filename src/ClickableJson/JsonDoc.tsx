@@ -49,7 +49,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
       }}
     >
       <span className={css.collapser} style={{color: theme.g(0.6)}} onClick={() => setCollapsed((x) => !x)}>
-        {collapsed ? '+' : '-'}
+        {collapsed ? '+' : '—'}
       </span>
       <span>
         {typeof property === 'string' && <JsonProperty pointer={pointer} onChange={onChange} />}
@@ -139,7 +139,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
       }}
     >
       <span className={css.collapser} style={{color: theme.g(0.6)}} onClick={() => setCollapsed((x) => !x)}>
-        {collapsed ? '+' : '-'}
+        {collapsed ? '+' : '—'}
       </span>
       <span>
         {typeof property === 'string' && <JsonProperty pointer={pointer} onChange={onChange} />}
