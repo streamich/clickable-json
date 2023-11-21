@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type {OnChange} from "./types";
+import type {OnChange} from './types';
 
 export interface ClickableJsonContextValue {
   /** JSON Pointer specifying which element to color with hover effect. */
