@@ -99,7 +99,7 @@ const JsonValue: React.FC<JsonValueProps> = (props) => {
           value={focused ? proposed : value}
           onChange={(e) => setProposed(e.target.value)}
           onFocus={() => setFocused(true)}
-          onBlur={(e) => setFocused(false)}
+          onBlur={() => setFocused(false)}
           onKeyDown={(e: React.KeyboardEvent) => {
             if (e.key === 'Enter') {
               if (inputRef.current) inputRef.current.blur();
@@ -343,7 +343,7 @@ const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visible}) =
           value={property}
           onChange={(e) => setProperty(e.target.value)}
           onFocus={() => {}}
-          onBlur={(e) => {
+          onBlur={() => {
             if (inputValueRef.current) inputValueRef.current.focus();
           }}
           onKeyDown={(e) => {
@@ -367,7 +367,7 @@ const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visible}) =
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => {}}
-          onBlur={(e) => {
+          onBlur={() => {
             // setEditing(false);
           }}
           onKeyDown={(e) => {
@@ -440,9 +440,9 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
           {'{'}
         </span>
         <span className={css.collapsed} style={{display: !collapsed ? 'none' : undefined}}>
-          {`{`}
+          {'{'}
           {!!keys.length && <strong>{keys.length}</strong>}
-          {`}`}
+          {'}'}
         </span>
       </span>
       <span className={css.list} style={{display: collapsed ? 'none' : undefined}}>
@@ -517,7 +517,7 @@ const JsonArrayInsert: React.FC<JsonArrayInsertProps> = ({pointer, visible}) => 
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => {}}
-          onBlur={(e) => {
+          onBlur={() => {
             setEditing(false);
           }}
           onKeyDown={(e) => {
@@ -586,9 +586,9 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
           {'['}
         </span>
         <span className={css.collapsed} style={{display: !collapsed ? 'none' : undefined}}>
-          {`[`}
+          {'['}
           {!!doc.length && <strong>{doc.length}</strong>}
-          {`]`}
+          {']'}
         </span>
       </span>
       <span className={css.list} style={{display: collapsed ? 'none' : undefined}}>
