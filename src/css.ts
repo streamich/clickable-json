@@ -1,13 +1,7 @@
 import {rule, theme} from 'nano-theme';
 
-const colorGenerator = (color: string) => (opacity: number) => `rgba(${color},${opacity})`;
-// export const gray = colorGenerator('33,55,77');
-// const grayInverted = colorGenerator('255,255,255');
-// export const green = colorGenerator('19,206,102');
-export const blueColor = colorGenerator('40,160,222');
-
-export const blue = '#07f';
-export const negative = '#FF4949';
+export const blue = theme.color.sem.blue[0];
+export const negative = theme.color.sem.negative[0];
 
 export const block = rule({
   d: 'inline-block',
@@ -117,7 +111,7 @@ export const hoverableCompact = rule({
 });
 
 export const hovered = rule({
-  bgc: blueColor(0.1),
+  bgc: theme.blue(0.1),
 });
 
 export const active = rule({
