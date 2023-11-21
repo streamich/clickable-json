@@ -20,7 +20,7 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
   const theme = useTheme();
 
   const style: React.CSSProperties = {
-    color: theme.g(.1),
+    color: theme.g(0.1),
   };
 
   const onSubmit = (e: React.FormEvent) => {
@@ -33,7 +33,9 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
   return (
     <>
       {!onChange ? (
-        <span className={css.property} style={style}>{selectable ? JSON.stringify(property) : property}</span>
+        <span className={css.property} style={style}>
+          {selectable ? JSON.stringify(property) : property}
+        </span>
       ) : (
         <AutosizeInput
           inputRef={(el) => ((inputRef as any).current = el)}
