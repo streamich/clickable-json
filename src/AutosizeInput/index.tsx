@@ -22,7 +22,7 @@ const INPUT_PROPS_BLACKLIST = [
 ];
 
 const cleanInputProps = (inputProps: object) => {
-  INPUT_PROPS_BLACKLIST.forEach(field => delete (inputProps as any)[field]);
+  INPUT_PROPS_BLACKLIST.forEach((field) => delete (inputProps as any)[field]);
   return inputProps;
 };
 

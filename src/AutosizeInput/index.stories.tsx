@@ -27,14 +27,13 @@ const InteractiveDemo: React.FC = () => {
   const [value, setValue] = React.useState('Hello World');
   return (
     <div>
-      <Component value={value} onChange={e => setValue(e.target.value)} />
+      <Component value={value} onChange={(e) => setValue(e.target.value)} />
       <div>Value: {value}</div>
     </div>
   );
 };
 
 export const Interactive: StoryObj<typeof meta> = {
-  args: {
-  },
+  args: {},
   render: () => <InteractiveDemo />,
 };

@@ -64,7 +64,7 @@ export const Post: StoryObj<typeof meta> = {
   } as any,
 };
 
-const Demo: React.FC<{doc: unknown}> = props => {
+const Demo: React.FC<{doc: unknown}> = (props) => {
   const [doc, setDoc] = React.useState<unknown>(props.doc);
   const onChange = (patch: Operation[]) => {
     const result = applyPatch(doc, patch, {mutate: false});

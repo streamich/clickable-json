@@ -40,7 +40,7 @@ interface JsonValueProps {
   onChange?: OnChange;
 }
 
-const JsonValue: React.FC<JsonValueProps> = props => {
+const JsonValue: React.FC<JsonValueProps> = (props) => {
   const {pointer, property, doc, comma, onChange} = props;
   const inputRef = React.useRef<HTMLInputElement>(null);
   const className = React.useMemo(
@@ -48,12 +48,12 @@ const JsonValue: React.FC<JsonValueProps> = props => {
       doc === null
         ? css.nil
         : typeof doc === 'boolean'
-        ? css.bool
-        : typeof doc === 'string'
-        ? css.str
-        : doc === Math.round(Number(doc))
-        ? css.num
-        : css.float,
+          ? css.bool
+          : typeof doc === 'string'
+            ? css.str
+            : doc === Math.round(Number(doc))
+              ? css.num
+              : css.float,
     [doc],
   );
   const value = React.useMemo(
@@ -61,12 +61,12 @@ const JsonValue: React.FC<JsonValueProps> = props => {
       doc === null
         ? 'null'
         : typeof doc === 'boolean'
-        ? doc
-          ? 'true'
-          : 'false'
-        : typeof doc === 'string'
-        ? JSON.stringify(doc)
-        : String(doc),
+          ? doc
+            ? 'true'
+            : 'false'
+          : typeof doc === 'string'
+            ? JSON.stringify(doc)
+            : String(doc),
     [doc],
   );
   const [proposed, setProposed] = React.useState(value);
@@ -94,12 +94,12 @@ const JsonValue: React.FC<JsonValueProps> = props => {
         <span className={className}>{value}</span>
       ) : (
         <AutosizeInput
-          inputRef={el => ((inputRef as any).current = el)}
+          inputRef={(el) => ((inputRef as any).current = el)}
           inputClassName={className + css.input}
           value={focused ? proposed : value}
-          onChange={e => setProposed(e.target.value)}
+          onChange={(e) => setProposed(e.target.value)}
           onFocus={() => setFocused(true)}
-          onBlur={e => setFocused(false)}
+          onBlur={(e) => setFocused(false)}
           onKeyDown={(e: React.KeyboardEvent) => {
             if (e.key === 'Enter') {
               if (inputRef.current) inputRef.current.blur();
@@ -132,7 +132,8 @@ const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) => {
   const onSubmit = (e: React.FormEvent) => {
     if (e) e.preventDefault();
     if (e) e.stopPropagation();
-    if (onChange) onChange([{op: 'move', from: pointer, path: steps.slice(0, steps.length - 1).join('/') + '/' + proposed}]);
+    if (onChange)
+      onChange([{op: 'move', from: pointer, path: steps.slice(0, steps.length - 1).join('/') + '/' + proposed}]);
   };
 
   return (
@@ -141,16 +142,16 @@ const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) => {
         <span className={css.property}>{selectable ? JSON.stringify(property) : property}</span>
       ) : (
         <AutosizeInput
-          inputRef={el => ((inputRef as any).current = el)}
+          inputRef={(el) => ((inputRef as any).current = el)}
           inputClassName={css.property + css.input}
           value={focused ? proposed : property}
-          onChange={e => setProposed(e.target.value)}
+          onChange={(e) => setProposed(e.target.value)}
           onFocus={() => setFocused(true)}
-          onBlur={e => {
+          onBlur={(e) => {
             setFocused(false);
             onSubmit(e);
           }}
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             if (e.key === 'Enter') {
               if (inputRef.current) inputRef.current.blur();
             } else if (e.key === 'Escape') {
@@ -334,18 +335,18 @@ const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visible}) =
     return (
       <span style={{display: visible ? undefined : 'none'}}>
         <AutosizeInput
-          inputRef={el => {
+          inputRef={(el) => {
             (inputPropertyRef as any).current = el;
             if (el) el.focus();
           }}
           inputClassName={css.property + css.input + css.inputActive}
           value={property}
-          onChange={e => setProperty(e.target.value)}
+          onChange={(e) => setProperty(e.target.value)}
           onFocus={() => {}}
-          onBlur={e => {
+          onBlur={(e) => {
             if (inputValueRef.current) inputValueRef.current.focus();
           }}
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             if (e.key === 'Escape') {
               if (property) setProperty('');
               else if (value) setValue('');
@@ -359,17 +360,17 @@ const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visible}) =
           <span>{':'}</span>
         </span>
         <AutosizeInput
-          inputRef={el => {
+          inputRef={(el) => {
             (inputValueRef as any).current = el;
           }}
           inputClassName={css.str + css.input + css.inputActive}
           value={value}
-          onChange={e => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value)}
           onFocus={() => {}}
-          onBlur={e => {
+          onBlur={(e) => {
             // setEditing(false);
           }}
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             if (e.key === 'Escape') {
               if (value) setValue('');
               else if (inputPropertyRef.current) inputPropertyRef.current.focus();
@@ -425,7 +426,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
         if (collapsed) setCollapsed(false);
       }}
     >
-      <span className={css.collapser} onClick={() => setCollapsed(x => !x)}>
+      <span className={css.collapser} onClick={() => setCollapsed((x) => !x)}>
         {collapsed ? '+' : '-'}
       </span>
       <span>
@@ -508,18 +509,18 @@ const JsonArrayInsert: React.FC<JsonArrayInsertProps> = ({pointer, visible}) => 
     return (
       <span style={{display: visible ? undefined : 'none'}}>
         <AutosizeInput
-          inputRef={el => {
+          inputRef={(el) => {
             (inputRef as any).current = el;
             if (el) el.focus();
           }}
           inputClassName={css.str + css.input}
           value={value}
-          onChange={e => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value)}
           onFocus={() => {}}
-          onBlur={e => {
+          onBlur={(e) => {
             setEditing(false);
           }}
-          onKeyDown={e => {
+          onKeyDown={(e) => {
             if (e.key === 'Escape') {
               if (value) setValue('');
               else setEditing(false);
@@ -571,7 +572,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
         if (collapsed) setCollapsed(false);
       }}
     >
-      <span className={css.collapser} onClick={() => setCollapsed(x => !x)}>
+      <span className={css.collapser} onClick={() => setCollapsed((x) => !x)}>
         {collapsed ? '+' : '-'}
       </span>
       <span>
@@ -634,7 +635,7 @@ export interface JsonDocProps {
   onChange?: OnChange;
 }
 
-export const JsonDoc: React.FC<JsonDocProps> = props => {
+export const JsonDoc: React.FC<JsonDocProps> = (props) => {
   const {doc, comma} = props;
   return !doc ? (
     <JsonValue {...props} comma={comma} />
@@ -658,7 +659,7 @@ export interface ClickableJsonProps {
   onChange?: OnChange;
 }
 
-export const ClickableJson: React.FC<ClickableJsonProps> = props => {
+export const ClickableJson: React.FC<ClickableJsonProps> = (props) => {
   const isMounted = useMountedState();
   const [hoverPointer, setHoverPointer] = React.useState<null | string>(null);
   const [activePointer, setActivePointer] = React.useState<null | string>(null);
@@ -684,12 +685,12 @@ export const ClickableJson: React.FC<ClickableJsonProps> = props => {
     <context.Provider
       value={{
         hoverPointer,
-        setHoverPointer: value => {
+        setHoverPointer: (value) => {
           if (!isMounted) return;
           setHoverPointer(value);
         },
         activePointer,
-        setActivePointer: value => {
+        setActivePointer: (value) => {
           if (!isMounted) return;
           setActivePointer(value);
         },

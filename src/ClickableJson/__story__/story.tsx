@@ -36,9 +36,9 @@ const doc2 = {
   },
 };
 
-const Demo: React.FC<{doc: unknown}> = props => {
+const Demo: React.FC<{doc: unknown}> = (props) => {
   const [doc, setDoc] = React.useState<unknown>(props.doc);
-  const onChange = patch => {
+  const onChange = (patch) => {
     const result = applyPatch(doc, patch, false);
     setDoc(result.doc);
   };
@@ -52,12 +52,12 @@ const Demo: React.FC<{doc: unknown}> = props => {
 storiesOf('Molecules|JsonBuilder', module)
   .add('Default', () => (
     <div style={{padding: '32px 64px'}}>
-      <ClickableJson doc={doc1} onChange={patch => console.log('onChange', patch)} />
+      <ClickableJson doc={doc1} onChange={(patch) => console.log('onChange', patch)} />
     </div>
   ))
   .add('Post', () => (
     <div style={{padding: '32px 64px'}}>
-      <ClickableJson doc={doc2} onChange={patch => console.log('onChange', patch)} />
+      <ClickableJson doc={doc2} onChange={(patch) => console.log('onChange', patch)} />
     </div>
   ))
   .add('read-only', () => (
