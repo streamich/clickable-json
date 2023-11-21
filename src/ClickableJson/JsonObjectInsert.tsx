@@ -18,6 +18,7 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
   const [value, setValue] = React.useState('');
   const inputPropertyRef = React.useRef<HTMLInputElement>(null);
   const inputValueRef = React.useRef<HTMLInputElement>(null);
+  const insButtonClass = css.useInsButton();
 
   if (!onChange) return null;
 
@@ -91,7 +92,7 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
     <span className={css.insArrBlock} style={{display: visible ? undefined : 'none'}} onClick={() => setEditing(true)}>
       <span className={css.insArrDot} />
       <span className={css.insArrLine} />
-      <button className={css.insButton + css.insArrButton}>+</button>
+      <button className={css.insButton + insButtonClass + css.insArrButton}>+</button>
       <span className={css.tooltip + css.insArrTooltip}>{t('Add key')}</span>
     </span>
   );

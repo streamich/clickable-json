@@ -1,4 +1,4 @@
-import {rule, theme} from 'nano-theme';
+import {makeRule, rule, theme} from 'nano-theme';
 
 export const blue = theme.color.sem.blue[0];
 export const negative = theme.color.sem.negative[0];
@@ -202,20 +202,31 @@ export const insButton = rule({
   lh: '16px',
   cur: 'pointer',
   bd: `1px dotted ${blue}`,
-  bg: theme.bg,
   col: blue,
   fw: 'normal',
   '&:hover': {
     fw: 'bold',
-    col: theme.bg,
     bg: blue,
   },
   [`.${insArrBlock.trim()}:hover &`]: {
     fw: 'bold',
-    col: theme.bg,
     bg: blue,
   },
 });
+
+export const useInsButton = makeRule(theme => ({
+  bg: theme.bg,
+  '&:hover': {
+    col: theme.bg,
+  },
+  [`.${insArrBlock.trim()}:hover &`]: {
+    col: theme.bg,
+  },
+  '&:active': {
+    bg: theme.g(0.1),
+    bd: `1px solid ${theme.g(0.1)}`,
+  },
+}));
 
 export const tooltip = rule({
   ...theme.font.ui1,

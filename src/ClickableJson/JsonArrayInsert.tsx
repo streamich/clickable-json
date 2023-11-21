@@ -15,6 +15,7 @@ export const JsonArrayInsert: React.FC<JsonArrayInsertProps> = ({pointer, visibl
   const [editing, setEditing] = React.useState(false);
   const [value, setValue] = React.useState('');
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const insButtonClass = css.useInsButton();
 
   if (!onChange) return null;
 
@@ -63,7 +64,7 @@ export const JsonArrayInsert: React.FC<JsonArrayInsertProps> = ({pointer, visibl
     <span className={css.insArrBlock} style={{display: visible ? undefined : 'none'}} onClick={() => setEditing(true)}>
       <span className={css.insArrDot} />
       <span className={css.insArrLine} />
-      <button className={css.insArrButton + css.insButton}>+</button>
+      <button className={css.insArrButton + insButtonClass + css.insButton}>+</button>
       <span className={css.tooltip + css.insArrTooltip}>{t('Insert')}</span>
     </span>
   );

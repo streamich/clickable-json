@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useT} from 'use-t';
 import Svg from 'iconista';
-import {theme} from 'nano-theme';
+import {useTheme} from 'nano-theme';
 import {context} from './context';
 import * as css from '../css';
 
@@ -16,6 +16,8 @@ export const JsonHoverable: React.FC<JsonHoverableProps> = ({pointer, children})
     React.useContext(context);
   const [draggedOver, setDraggedOver] = React.useState(false);
   const [deleteHovered, setDeleteHovered] = React.useState(false);
+  const theme = useTheme();
+  const useInsButtonClass = css.useInsButton();
 
   const onMouseMove = (e: React.MouseEvent) => {
     if (!formal) e.preventDefault(); // formal allows user select text
@@ -105,7 +107,7 @@ export const JsonHoverable: React.FC<JsonHoverableProps> = ({pointer, children})
       <>
         {subChildren}
         <button
-          className={css.insButton + css.deleteButton}
+          className={css.insButton + useInsButtonClass + css.deleteButton}
           onClick={() => onChange([{op: 'remove', path: pointer}])}
           onMouseEnter={() => setDeleteHovered(true)}
           onMouseOver={() => setDeleteHovered(true)}
