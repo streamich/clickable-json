@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useTheme} from 'nano-theme';
 import AutosizeInput from '../AutosizeInput';
 import {context} from './context';
 import * as css from '../css';
@@ -16,6 +17,11 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
   const [proposed, setProposed] = React.useState(property);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [focused, setFocused] = React.useState(false);
+  const theme = useTheme();
+
+  const style: React.CSSProperties = {
+    color: theme.g(.1),
+  };
 
   const onSubmit = (e: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -27,11 +33,12 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
   return (
     <>
       {!onChange ? (
-        <span className={css.property}>{selectable ? JSON.stringify(property) : property}</span>
+        <span className={css.property} style={style}>{selectable ? JSON.stringify(property) : property}</span>
       ) : (
         <AutosizeInput
           inputRef={(el) => ((inputRef as any).current = el)}
           inputClassName={css.property + css.input}
+          inputStyle={style}
           value={focused ? proposed : property}
           onChange={(e) => setProposed(e.target.value)}
           onFocus={() => setFocused(true)}
@@ -48,7 +55,7 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
           }}
         />
       )}
-      <span className={css.colon}>
+      <span className={css.colon} style={{color: theme.g(0.5)}}>
         <span>:</span>
       </span>
     </>

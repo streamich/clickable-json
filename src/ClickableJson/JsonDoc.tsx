@@ -4,9 +4,10 @@ import {JsonProperty} from './JsonProperty';
 import {JsonValue} from './JsonValue';
 import {JsonHoverable} from './JsonHoverable';
 import * as css from '../css';
-import type {OnChange} from './types';
 import {JsonObjectInsert} from './JsonObjectInsert';
 import {JsonArrayInsert} from './JsonArrayInsert';
+import type {OnChange} from './types';
+import {useTheme} from 'nano-theme';
 
 interface JsonObjectProps {
   property?: string | number;
@@ -24,6 +25,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
   }, [doc]);
   const [collapsed, setCollapsed] = React.useState(false);
   const [brackedHovered, setBracketHovered] = React.useState(false);
+  const theme = useTheme();
 
   const onBracketMouseEnter = () => {
     setBracketHovered(true);
@@ -33,6 +35,8 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
     setBracketHovered(false);
   };
 
+  const bracketColor = theme.g(0.3);
+
   return (
     <span
       className={css.object}
@@ -40,13 +44,13 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
         if (collapsed) setCollapsed(false);
       }}
     >
-      <span className={css.collapser} onClick={() => setCollapsed((x) => !x)}>
+      <span className={css.collapser} style={{color: theme.g(0.6)}} onClick={() => setCollapsed((x) => !x)}>
         {collapsed ? '+' : '-'}
       </span>
       <span>
         {typeof property === 'string' && <JsonProperty pointer={pointer} onChange={onChange} />}
         <span
-          style={{display: collapsed ? 'none' : undefined}}
+          style={{display: collapsed ? 'none' : undefined, color: bracketColor}}
           className={brackedHovered ? css.bracketHovered : ''}
           onMouseEnter={onBracketMouseEnter}
           onMouseLeave={onBracketMouseLeave}
@@ -54,9 +58,9 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
           {'{'}
         </span>
         <span className={css.collapsed} style={{display: !collapsed ? 'none' : undefined}}>
-          {'{'}
+          <span style={{color: bracketColor}}>{'{'}</span>
           {!!keys.length && <strong>{keys.length}</strong>}
-          {'}'}
+          <span style={{color: bracketColor}}>{'}'}</span>
         </span>
       </span>
       <span className={css.list} style={{display: collapsed ? 'none' : undefined}}>
@@ -81,7 +85,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
         <JsonObjectInsert pointer={pointer} visible={activePointer === pointer} />
       </span>
       <span
-        style={{display: collapsed ? 'none' : undefined}}
+        style={{display: collapsed ? 'none' : undefined, color: bracketColor}}
         className={brackedHovered ? css.bracketHovered : ''}
         onMouseEnter={onBracketMouseEnter}
         onMouseLeave={onBracketMouseLeave}
@@ -105,6 +109,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
   const [collapsed, setCollapsed] = React.useState(false);
   const [brackedHovered, setBracketHovered] = React.useState(false);
   const {activePointer, formal: selectable} = React.useContext(context);
+  const theme = useTheme();
 
   const onBracketMouseEnter = () => {
     setBracketHovered(true);
@@ -114,6 +119,8 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
     setBracketHovered(false);
   };
 
+  const bracketColor = theme.g(0.3);
+
   return (
     <span
       className={css.object}
@@ -121,13 +128,13 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
         if (collapsed) setCollapsed(false);
       }}
     >
-      <span className={css.collapser} onClick={() => setCollapsed((x) => !x)}>
+      <span className={css.collapser} style={{color: theme.g(0.6)}} onClick={() => setCollapsed((x) => !x)}>
         {collapsed ? '+' : '-'}
       </span>
       <span>
         {typeof property === 'string' && <JsonProperty pointer={pointer} onChange={onChange} />}
         <span
-          style={{display: collapsed ? 'none' : undefined}}
+          style={{display: collapsed ? 'none' : undefined, color: bracketColor}}
           className={brackedHovered ? css.bracketHovered : ''}
           onMouseEnter={onBracketMouseEnter}
           onMouseLeave={onBracketMouseLeave}
@@ -135,9 +142,9 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
           {'['}
         </span>
         <span className={css.collapsed} style={{display: !collapsed ? 'none' : undefined}}>
-          {'['}
+          <span style={{color: bracketColor}}>{'['}</span>
           {!!doc.length && <strong>{doc.length}</strong>}
-          {']'}
+          <span style={{color: bracketColor}}>{']'}</span>
         </span>
       </span>
       <span className={css.list} style={{display: collapsed ? 'none' : undefined}}>
@@ -164,7 +171,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
         <JsonArrayInsert pointer={`${pointer}/-`} visible={activePointer === pointer} />
       </span>
       <span
-        style={{display: collapsed ? 'none' : undefined}}
+        style={{display: collapsed ? 'none' : undefined, color: bracketColor}}
         className={brackedHovered ? css.bracketHovered : ''}
         onMouseEnter={onBracketMouseEnter}
         onMouseLeave={onBracketMouseLeave}

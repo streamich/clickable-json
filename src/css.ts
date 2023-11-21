@@ -69,7 +69,6 @@ export const input = rule({
 export const inputActive = rule(activeInput);
 
 export const colon = rule({
-  col: theme.g(0.5),
   pad: '0 8px 0 0px',
   '&>span': {
     pad: '0 2px',
@@ -126,7 +125,6 @@ export const collapser = rule({
   left: '-24px',
   cur: 'default',
   userSelect: 'none',
-  col: theme.g(0.6),
 });
 
 export const collapsed = rule({
