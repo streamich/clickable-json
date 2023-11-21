@@ -35,6 +35,10 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
     setBracketHovered(false);
   };
 
+  const handleBracketClick = () => {
+    if (!collapsed && pointer === activePointer) setCollapsed(true);
+  };
+
   const bracketColor = theme.g(0.3);
 
   return (
@@ -54,6 +58,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
           className={brackedHovered ? css.bracketHovered : ''}
           onMouseEnter={onBracketMouseEnter}
           onMouseLeave={onBracketMouseLeave}
+          onClick={handleBracketClick}
         >
           {'{'}
         </span>
@@ -89,6 +94,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
         className={brackedHovered ? css.bracketHovered : ''}
         onMouseEnter={onBracketMouseEnter}
         onMouseLeave={onBracketMouseLeave}
+        onClick={handleBracketClick}
       >
         {'}'}
       </span>
@@ -119,6 +125,10 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
     setBracketHovered(false);
   };
 
+  const handleBracketClick = () => {
+    if (!collapsed && pointer === activePointer) setCollapsed(true);
+  };
+
   const bracketColor = theme.g(0.3);
 
   return (
@@ -138,6 +148,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
           className={brackedHovered ? css.bracketHovered : ''}
           onMouseEnter={onBracketMouseEnter}
           onMouseLeave={onBracketMouseLeave}
+          onClick={handleBracketClick}
         >
           {'['}
         </span>
@@ -175,6 +186,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
         className={brackedHovered ? css.bracketHovered : ''}
         onMouseEnter={onBracketMouseEnter}
         onMouseLeave={onBracketMouseLeave}
+        onClick={handleBracketClick}
       >
         {']'}
       </span>
