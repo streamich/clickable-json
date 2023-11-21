@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type {Meta, StoryObj} from '@storybook/react';
 import {ClickableJson} from '.';
+import {applyPatch, Operation} from 'json-joy/lib/json-patch';
 
 const meta: Meta<typeof Text> = {
   title: 'ClickableJson',
@@ -15,10 +16,12 @@ const meta: Meta<typeof Text> = {
 export default meta;
 
 const doc1 = {
-  foo: 'bar',
-  test: null,
-  inner: {
-    name: 'Vadim',
+  support: 'https://github.com/sponsors/streamich',
+  license: 'use it if you support me',
+  foo: null,
+  test: 123,
+  developer: {
+    name: '@streamich',
   },
 };
 
@@ -52,4 +55,35 @@ export const Primary: StoryObj<typeof meta> = {
     value: doc1,
     onChange: (patch: unknown) => console.log('onChange', patch),
   } as any,
+};
+
+export const Post: StoryObj<typeof meta> = {
+  args: {
+    value: doc2,
+    onChange: (patch: unknown) => console.log('onChange', patch),
+  } as any,
+};
+
+const Demo: React.FC<{doc: unknown}> = props => {
+  const [doc, setDoc] = React.useState<unknown>(props.doc);
+  const onChange = (patch: Operation[]) => {
+    const result = applyPatch(doc, patch, {mutate: false});
+    setDoc(result.doc);
+  };
+  return (
+    <div style={{padding: '32px 64px'}}>
+      <ClickableJson doc={doc} onChange={onChange} />
+    </div>
+  );
+};
+
+export const Interactive: StoryObj<typeof meta> = {
+  render: () => <Demo doc={doc1} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const InteractiveLarge: StoryObj<typeof meta> = {
+  render: () => <Demo doc={doc2} />,
 };
