@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "removeComments": false,
+    "noImplicitAny": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "pretty": true,
+    "sourceMap": true,
+    "strict": true,
+    "jsx": "react",
+    "forceConsistentCasingInFileNames": true,
+    "noEmitOnError": true,
+    "noErrorTruncation": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmitHelpers": true,
+    "noImplicitReturns": true,
+    "declaration": true,
+    "downlevelIteration": true,
+    "isolatedModules": false,
+    "outDir": "./dist"
+  },
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "lib",
+    "es6",
+    "es2020",
+    "esm",
+    "docs",
+    "README.md"
+  ],
+  "typedocOptions": {
+    "entryPoints": [
+      "src/index.ts",
+    ],
+    "out": "typedocs"
+  }
+}
