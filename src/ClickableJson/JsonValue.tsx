@@ -70,6 +70,7 @@ export const JsonValue: React.FC<JsonValueProps> = (props) => {
         <AutosizeInput
           inputRef={(el) => ((inputRef as any).current = el)}
           inputClassName={className + css.input}
+          inputStyle={focused ? {color: theme.g(0.1), background: theme.bg, borderColor: theme.g(.7)} : undefined}
           value={focused ? proposed : value}
           onChange={(e) => setProposed(e.target.value)}
           onFocus={() => setFocused(true)}

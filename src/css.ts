@@ -71,7 +71,7 @@ export const input = rule({
   mar: 0,
   pad: 0,
   bg: 'transparent',
-  bdrad: '3px',
+  bdrad: '5px',
   d: 'inline-block',
   minW: 'auto',
   w: 'auto',
