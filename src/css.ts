@@ -27,7 +27,7 @@ export const quote = rule({
 });
 
 export const bool = rule({
-  col: '#512898',
+  col: '#411888',
 });
 
 export const boolDark = rule({

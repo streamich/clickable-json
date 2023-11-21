@@ -28,7 +28,7 @@ export const JsonValue: React.FC<JsonValueProps> = (props) => {
             : doc === Math.round(Number(doc))
               ? (theme.isLight ? css.num : css.numDark)
               : (theme.isLight ? css.float : css.floatDark),
-    [doc],
+    [doc, theme],
   );
   const value = React.useMemo(
     () =>
@@ -41,7 +41,7 @@ export const JsonValue: React.FC<JsonValueProps> = (props) => {
           : typeof doc === 'string'
             ? JSON.stringify(doc)
             : String(doc),
-    [doc],
+    [doc, theme],
   );
   const [proposed, setProposed] = React.useState(value);
   const [focused, setFocused] = React.useState(false);
