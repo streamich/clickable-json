@@ -1,7 +1,5 @@
 import * as React from 'react';
 import {useT} from 'use-t';
-import Svg from 'iconista';
-import {theme} from 'nano-theme';
 import {escapeComponent} from 'json-joy/lib/json-pointer';
 import useClickAway from 'react-use/lib/useClickAway';
 import useMountedState from 'react-use/lib/useMountedState';
@@ -9,143 +7,9 @@ import AutosizeInput from '../AutosizeInput';
 import {context} from './context';
 import {JsonProperty} from './JsonProperty';
 import {JsonValue} from './JsonValue';
+import {JsonHoverable} from './JsonHoverable';
 import * as css from '../css';
 import type {OnChange} from './types';
-
-interface HoverableProps {
-  pointer: string;
-  children: React.ReactElement;
-}
-
-const Hoverable: React.FC<HoverableProps> = ({pointer, children}) => {
-  const [t] = useT();
-  const {hoverPointer, setHoverPointer, activePointer, setActivePointer, formal, compact, onChange, isInputFocused} =
-    React.useContext(context);
-  const [draggedOver, setDraggedOver] = React.useState(false);
-  const [deleteHovered, setDeleteHovered] = React.useState(false);
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!formal) e.preventDefault(); // formal allows user select text
-    e.stopPropagation();
-    if (hoverPointer !== pointer) setHoverPointer(pointer);
-  };
-
-  const onMouseEnter = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setHoverPointer(pointer);
-  };
-
-  const onMouseLeave = () => {
-    setHoverPointer(null);
-  };
-
-  const onClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setActivePointer(pointer);
-  };
-
-  const onDragEnter = formal
-    ? undefined
-    : (e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDraggedOver(true);
-      };
-
-  const onDragLeave = formal
-    ? undefined
-    : (e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDraggedOver(false);
-      };
-
-  const onDragOver = formal
-    ? undefined
-    : (e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-      };
-
-  const onDrop = formal
-    ? undefined
-    : (e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDraggedOver(false);
-        const from = e.dataTransfer.getData('text/plain');
-        if (onChange) onChange([{op: 'move', from, path: pointer}]);
-      };
-
-  const onDragStart = formal
-    ? undefined
-    : (e: React.DragEvent) => {
-        e.stopPropagation();
-        e.dataTransfer.setData('text/plain', pointer);
-      };
-
-  const isHovered = hoverPointer === pointer;
-  const isActive = activePointer === pointer;
-
-  let subChildren = children.props.children;
-
-  if (pointer) {
-    subChildren = (
-      <span
-        onDrop={onDrop}
-        onDragOver={onDragOver}
-        onDragEnter={onDragEnter}
-        onDragLeave={onDragLeave}
-        style={{outline: draggedOver ? `1px solid ${theme.blue}` : undefined}}
-      >
-        <span draggable={!formal} onDragStart={onDragStart}>
-          {subChildren}
-        </span>
-      </span>
-    );
-  }
-
-  if (!!onChange && !isInputFocused && pointer === activePointer) {
-    subChildren = (
-      <>
-        {subChildren}
-        <button
-          className={css.insButton + css.deleteButton}
-          onClick={() => onChange([{op: 'remove', path: pointer}])}
-          onMouseEnter={() => setDeleteHovered(true)}
-          onMouseOver={() => setDeleteHovered(true)}
-          onMouseLeave={() => setDeleteHovered(false)}
-        >
-          <Svg set="atlaskit" icon="cross" width={10} height={10} />
-          <span className={css.tooltip + css.deleteButtonTooltip}>{t('Delete')}</span>
-        </button>
-      </>
-    );
-  }
-
-  return React.cloneElement(
-    children,
-    {
-      onMouseMove,
-      onMouseEnter,
-      onMouseLeave,
-      onClick,
-      className:
-        (children.props.className || '') +
-        css.hoverable +
-        (compact ? css.hoverableCompact : '') +
-        (isHovered ? css.hovered : '') +
-        (isActive ? css.active : ''),
-      style: {
-        ...(children.props.style || {}),
-        outline: deleteHovered ? `1px dotted ${css.negative}` : undefined,
-      },
-    },
-    subChildren,
-  );
-};
 
 interface JsonObjectInsertProps {
   pointer: string;
@@ -295,7 +159,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
           const itemPointer = `${pointer}/${key}`;
           return (
             <span key={key} className={css.line}>
-              <Hoverable pointer={itemPointer}>
+              <JsonHoverable pointer={itemPointer}>
                 <span className={css.lineInner}>
                   <JsonDoc
                     property={key}
@@ -305,7 +169,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
                     onChange={onChange}
                   />
                 </span>
-              </Hoverable>
+              </JsonHoverable>
             </span>
           );
         })}
@@ -443,7 +307,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
             <React.Fragment key={index}>
               <JsonArrayInsert pointer={`${pointer}/${index}`} visible={activePointer === pointer} />
               <span className={css.line}>
-                <Hoverable pointer={itemPointer}>
+                <JsonHoverable pointer={itemPointer}>
                   <span className={css.lineInner}>
                     <JsonDoc
                       doc={doc[index]}
@@ -452,7 +316,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
                       onChange={onChange}
                     />
                   </span>
-                </Hoverable>
+                </JsonHoverable>
               </span>
             </React.Fragment>
           );
@@ -546,11 +410,11 @@ export const ClickableJson: React.FC<ClickableJsonProps> = (props) => {
         isInputFocused,
       }}
     >
-      <Hoverable pointer="">
+      <JsonHoverable pointer="">
         <span ref={ref} className={css.block} style={{fontSize: props.fontSize || '13.4px'}}>
           <JsonDoc {...props} pointer="" />
         </span>
-      </Hoverable>
+      </JsonHoverable>
     </context.Provider>
   );
 };
