@@ -107,4 +107,7 @@ export const InteractiveEmpty: StoryObj<typeof meta> = {
 
 export const InteractiveLarge: StoryObj<typeof meta> = {
   render: () => <Demo doc={doc2} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
