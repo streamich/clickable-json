@@ -65,6 +65,7 @@ export const inputActive = rule(activeInput);
 
 export const colon = rule({
   pd: '0 8px 0 0px',
+  cur: 'default',
   '&>span': {
     pd: '0 2px',
   },

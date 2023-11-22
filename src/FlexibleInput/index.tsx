@@ -46,6 +46,9 @@ export interface FlexibleInputProps {
   /** Maximum width to allow. */
   maxWidth?: number;
 
+  /** Whether the input is focused on initial render. */
+  focus?: boolean;
+
   /** Callback for when the value changes. */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
@@ -75,6 +78,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
   extraWidth,
   minWidth = 8,
   maxWidth,
+  focus,
   onChange,
   onFocus,
   onBlur,
@@ -114,6 +118,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
     <div className={blockClass}>
       <input
         ref={(input) => {
+          if (input && focus) input.focus();
           (inputRef as any).current = input;
           if (inp) inp(input);
         }}

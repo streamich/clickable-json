@@ -97,7 +97,7 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
   };
 
   return (
-    <div
+    <span
       className={css.input}
       style={
         focused
@@ -119,6 +119,6 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
         onCancel={handleCancel}
         onTab={handleTab}
       />
-    </div>
+    </span>
   );
 };
