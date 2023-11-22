@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type {Meta, StoryObj} from '@storybook/react';
-import {ClickableJson} from '.';
+import {ClickableJson, ClickableJsonProps} from '.';
 import {applyPatch, Operation} from 'json-joy/lib/json-patch';
 
 const meta: Meta<typeof Text> = {
@@ -57,16 +57,10 @@ export const Primary: StoryObj<typeof meta> = {
   } as any,
 };
 
-export const Post: StoryObj<typeof meta> = {
-  args: {
-    doc: doc2,
-    onChange: (patch: unknown) => console.log('onChange', patch),
-  } as any,
-};
-
 export const Readonly: StoryObj<typeof meta> = {
   args: {
     doc: doc1,
+    onChange: undefined,
   } as any,
 };
 
@@ -78,7 +72,7 @@ export const FormalAndCompact: StoryObj<typeof meta> = {
   } as any,
 };
 
-const Demo: React.FC<{doc: unknown}> = (props) => {
+const Demo: React.FC<ClickableJsonProps> = (props) => {
   const [doc, setDoc] = React.useState<unknown>(props.doc);
   const onChange = (patch: Operation[]) => {
     const result = applyPatch(doc, patch, {mutate: false});
@@ -86,7 +80,7 @@ const Demo: React.FC<{doc: unknown}> = (props) => {
   };
   return (
     <div style={{padding: '32px 64px'}}>
-      <ClickableJson doc={doc} onChange={onChange} />
+      <ClickableJson {...props} doc={doc} onChange={onChange} />
     </div>
   );
 };

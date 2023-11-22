@@ -3,12 +3,13 @@ import useClickAway from 'react-use/lib/useClickAway';
 import useMountedState from 'react-use/lib/useMountedState';
 import {context} from './context';
 import {JsonHoverable} from './JsonHoverable';
+import {JsonDoc} from './JsonDoc';
 import * as css from '../css';
 import type {OnChange} from './types';
-import {JsonDoc} from './JsonDoc';
 
 export interface ClickableJsonProps {
   doc: unknown;
+  readonly?: boolean;
   formal?: boolean;
   keepOrder?: boolean;
   fontSize?: string;
@@ -38,6 +39,8 @@ export const ClickableJson: React.FC<ClickableJsonProps> = (props) => {
     };
   }, []);
 
+  const onChange = props.readonly ? undefined : props.onChange;
+
   return (
     <context.Provider
       value={{
@@ -51,7 +54,7 @@ export const ClickableJson: React.FC<ClickableJsonProps> = (props) => {
           if (!isMounted) return;
           setActivePointer(value);
         },
-        onChange: props.onChange,
+        onChange,
         formal: props.formal,
         compact: props.compact,
         keepOrder: props.keepOrder,
@@ -60,7 +63,7 @@ export const ClickableJson: React.FC<ClickableJsonProps> = (props) => {
     >
       <JsonHoverable pointer="">
         <span ref={ref} className={css.block} style={{fontSize: props.fontSize || '13.4px'}}>
-          <JsonDoc {...props} pointer="" />
+          <JsonDoc {...props} pointer="" onChange={onChange} />
         </span>
       </JsonHoverable>
     </context.Provider>
