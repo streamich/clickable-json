@@ -8,6 +8,9 @@
   },
   "homepage": "https://github.com/streamich/clickable-json",
   "repository": "streamich/clickable-json",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "typings": "lib/index.d.ts",
   "files": [
     "LICENSE",
     "lib/"
