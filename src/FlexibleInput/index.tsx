@@ -9,6 +9,7 @@ const blockClass = rule({
 
 const inputClass = rule({
   bxz: 'border-box',
+  ov: 'hidden',
   pd: 0,
   mr: 0,
   bd: 0,
@@ -18,10 +19,10 @@ const inputClass = rule({
 
 const sizerClass = rule({
   pos: 'absolute',
+  ov: 'hidden',
   pe: 'none',
   us: 'none',
   bxz: 'border-box',
-  ov: 'scroll',
   t: 0,
   l: 0,
   ws: 'pre',
@@ -140,7 +141,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
       />
       <div ref={sizerRef} className={sizerClass}>
         <span style={{visibility: 'hidden'}}>{value}</span>
-        <span style={{color: theme.g(0.5)}}>{typeahead}</span>
+        <span style={{color: theme.g(0.7)}}>{typeahead}</span>
       </div>
     </div>
   );
