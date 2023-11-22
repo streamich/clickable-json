@@ -44,6 +44,58 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
     if (onChange) onChange(newValue);
   };
 
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const input = e.target;
+    const value = input.value;
+    const length = value.length;
+    // Nicely select short strings. Always select very short strings, for
+    // a bit longer strings check if there are any spaces or newlines. The
+    // characters should allow to select UUIDs.
+    if (length && length < 40 && (value === proposed)) {
+      setTimeout(() => {
+        if (value[0] === '"' && value[length - 1] === '"') {
+          if (length < 17 || (value.indexOf('\n') === -1 && value.indexOf(' ') === -1)) {
+            input.setSelectionRange(1, length - 1, 'forward');
+          }
+        } else if (value === 'null') input.setSelectionRange(0, 4, 'forward');
+        else {
+          try {
+            switch (typeof JSON.parse(value)) {
+              case 'number':
+              case 'boolean': {
+                input.setSelectionRange(0, length, 'forward');
+                break;
+              }
+            }
+          } catch {}
+        }
+      }, 155);
+    }
+    setFocused(true);
+  };
+
+  const handleBlur = () => {
+    setFocused(false);
+  };
+
+  const handleSubmit = (e: React.KeyboardEvent) => {
+    if (inputRef.current) inputRef.current.blur();
+    onSubmit(e);
+  };
+
+  const handleCancel = () => {
+    if (json !== proposed) setProposed(json);
+    else if (inputRef.current) inputRef.current.blur();
+  };
+
+  const handleTab = (e: React.KeyboardEvent) => {
+    const ahead = typeahead(proposed);
+    if (ahead) {
+      e.preventDefault();
+      setProposed(proposed + ahead);
+    }
+  };
+
   return (
     <div
       className={css.input}
@@ -57,51 +109,11 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
         value={focused ? proposed : json}
         typeahead={focused ? typeahead(proposed) : ''}
         onChange={(e) => setProposed(e.target.value)}
-        onFocus={(e) => {
-          const input = e.target;
-          const value = input.value;
-          const length = value.length;
-          // Nicely select short strings. Always select very short strings, for
-          // a bit longer strings check if there are any spaces or newlines. The
-          // characters should allow to select UUIDs.
-          if (length && length < 40 && (value === proposed)) {
-            setTimeout(() => {
-              if (value[0] === '"' && value[length - 1] === '"') {
-                if (length < 17 || (value.indexOf('\n') === -1 && value.indexOf(' ') === -1)) {
-                  input.setSelectionRange(1, length - 1, 'forward');
-                }
-              } else if (value === 'null') input.setSelectionRange(0, 4, 'forward');
-              else {
-                try {
-                  switch (typeof JSON.parse(value)) {
-                    case 'number':
-                    case 'boolean': {
-                      input.setSelectionRange(0, length, 'forward');
-                      break;
-                    }
-                  }
-                } catch {}
-              }
-            }, 155);
-          }
-          setFocused(true);
-        }}
-        onBlur={() => setFocused(false)}
-        onSubmit={(e) => {
-          if (inputRef.current) inputRef.current.blur();
-          onSubmit(e);
-        }}
-        onCancel={(e) => {
-          if (json !== proposed) setProposed(json);
-          else if (inputRef.current) inputRef.current.blur();
-        }}
-        onTab={(e) => {
-          const ahead = typeahead(proposed);
-          if (ahead) {
-            e.preventDefault();
-            setProposed(proposed + ahead);
-          }
-        }}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onSubmit={handleSubmit}
+        onCancel={handleCancel}
+        onTab={handleTab}
       />
     </div>
   );
