@@ -11,7 +11,7 @@ export interface JsonHoverableProps {
 
 export const JsonHoverable: React.FC<JsonHoverableProps> = ({pointer, children}) => {
   const [t] = useT();
-  const {hoverPointer, setHoverPointer, activePointer, setActivePointer, formal, compact, onChange, isInputFocused} =
+  const {hoverPointer, setHoverPointer, activePointer, setActivePointer, compact, onChange, isInputFocused} =
     React.useContext(context);
   const [deleteHovered, setDeleteHovered] = React.useState(false);
   const useInsButtonClass = css.useInsButton();

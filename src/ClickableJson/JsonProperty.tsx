@@ -29,7 +29,7 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
   }
 
   if (property.indexOf(' ') !== -1) {
-    style.background = theme.blue(.1);
+    style.background = theme.blue(0.1);
   }
 
   const onSubmit = (e: React.FormEvent) => {
