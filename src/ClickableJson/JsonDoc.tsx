@@ -63,9 +63,9 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
           {'{'}
         </span>
         <span className={css.collapsed} style={{display: !collapsed ? 'none' : undefined}}>
-          <span style={{color: bracketColor}}>{'{'}</span>
+          <span style={{color: css.blue}}>{'{'}</span>
           {!!keys.length && <strong>{keys.length}</strong>}
-          <span style={{color: bracketColor}}>{'}'}</span>
+          <span style={{color: css.blue}}>{'}'}</span>
         </span>
       </span>
       <span className={css.list} style={{display: collapsed ? 'none' : undefined}}>
@@ -153,9 +153,9 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
           {'['}
         </span>
         <span className={css.collapsed} style={{display: !collapsed ? 'none' : undefined}}>
-          <span style={{color: bracketColor}}>{'['}</span>
+          <span style={{color: css.blue}}>{'['}</span>
           {!!doc.length && <strong>{doc.length}</strong>}
-          <span style={{color: bracketColor}}>{']'}</span>
+          <span style={{color: css.blue}}>{']'}</span>
         </span>
       </span>
       <span className={css.list} style={{display: collapsed ? 'none' : undefined}}>

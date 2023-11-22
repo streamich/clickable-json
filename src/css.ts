@@ -96,7 +96,7 @@ export const lineInner = rule({
 export const hoverable = rule({
   bxz: 'border-box',
   pd: '3px',
-  bdrad: '3px',
+  bdrad: '4px',
   trs: 'background-color .3s ease-out',
 });
 
@@ -129,6 +129,11 @@ export const collapser = rule({
 export const collapsed = rule({
   col: blue,
   cur: 'default',
+  fw: 'bold',
+  bg: theme.blue(.1),
+  pd: '2px',
+  mr: '-2px',
+  bdrad: '4px',
 });
 
 export const bracketHovered = rule({
