@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useTheme} from 'nano-theme';
-import AutosizeInput from '../AutosizeInput';
 import {context} from './context';
 import * as css from '../css';
+import {FlexibleInput} from '../FlexibleInput';
 import type {OnChange} from './types';
 
 export interface JsonPropertyProps {
@@ -25,10 +25,13 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
 
   if (focused) {
     style.background = theme.bg;
-    style.borderColor = theme.g(0.7);
+    style.border = `1px solid ${theme.g(0.9)}`;
+    style.fontWeight = 'bold';
+    style.margin = '-3px';
+    style.padding = '2px';
   }
 
-  if (property.indexOf(' ') !== -1) {
+  if (!property || property.indexOf(' ') !== -1) {
     style.background = theme.blue(0.1);
   }
 
@@ -46,25 +49,33 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
           {formal ? JSON.stringify(property) : property}
         </span>
       ) : (
-        <AutosizeInput
-          inputRef={(el) => ((inputRef as any).current = el)}
-          inputClassName={css.property + css.input}
-          inputStyle={style}
-          value={focused ? proposed : property}
-          onChange={(e) => setProposed(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={(e) => {
-            setFocused(false);
-            onSubmit(e);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              if (inputRef.current) inputRef.current.blur();
-            } else if (e.key === 'Escape') {
-              if (inputRef.current) inputRef.current.blur();
-            }
-          }}
-        />
+        <span
+          className={css.property + css.input}
+          style={style}
+        >
+          <FlexibleInput
+            inp={(el) => ((inputRef as any).current = el)}
+            value={focused ? proposed : property}
+            onChange={(e) => setProposed(e.target.value)}
+            onFocus={() => setFocused(true)}
+            onBlur={(e) => {
+              setFocused(false);
+            }}
+            onSubmit={(e) => {
+              if (inputRef.current) {
+                inputRef.current.blur();
+                setFocused(false);
+              }
+              onSubmit(e);
+            }}
+            onCancel={() => {
+              if (inputRef.current) {
+                inputRef.current.blur();
+                setFocused(false);
+              }
+            }}
+          />
+        </span>
       )}
       <span className={css.colon} style={{color: theme.g(0.5)}}>
         <span>:</span>

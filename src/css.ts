@@ -29,10 +29,11 @@ export const quote = rule({
 export const property = rule({
   pad: '0',
   fw: 'bold',
+  bxz: 'border-box',
 });
 
 const activeInput = {
-  col: theme.g(0.2),
+  col: theme.g(0),
   pd: '5px',
   bg: theme.bg,
   bd: `1px solid ${theme.g(0.7)}`,
