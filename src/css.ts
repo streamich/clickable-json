@@ -184,10 +184,6 @@ export const insButton = rule({
     fw: 'bold',
     bg: blue,
   },
-  [`.${insArrBlock.trim()}:hover &`]: {
-    fw: 'bold',
-    bg: blue,
-  },
 });
 
 export const useInsButton = makeRule((theme) => ({
@@ -195,10 +191,8 @@ export const useInsButton = makeRule((theme) => ({
   '&:hover': {
     col: theme.bg,
   },
-  [`.${insArrBlock.trim()}:hover &`]: {
-    col: theme.bg,
-  },
   '&:active': {
+    col: theme.g(0.9),
     bg: theme.g(0.1),
     bd: `1px solid ${theme.g(0.1)}`,
   },
