@@ -11,7 +11,7 @@ export interface JsonPropertyProps {
 }
 
 export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) => {
-  const {formal: selectable} = React.useContext(context);
+  const {formal} = React.useContext(context);
   const steps = React.useMemo(() => pointer.split('/'), [pointer]);
   const property = React.useMemo(() => steps[steps.length - 1], [steps]);
   const [proposed, setProposed] = React.useState(property);
@@ -22,6 +22,10 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
   const style: React.CSSProperties = {
     color: theme.g(0.1),
   };
+
+  if (property[0] === ' ' || property[property.length - 1] === ' ') {
+    style.background = theme.red(.08);
+  }
 
   const onSubmit = (e: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -34,7 +38,7 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
     <>
       {!onChange ? (
         <span className={css.property} style={style}>
-          {selectable ? JSON.stringify(property) : property}
+          {formal ? JSON.stringify(property) : property}
         </span>
       ) : (
         <AutosizeInput
