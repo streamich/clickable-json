@@ -113,6 +113,10 @@ export const active = rule({
   pos: 'relative',
 });
 
+export const bracket = rule({
+  cur: 'default',
+});
+
 export const collapser = rule({
   pd: '0 6px',
   pos: 'absolute',
@@ -124,6 +128,7 @@ export const collapser = rule({
 
 export const collapsed = rule({
   col: blue,
+  cur: 'default',
 });
 
 export const bracketHovered = rule({
