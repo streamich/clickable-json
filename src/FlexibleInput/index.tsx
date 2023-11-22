@@ -16,6 +16,8 @@ const inputClass = rule({
   bg: 0,
   out: 0,
   col: 'inherit',
+  fw: 'inherit',
+  f: 'inherit',
 });
 
 const sizerClass = rule({
@@ -92,7 +94,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
   const inputRef = React.useRef<HTMLInputElement>(null);
   const sizerRef = React.useRef<HTMLDivElement>(null);
   const theme = useTheme();
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (!inputRef.current || !sizerRef.current) return;
     if (focus) inputRef.current.focus();
     copyStyles(inputRef.current, sizerRef.current!, [
@@ -108,7 +110,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
       'boxSizing',
     ]);
   }, []);
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (!inputRef.current || !sizerRef.current) return;
     let width = sizerRef.current.scrollWidth;
     if (extraWidth) width += extraWidth;
