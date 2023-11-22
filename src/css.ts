@@ -218,14 +218,14 @@ export const useInsButton = makeRule((theme) => ({
 export const tooltip = rule({
   ...theme.font.ui1,
   pos: 'absolute',
-  t: '-32px',
+  t: '-2.8em',
   l: '0px',
   d: 'inline-block',
   bg: 'rgba(0,0,0,.8)',
   col: '#fff',
-  fz: 13 / 13.4 + 'em',
-  pad: '4px 6px 6px',
-  bdrad: '2px',
+  fz: 12 / 13.4 + 'em',
+  pad: '.4em .8em',
+  bdrad: '.4em',
   z: 3,
   pe: 'none',
   us: 'none',
@@ -233,7 +233,7 @@ export const tooltip = rule({
 
 export const insArrTooltip = rule({
   pos: 'absolute',
-  t: '-36px',
+  t: '-2.8em',
   l: '-75px',
   vis: 'hidden',
   [`.${insArrBlock.trim()}:hover &`]: {
