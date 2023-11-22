@@ -41,8 +41,10 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
   if (editing) {
     const keyInput = (
       <span
-        className={css.property + css.input + css.inputActive}
+        className={css.property + css.input}
         style={{
+          color: theme.g(0.1),
+          background: theme.bg,
           display: visible ? undefined : 'none',
           margin: '-1px 0 -1px -2px',
           padding: '3px 4px',

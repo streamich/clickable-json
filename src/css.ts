@@ -51,7 +51,7 @@ export const input = rule({
   d: 'inline-block',
   minW: 'auto',
   w: 'auto',
-  '&:focus': activeInput,
+  // '&:focus': activeInput,
   '&::selection': {
     col: '#fff',
     bgc: blue,
