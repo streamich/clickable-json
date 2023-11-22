@@ -22,40 +22,8 @@ export const ValueColor = {
   float: ['#015833', '#51a883'],
 }
 
-export const nil = rule({
-  col: theme.g(0.6),
-});
-
-export const str = rule({
-  col: '#CC2336',
-});
-
 export const quote = rule({
   col: '#E84D3D',
-});
-
-export const bool = rule({
-  col: '#411888',
-});
-
-export const boolDark = rule({
-  col: '#9168c8',
-});
-
-export const num = rule({
-  col: '#0a8F3F',
-});
-
-export const numDark = rule({
-  col: '#0FaF4F',
-});
-
-export const float = rule({
-  col: '#015833',
-});
-
-export const floatDark = rule({
-  col: '#51a883',
 });
 
 export const property = rule({
