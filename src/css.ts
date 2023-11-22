@@ -52,6 +52,10 @@ export const input = rule({
   minW: 'auto',
   w: 'auto',
   '&:focus': activeInput,
+  '&::selection': {
+    col: '#fff',
+    bgc: blue,
+  },
 });
 
 export const inputActive = rule(activeInput);
@@ -137,7 +141,7 @@ export const insArrDot = rule({
   h: '3px',
   bdrad: '50%',
   bg: blue,
-  pointerEvents: 'none',
+  pe: 'none',
   [`.${insArrBlock.trim()}:hover &`]: {
     top: '-1px',
     left: '-5px',
@@ -153,7 +157,7 @@ export const insArrLine = rule({
   w: '50px',
   h: '0px',
   bdt: `1px dotted ${blue}`,
-  pointerEvents: 'none',
+  pe: 'none',
   [`.${insArrBlock.trim()}:hover &`]: {
     l: '-58px',
     w: '54px',
