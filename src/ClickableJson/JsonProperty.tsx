@@ -24,7 +24,7 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
   };
 
   if (property[0] === ' ' || property[property.length - 1] === ' ') {
-    style.background = theme.red(.08);
+    style.background = theme.blue(.1);
   }
 
   const onSubmit = (e: React.FormEvent) => {
