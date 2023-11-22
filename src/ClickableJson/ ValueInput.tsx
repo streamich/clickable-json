@@ -2,46 +2,14 @@ import * as React from 'react';
 import {useTheme} from 'nano-theme';
 import AutosizeInput from '../AutosizeInput';
 import * as css from '../css';
-
-export const valueColor = (isDark: boolean, value: unknown): string | undefined => {
-  switch (typeof value) {
-    case 'boolean':
-      return css.ValueColor.bool[~~isDark];
-    case 'string':
-      return css.ValueColor.str[~~isDark];
-    case 'number':
-      return value === Math.round(value) ? css.ValueColor.num[~~isDark] : css.ValueColor.float[~~isDark];
-    case 'object':
-      return value === null ? css.ValueColor.nil[~~isDark] : undefined;
-  }
-  return;
-};
-
-const inputColor = (isDark: boolean, input: string): string | undefined => {
-  input = input.trim();
-  if (input === 'true' || input === 'false') return css.ValueColor.bool[~~isDark];
-  if (input === 'null') return css.ValueColor.nil[~~isDark];
-  if (input.length < 24) {
-    if (input[0] === '-' || (input[0] >= '0' && input[0] <= '9')) {
-      try {
-        const parsed = JSON.parse(input);
-        if (typeof parsed === 'number') {
-          if (parsed === Math.round(parsed)) return css.ValueColor.num[~~isDark];
-          else return css.ValueColor.float[~~isDark];
-        }
-      } catch {}
-    }
-  }
-  if (input[0] === '[' || input[0] === '{') return undefined;
-  return css.ValueColor.str[~~isDark];
-};
+import {inputColor, valueColor} from './utils';
 
 export interface ValueInputProps {
   value: unknown;
   onChange?: (value: unknown) => void;
 }
 
-export const  ValueInput: React.FC<ValueInputProps> = (props) => {
+export const ValueInput: React.FC<ValueInputProps> = (props) => {
   const {value, onChange} = props;
   const inputRef = React.useRef<HTMLInputElement>(null);
   const theme = useTheme();
