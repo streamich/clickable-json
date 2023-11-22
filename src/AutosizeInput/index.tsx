@@ -35,15 +35,6 @@ const copyStyles = (styles: React.CSSProperties, node: any) => {
   node.style.textTransform = styles.textTransform;
 };
 
-const isIE =
-  typeof window !== 'undefined' && window.navigator ? /MSIE |Trident\/|Edge\//.test(window.navigator.userAgent) : false;
-
-const generateId = (): string | undefined => {
-  // we only need an auto-generated ID for stylesheet injection, which is only
-  // used for IE. so if the browser is not IE, this should return undefined.
-  return isIE ? '_' + Math.random().toString(36).substr(2, 12) : undefined;
-};
-
 export interface AutosizeInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
   defaultValue?: string;
@@ -63,7 +54,6 @@ export interface AutosizeInputProps extends React.InputHTMLAttributes<HTMLInputE
 
 export interface AutosizeInputState {
   inputWidth: number;
-  inputId?: string;
 }
 
 export class AutosizeInput extends React.Component<AutosizeInputProps, AutosizeInputState> {
@@ -76,7 +66,6 @@ export class AutosizeInput extends React.Component<AutosizeInputProps, AutosizeI
     super(props, context);
     this.state = {
       inputWidth: props.minWidth || 0,
-      inputId: props.id || generateId(),
     };
   }
   componentDidMount() {
@@ -87,7 +76,6 @@ export class AutosizeInput extends React.Component<AutosizeInputProps, AutosizeI
   UNSAFE_componentWillReceiveProps(nextProps: AutosizeInputProps) {
     const {id} = nextProps;
     if (id !== this.props.id) {
-      this.setState({inputId: id || generateId()});
     }
   }
   componentDidUpdate(prevProps: AutosizeInputProps, prevState: AutosizeInputState) {
@@ -189,7 +177,6 @@ export class AutosizeInput extends React.Component<AutosizeInputProps, AutosizeI
     const {...inputProps} = this.props as any;
     cleanInputProps(inputProps);
     inputProps.className = this.props.inputClassName;
-    inputProps.id = this.state.inputId;
     inputProps.style = inputStyle;
 
     return (
