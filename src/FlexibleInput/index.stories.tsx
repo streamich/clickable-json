@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type {Meta, StoryObj} from '@storybook/react';
-import {FlexibleInput as Component} from '.';
+import {FlexibleInput as Component, FlexibleInputProps} from '.';
 
 const meta: Meta<typeof Text> = {
   title: 'FlexibleInput',
@@ -21,15 +21,18 @@ export const Primary: StoryObj<typeof meta> = {
   } as any,
 };
 
-const InteractiveDemo: React.FC = () => {
+const InteractiveDemo: React.FC<Omit<FlexibleInputProps, 'value' | 'onChange'>> = (props) => {
   const [value, setValue] = React.useState('Hello World');
   return (
     <div>
-      <Component
-        value={value}
-        typeahead={value === 'n' ? 'ull' : value === 'f' ? 'alse' : ''}
-        onChange={(e) => setValue(e.target.value)}
-      />
+      <div style={{border: '1px solid #bbb', borderRadius: 4, display: 'inline-block', padding: '4px 8px'}}>
+        <Component
+          {...props}
+          value={value}
+          typeahead={props.typeahead || (value === 'n' ? 'ull' : value === 'f' ? 'alse' : '')}
+          onChange={(e) => setValue(e.target.value)}
+        />
+      </div>
       <div>Value: {value}</div>
     </div>
   );
@@ -38,4 +41,19 @@ const InteractiveDemo: React.FC = () => {
 export const Interactive: StoryObj<typeof meta> = {
   args: {},
   render: () => <InteractiveDemo />,
+};
+
+export const MinWidth: StoryObj<typeof meta> = {
+  args: {},
+  render: () => <InteractiveDemo minWidth={200} />,
+};
+
+export const MaxWidth: StoryObj<typeof meta> = {
+  args: {},
+  render: () => <InteractiveDemo maxWidth={200} />,
+};
+
+export const ExtraWidth: StoryObj<typeof meta> = {
+  args: {},
+  render: () => <InteractiveDemo extraWidth={100} />,
 };

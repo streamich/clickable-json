@@ -14,6 +14,7 @@ const inputClass = rule({
   mr: 0,
   bd: 0,
   bg: 0,
+  out: 0,
   col: 'inherit',
 });
 
