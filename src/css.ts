@@ -16,10 +16,10 @@ export const object = rule({
 
 export const ValueColor = {
   nil: [theme.g(0.6), darkTheme.g(0.6)],
-  str: ['#CC2336', '#CC2336'],
+  str: ['#e00e44', '#f01e54'],
   bool: ['#411888', '#9168c8'],
   num: ['#0a8F3F', '#0FaF4F'],
-  float: ['#015833', '#51a883'],
+  float: ['#016873', '#51a8b3'],
 };
 
 export const quote = rule({
@@ -29,14 +29,15 @@ export const quote = rule({
 export const property = rule({
   pad: '0',
   fw: 'bold',
+  bxz: 'border-box',
 });
 
 const activeInput = {
-  col: theme.g(0.2),
-  pad: '5px',
+  col: theme.g(0),
+  pd: '5px',
   bg: theme.bg,
   bd: `1px solid ${theme.g(0.7)}`,
-  mar: '-6px',
+  mr: '-6px',
   out: 0,
 };
 
@@ -51,15 +52,23 @@ export const input = rule({
   d: 'inline-block',
   minW: 'auto',
   w: 'auto',
-  '&:focus': activeInput,
+  // '&:focus': activeInput,
+  '&::selection': {
+    col: '#fff',
+    bgc: blue,
+  },
+  input: {
+    out: 0,
+  },
 });
 
 export const inputActive = rule(activeInput);
 
 export const colon = rule({
-  pad: '0 8px 0 0px',
+  pd: '0 8px 0 0px',
+  cur: 'default',
   '&>span': {
-    pad: '0 2px',
+    pd: '0 2px',
   },
   '&:hover': {
     '&>span': {
@@ -71,15 +80,15 @@ export const colon = rule({
 export const list = rule({
   d: 'block',
   listStyleType: 'none',
-  pad: 0,
-  mar: '0 0 0 32px',
+  pd: 0,
+  mr: '0 0 0 32px',
 });
 
 export const line = rule({
   d: 'block',
-  listStyle: 'none',
-  pad: 0,
-  mar: 0,
+  ls: 'none',
+  pd: 0,
+  mr: 0,
 });
 
 export const lineInner = rule({
@@ -88,13 +97,13 @@ export const lineInner = rule({
 
 export const hoverable = rule({
   bxz: 'border-box',
-  pad: '3px',
-  bdrad: '3px',
+  pd: '3px',
+  bdrad: '4px',
   trs: 'background-color .3s ease-out',
 });
 
 export const hoverableCompact = rule({
-  pad: '1px 3px',
+  pd: '1px 3px',
 });
 
 export const hovered = rule({
@@ -106,17 +115,27 @@ export const active = rule({
   pos: 'relative',
 });
 
-export const collapser = rule({
-  pad: '0 6px',
-  pos: 'absolute',
-  top: '0px',
-  left: '-24px',
+export const bracket = rule({
   cur: 'default',
-  userSelect: 'none',
+});
+
+export const collapser = rule({
+  pd: '0 6px',
+  pos: 'absolute',
+  t: '0px',
+  l: '-24px',
+  cur: 'default',
+  us: 'none',
 });
 
 export const collapsed = rule({
   col: blue,
+  cur: 'default',
+  fw: 'bold',
+  bg: theme.blue(0.1),
+  pd: '2px',
+  mr: '-2px',
+  bdrad: '4px',
 });
 
 export const bracketHovered = rule({
@@ -131,13 +150,13 @@ export const insArrBlock = rule({
 
 export const insArrDot = rule({
   pos: 'absolute',
-  top: '0px',
-  left: '-4px',
+  t: '0px',
+  l: '-4px',
   w: '3px',
   h: '3px',
   bdrad: '50%',
   bg: blue,
-  pointerEvents: 'none',
+  pe: 'none',
   [`.${insArrBlock.trim()}:hover &`]: {
     top: '-1px',
     left: '-5px',
@@ -148,14 +167,14 @@ export const insArrDot = rule({
 
 export const insArrLine = rule({
   pos: 'absolute',
-  top: '1px',
-  left: '-56px',
+  t: '1px',
+  l: '-56px',
   w: '50px',
   h: '0px',
   bdt: `1px dotted ${blue}`,
-  pointerEvents: 'none',
+  pe: 'none',
   [`.${insArrBlock.trim()}:hover &`]: {
-    left: '-58px',
+    l: '-58px',
     w: '54px',
     bdt: `1px solid ${blue}`,
   },
@@ -163,8 +182,8 @@ export const insArrLine = rule({
 
 export const insArrButton = rule({
   pos: 'absolute',
-  top: '-7px',
-  left: '-75px',
+  t: '-7px',
+  l: '-75px',
 });
 
 export const insButton = rule({
@@ -172,7 +191,7 @@ export const insButton = rule({
   h: '17px',
   bdrad: '2px',
   pad: 0,
-  mar: 0,
+  mr: 0,
   out: 0,
   ff: 'monospace',
   lh: '16px',
@@ -181,7 +200,6 @@ export const insButton = rule({
   col: blue,
   fw: 'normal',
   '&:hover': {
-    fw: 'bold',
     bg: blue,
   },
 });
@@ -201,23 +219,23 @@ export const useInsButton = makeRule((theme) => ({
 export const tooltip = rule({
   ...theme.font.ui1,
   pos: 'absolute',
-  top: '-32px',
-  left: '0px',
+  t: '-2.8em',
+  l: '0px',
   d: 'inline-block',
   bg: 'rgba(0,0,0,.8)',
   col: '#fff',
-  fz: 13 / 13.4 + 'em',
-  pad: '4px 6px 6px',
-  bdrad: '2px',
+  fz: 12 / 13.4 + 'em',
+  pad: '.4em .8em',
+  bdrad: '.4em',
   z: 3,
-  pointerEvents: 'none',
-  userSelect: 'none',
+  pe: 'none',
+  us: 'none',
 });
 
 export const insArrTooltip = rule({
   pos: 'absolute',
-  top: '-36px',
-  left: '-75px',
+  t: '-2.8em',
+  l: '-75px',
   vis: 'hidden',
   [`.${insArrBlock.trim()}:hover &`]: {
     vis: 'visible',
@@ -226,13 +244,13 @@ export const insArrTooltip = rule({
 
 export const deleteButton = rule({
   d: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
+  jc: 'center',
+  ai: 'center',
   w: '20px',
   h: '20px',
   pos: 'absolute',
-  top: '-11px',
-  left: '-11px',
+  t: '-11px',
+  l: '-11px',
   z: 2,
   bdrad: '50%',
   svg: {
@@ -253,8 +271,8 @@ export const deleteButton = rule({
 
 export const deleteButtonTooltip = rule({
   pos: 'absolute',
-  top: '-30px',
-  left: '0px',
+  t: '-30px',
+  l: '0px',
   vis: 'hidden',
   [`.${deleteButton.trim()}:hover &`]: {
     vis: 'visible',

@@ -17,7 +17,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => {
-      const isLight = useStoryContext().globals.backgrounds.value === '#F8F8F8';
+      const isLight = String(useStoryContext()?.globals?.backgrounds?.value)[1].toLowerCase() === 'f';
       return (
         <Provider theme={!isLight ? 'dark' : 'light'}>
           <GlobalCss />

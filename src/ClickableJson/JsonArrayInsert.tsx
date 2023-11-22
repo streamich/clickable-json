@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {useT} from 'use-t';
-import AutosizeInput from '../AutosizeInput';
 import {context} from './context';
 import * as css from '../css';
-import {inputStyle} from './utils';
+import {inputStyle, typeahead} from './utils';
 import {useTheme} from 'nano-theme';
+import {FlexibleInput} from '../FlexibleInput';
 
 export interface JsonArrayInsertProps {
   pointer: string;
@@ -35,28 +35,37 @@ export const JsonArrayInsert: React.FC<JsonArrayInsertProps> = ({pointer, visibl
   };
 
   if (editing) {
+    const style = inputStyle(theme, !theme.isLight, value);
+    style.display = visible ? undefined : 'none';
+    style.margin = '-1px 0 -1px -2px';
+    style.padding = '3px 4px';
+    style.border = `1px solid ${theme.g(0.85)}`;
+
     return (
-      <span style={{display: visible ? undefined : 'none'}}>
-        <AutosizeInput
-          inputRef={(el) => {
-            (inputRef as any).current = el;
-            if (el) el.focus();
-          }}
-          inputClassName={css.input}
-          inputStyle={inputStyle(theme, !theme.isLight, value)}
+      <span className={css.input} style={style}>
+        <FlexibleInput
+          focus
+          inp={(el) => ((inputRef as any).current = el)}
           value={value}
+          typeahead={typeahead(value)}
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => {}}
           onBlur={() => {
             setEditing(false);
           }}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') {
-              if (value) setValue('');
-              else setEditing(false);
-            } else if (e.key === 'Enter') {
-              if (inputRef.current) inputRef.current.blur();
-              onSubmit();
+          onSubmit={() => {
+            if (inputRef.current) inputRef.current.blur();
+            onSubmit();
+          }}
+          onCancel={() => {
+            if (value) setValue('');
+            else setEditing(false);
+          }}
+          onTab={(e) => {
+            const ahead = typeahead(value);
+            if (ahead) {
+              e.preventDefault();
+              setValue(value + ahead);
             }
           }}
         />

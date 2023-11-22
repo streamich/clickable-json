@@ -3216,6 +3216,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addons@npm:^7.5.3":
+  version: 7.5.3
+  resolution: "@storybook/addons@npm:7.5.3"
+  dependencies:
+    "@storybook/manager-api": "npm:7.5.3"
+    "@storybook/preview-api": "npm:7.5.3"
+    "@storybook/types": "npm:7.5.3"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 241eb520960c18ab5973c58d922ad771f62c5d8c0a2771a9f7a2975ef49e606197593d2b126086e5569ce4fa41994d07deef90bab646eaf271d421997059ab51
+  languageName: node
+  linkType: hard
+
 "@storybook/blocks@npm:7.5.3, @storybook/blocks@npm:^7.5.3":
   version: 7.5.3
   resolution: "@storybook/blocks@npm:7.5.3"
@@ -5972,6 +5986,7 @@ __metadata:
     "@storybook/addon-interactions": "npm:^7.5.3"
     "@storybook/addon-links": "npm:^7.5.3"
     "@storybook/addon-onboarding": "npm:^1.0.8"
+    "@storybook/addons": "npm:^7.5.3"
     "@storybook/blocks": "npm:^7.5.3"
     "@storybook/react": "npm:^7.5.3"
     "@storybook/react-webpack5": "npm:^7.5.3"

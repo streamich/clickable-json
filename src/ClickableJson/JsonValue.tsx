@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useTheme} from 'nano-theme';
 import {JsonProperty} from './JsonProperty';
-import {ValueInput} from './ ValueInput';
+import {ValueInput} from './ValueInput';
 import {valueColor} from './utils';
 import type {OnChange} from './types';
 

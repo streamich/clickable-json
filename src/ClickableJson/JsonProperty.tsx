@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useTheme} from 'nano-theme';
-import AutosizeInput from '../AutosizeInput';
 import {context} from './context';
 import * as css from '../css';
+import {FlexibleInput} from '../FlexibleInput';
 import type {OnChange} from './types';
 
 export interface JsonPropertyProps {
@@ -11,7 +11,7 @@ export interface JsonPropertyProps {
 }
 
 export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) => {
-  const {formal: selectable} = React.useContext(context);
+  const {formal} = React.useContext(context);
   const steps = React.useMemo(() => pointer.split('/'), [pointer]);
   const property = React.useMemo(() => steps[steps.length - 1], [steps]);
   const [proposed, setProposed] = React.useState(property);
@@ -22,6 +22,18 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
   const style: React.CSSProperties = {
     color: theme.g(0.1),
   };
+
+  if (focused) {
+    style.background = theme.bg;
+    style.border = `1px solid ${theme.g(0.9)}`;
+    style.fontWeight = 'bold';
+    style.margin = '-3px';
+    style.padding = '2px';
+  }
+
+  if (!property || property.indexOf(' ') !== -1) {
+    style.background = theme.blue(0.1);
+  }
 
   const onSubmit = (e: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -34,28 +46,43 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
     <>
       {!onChange ? (
         <span className={css.property} style={style}>
-          {selectable ? JSON.stringify(property) : property}
+          {formal ? JSON.stringify(property) : property}
         </span>
       ) : (
-        <AutosizeInput
-          inputRef={(el) => ((inputRef as any).current = el)}
-          inputClassName={css.property + css.input}
-          inputStyle={style}
-          value={focused ? proposed : property}
-          onChange={(e) => setProposed(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={(e) => {
-            setFocused(false);
-            onSubmit(e);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              if (inputRef.current) inputRef.current.blur();
-            } else if (e.key === 'Escape') {
-              if (inputRef.current) inputRef.current.blur();
-            }
-          }}
-        />
+        <span className={css.property + css.input} style={style}>
+          <FlexibleInput
+            inp={(el) => ((inputRef as any).current = el)}
+            value={focused ? proposed : property}
+            onChange={(e) => setProposed(e.target.value)}
+            onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
+              const input = e.target;
+              const value = input.value;
+              const length = value.length;
+              if (length && length < 6) {
+                setTimeout(() => {
+                  input.setSelectionRange(0, length, 'forward');
+                }, 155);
+              }
+              setFocused(true);
+            }}
+            onBlur={() => {
+              setFocused(false);
+            }}
+            onSubmit={(e) => {
+              if (inputRef.current) {
+                inputRef.current.blur();
+                setFocused(false);
+              }
+              onSubmit(e);
+            }}
+            onCancel={() => {
+              if (inputRef.current) {
+                inputRef.current.blur();
+                setFocused(false);
+              }
+            }}
+          />
+        </span>
       )}
       <span className={css.colon} style={{color: theme.g(0.5)}}>
         <span>:</span>
