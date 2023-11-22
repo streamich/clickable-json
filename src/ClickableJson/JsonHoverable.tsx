@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useT} from 'use-t';
 import Svg from 'iconista';
-import {useTheme} from 'nano-theme';
 import {context} from './context';
 import * as css from '../css';
 
@@ -14,13 +13,10 @@ export const JsonHoverable: React.FC<JsonHoverableProps> = ({pointer, children})
   const [t] = useT();
   const {hoverPointer, setHoverPointer, activePointer, setActivePointer, formal, compact, onChange, isInputFocused} =
     React.useContext(context);
-  const [draggedOver, setDraggedOver] = React.useState(false);
   const [deleteHovered, setDeleteHovered] = React.useState(false);
-  const theme = useTheme();
   const useInsButtonClass = css.useInsButton();
 
   const onMouseMove = (e: React.MouseEvent) => {
-    if (!formal) e.preventDefault(); // formal allows user select text
     e.stopPropagation();
     if (hoverPointer !== pointer) setHoverPointer(pointer);
   };
@@ -41,66 +37,10 @@ export const JsonHoverable: React.FC<JsonHoverableProps> = ({pointer, children})
     setActivePointer(pointer);
   };
 
-  const onDragEnter = formal
-    ? undefined
-    : (e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDraggedOver(true);
-      };
-
-  const onDragLeave = formal
-    ? undefined
-    : (e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDraggedOver(false);
-      };
-
-  const onDragOver = formal
-    ? undefined
-    : (e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-      };
-
-  const onDrop = formal
-    ? undefined
-    : (e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDraggedOver(false);
-        const from = e.dataTransfer.getData('text/plain');
-        if (onChange) onChange([{op: 'move', from, path: pointer}]);
-      };
-
-  const onDragStart = formal
-    ? undefined
-    : (e: React.DragEvent) => {
-        e.stopPropagation();
-        e.dataTransfer.setData('text/plain', pointer);
-      };
-
   const isHovered = hoverPointer === pointer;
   const isActive = activePointer === pointer;
 
   let subChildren = children.props.children;
-
-  if (pointer) {
-    subChildren = (
-      <span
-        onDrop={onDrop}
-        onDragOver={onDragOver}
-        onDragEnter={onDragEnter}
-        onDragLeave={onDragLeave}
-        style={{outline: draggedOver ? `1px solid ${theme.blue}` : undefined}}
-      >
-        <span draggable={!formal} onDragStart={onDragStart}>
-          {subChildren}
-        </span>
-      </span>
-    );
-  }
 
   if (!!onChange && !isInputFocused && pointer === activePointer) {
     subChildren = (
