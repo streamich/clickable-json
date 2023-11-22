@@ -16,10 +16,10 @@ export const object = rule({
 
 export const ValueColor = {
   nil: [theme.g(0.6), darkTheme.g(0.6)],
-  str: ['#CC2336', '#CC2336'],
+  str: ['#d00e4a', '#e01e5a'],
   bool: ['#411888', '#9168c8'],
   num: ['#0a8F3F', '#0FaF4F'],
-  float: ['#015833', '#51a883'],
+  float: ['#016873', '#51a8b3'],
 };
 
 export const quote = rule({
@@ -181,7 +181,6 @@ export const insButton = rule({
   col: blue,
   fw: 'normal',
   '&:hover': {
-    fw: 'bold',
     bg: blue,
   },
 });
