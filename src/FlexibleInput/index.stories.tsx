@@ -25,7 +25,11 @@ const InteractiveDemo: React.FC = () => {
   const [value, setValue] = React.useState('Hello World');
   return (
     <div>
-      <Component value={value} typeahead={value === 'n' ? 'ull' : value === 'f' ? 'alse' : ''} onChange={(e) => setValue(e.target.value)} />
+      <Component
+        value={value}
+        typeahead={value === 'n' ? 'ull' : value === 'f' ? 'alse' : ''}
+        onChange={(e) => setValue(e.target.value)}
+      />
       <div>Value: {value}</div>
     </div>
   );

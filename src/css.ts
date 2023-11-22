@@ -130,7 +130,7 @@ export const collapsed = rule({
   col: blue,
   cur: 'default',
   fw: 'bold',
-  bg: theme.blue(.1),
+  bg: theme.blue(0.1),
   pd: '2px',
   mr: '-2px',
   bdrad: '4px',

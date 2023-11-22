@@ -68,7 +68,21 @@ export interface FlexibleInputProps {
   onTab?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
-export const FlexibleInput: React.FC<FlexibleInputProps> = ({inp, value, typeahead = '', extraWidth, minWidth = 8, maxWidth, onChange, onFocus, onBlur, onKeyDown, onSubmit, onCancel, onTab}) => {
+export const FlexibleInput: React.FC<FlexibleInputProps> = ({
+  inp,
+  value,
+  typeahead = '',
+  extraWidth,
+  minWidth = 8,
+  maxWidth,
+  onChange,
+  onFocus,
+  onBlur,
+  onKeyDown,
+  onSubmit,
+  onCancel,
+  onTab,
+}) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const sizerRef = React.useRef<HTMLDivElement>(null);
   const theme = useTheme();
@@ -121,7 +135,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({inp, value, typeahe
       />
       <div ref={sizerRef} className={sizerClass}>
         <span style={{visibility: 'hidden'}}>{value}</span>
-        <span style={{color: theme.g(.5)}}>{typeahead}</span>
+        <span style={{color: theme.g(0.5)}}>{typeahead}</span>
       </div>
     </div>
   );
