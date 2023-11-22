@@ -1,9 +1,28 @@
 import * as React from 'react';
+import {useTheme} from 'nano-theme';
 import AutosizeInput from '../AutosizeInput';
 import * as css from '../css';
 import {JsonProperty} from './JsonProperty';
 import type {OnChange} from './types';
-import {useTheme} from 'nano-theme';
+
+const inputColor = (isDark: boolean, input: string): string | undefined => {
+  input = input.trim();
+  if (input === 'true' || input === 'false') return css.ValueColor.bool[~~isDark];
+  if (input === 'null') return css.ValueColor.nil[~~isDark];
+  if (input.length < 24) {
+    if (input[0] === '-' || (input[0] >= '0' && input[0] <= '9')) {
+      try {
+        const parsed = JSON.parse(input);
+        if (typeof parsed === 'number') {
+          if (parsed === Math.round(parsed)) return css.ValueColor.num[~~isDark];
+          else return css.ValueColor.float[~~isDark];
+        }
+      } catch {}
+    }
+  }
+  if (input[0] === '[' || input[0] === '{') return undefined;
+  return css.ValueColor.str[~~isDark];
+};
 
 export interface JsonValueProps {
   pointer: string;
@@ -70,7 +89,7 @@ export const JsonValue: React.FC<JsonValueProps> = (props) => {
         <AutosizeInput
           inputRef={(el) => ((inputRef as any).current = el)}
           inputClassName={className + css.input}
-          inputStyle={focused ? {color: theme.g(0.1), background: theme.bg, borderColor: theme.g(.7)} : undefined}
+          inputStyle={focused ? {color: inputColor(!theme.isLight, proposed) || theme.g(0.1), background: theme.bg, borderColor: theme.g(.7)} : undefined}
           value={focused ? proposed : value}
           onChange={(e) => setProposed(e.target.value)}
           onFocus={() => setFocused(true)}

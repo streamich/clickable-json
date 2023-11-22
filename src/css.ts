@@ -1,4 +1,4 @@
-import {makeRule, rule, theme} from 'nano-theme';
+import {makeRule, rule, theme, darkTheme} from 'nano-theme';
 
 export const blue = theme.color.sem.blue[0];
 export const negative = theme.color.sem.negative[0];
@@ -13,6 +13,14 @@ export const object = rule({
   pos: 'relative',
   d: 'inline-block',
 });
+
+export const ValueColor = {
+  nil: [theme.g(0.6), darkTheme.g(0.6)],
+  str: ['#CC2336', '#CC2336'],
+  bool: ['#411888', '#9168c8'],
+  num: ['#0a8F3F', '#0FaF4F'],
+  float: ['#015833', '#51a883'],
+}
 
 export const nil = rule({
   col: theme.g(0.6),
