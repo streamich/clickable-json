@@ -46,7 +46,7 @@ const doc2 = {
   poster: {
     id: 'xxsdfasdf-asdf-asdf-asdf-asdfasdfasdf',
     name: 'Muhammad',
-    list: [1, true, false, null, 'asdf'],
+    list: [1, -5, true, false, null, 'asdf'],
   },
 };
 

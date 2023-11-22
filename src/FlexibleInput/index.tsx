@@ -57,9 +57,18 @@ export interface FlexibleInputProps {
 
   /** Callback for when a key is pressed. */
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
+
+  /** Callback for when the Enter key is pressed. */
+  onSubmit?: React.KeyboardEventHandler<HTMLInputElement>;
+
+  /** Callback for when the Escape key is pressed. */
+  onCancel?: React.KeyboardEventHandler<HTMLInputElement>;
+
+  /** Callback for when the Tab key is pressed. */
+  onTab?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
-export const FlexibleInput: React.FC<FlexibleInputProps> = ({inp, value, typeahead = '', extraWidth, minWidth = 8, maxWidth, onChange, onFocus, onBlur, onKeyDown}) => {
+export const FlexibleInput: React.FC<FlexibleInputProps> = ({inp, value, typeahead = '', extraWidth, minWidth = 8, maxWidth, onChange, onFocus, onBlur, onKeyDown, onSubmit, onCancel, onTab}) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const sizerRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
@@ -98,7 +107,16 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({inp, value, typeahe
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
-        onKeyDown={onKeyDown}
+        onKeyDown={(e: React.KeyboardEvent) => {
+          if (e.key === 'Enter') {
+            if (onSubmit) onSubmit(e as any);
+          } else if (e.key === 'Escape') {
+            if (onCancel) onCancel(e as any);
+          } else if (e.key === 'Tab') {
+            if (onTab) onTab(e as any);
+          }
+          if (onKeyDown) onKeyDown(e as any);
+        }}
       />
       <div ref={sizerRef} className={sizerClass}>
         <span style={{visibility: 'hidden'}}>{value}</span>

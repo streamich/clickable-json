@@ -87,13 +87,19 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
           setFocused(true);
         }}
         onBlur={() => setFocused(false)}
-        onKeyDown={(e: React.KeyboardEvent) => {
-          if (e.key === 'Enter') {
-            if (inputRef.current) inputRef.current.blur();
-            onSubmit(e);
-          } else if (e.key === 'Escape') {
-            if (json !== proposed) setProposed(json);
-            else if (inputRef.current) inputRef.current.blur();
+        onSubmit={(e) => {
+          if (inputRef.current) inputRef.current.blur();
+          onSubmit(e);
+        }}
+        onCancel={(e) => {
+          if (json !== proposed) setProposed(json);
+          else if (inputRef.current) inputRef.current.blur();
+        }}
+        onTab={(e) => {
+          const ahead = typeahead(proposed);
+          if (ahead) {
+            e.preventDefault();
+            setProposed(proposed + ahead);
           }
         }}
       />
