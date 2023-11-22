@@ -28,7 +28,7 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
     style.borderColor = theme.g(0.7);
   }
 
-  if (property[0] === ' ' || property[property.length - 1] === ' ') {
+  if (property.indexOf(' ') !== -1) {
     style.background = theme.blue(.1);
   }
 
