@@ -67,6 +67,7 @@ export const Readonly: StoryObj<typeof meta> = {
 export const FormalAndCompact: StoryObj<typeof meta> = {
   args: {
     doc: doc1,
+    readonly: true,
     formal: true,
     compact: true,
   } as any,

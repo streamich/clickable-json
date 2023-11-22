@@ -8,12 +8,55 @@ import * as css from '../css';
 import type {OnChange} from './types';
 
 export interface ClickableJsonProps {
+  /**
+   * The JSON to display. Can be any JSON value.
+   */
   doc: unknown;
+
+  /**
+   * If true, the JSON is not editable. Useful for displaying JSON.
+   *
+   * @default false
+   */
   readonly?: boolean;
+
+  /**
+   * Print the JSON in a more formal way. Adds quotes to keys and string values.
+   * Adds commas after each property.
+   *
+   * Works only in readonly mode.
+   *
+   * @default false
+   */
   formal?: boolean;
+
+  /**
+   * Keep the order of properties in objects. By default the properties are
+   * sorted alphabetically.
+   *
+   * @default false
+   */
   keepOrder?: boolean;
+
+  /**
+   * Font size of the JSON.
+   *
+   * @default '13.4px'
+   */
   fontSize?: string;
+
+  /**
+   * If true, the JSON is printed in a compact way. Reduces spacing between
+   * elements.
+   *
+   * @default false
+   */
   compact?: boolean;
+
+  /**
+   * Callback called when the JSON is changed. The callback receives a [JSON Patch
+   * (RFC 6902)](https://datatracker.ietf.org/doc/html/rfc6902) as an argument.
+   */
   onChange?: OnChange;
 }
 
