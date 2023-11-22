@@ -23,6 +23,11 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
     color: theme.g(0.1),
   };
 
+  if (focused) {
+    style.background = theme.bg;
+    style.borderColor = theme.g(0.7);
+  }
+
   if (property[0] === ' ' || property[property.length - 1] === ' ') {
     style.background = theme.blue(.1);
   }
