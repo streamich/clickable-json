@@ -53,7 +53,9 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, parentCo
         {collapsed ? '+' : '—'}
       </span>
       <span>
-        {typeof property === 'string' && <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />}
+        {typeof property === 'string' && (
+          <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />
+        )}
         <span
           className={css.bracket + (brackedHovered ? css.bracketHovered : '')}
           style={{display: collapsed ? 'none' : undefined, color: bracketColor}}
@@ -145,7 +147,9 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, parentColl
         {collapsed ? '+' : '—'}
       </span>
       <span>
-        {typeof property === 'string' && <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />}
+        {typeof property === 'string' && (
+          <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />
+        )}
         <span
           className={css.bracket + (brackedHovered ? css.bracketHovered : '')}
           style={{display: collapsed ? 'none' : undefined, color: bracketColor}}

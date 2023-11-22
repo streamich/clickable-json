@@ -37,7 +37,9 @@ export const JsonValue: React.FC<JsonValueProps> = (props) => {
 
   return (
     <>
-      {typeof property === 'string' && <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />}
+      {typeof property === 'string' && (
+        <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />
+      )}
       {!onChange ? (
         <span style={{color: valueColor(!theme.isLight, doc)}}>{value}</span>
       ) : (
