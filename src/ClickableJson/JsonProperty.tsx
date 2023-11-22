@@ -57,7 +57,17 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
             inp={(el) => ((inputRef as any).current = el)}
             value={focused ? proposed : property}
             onChange={(e) => setProposed(e.target.value)}
-            onFocus={() => setFocused(true)}
+            onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
+              const input = e.target;
+              const value = input.value;
+              const length = value.length;
+              if (length && length < 6) {
+                setTimeout(() => {
+                  input.setSelectionRange(0, length, 'forward');
+                }, 155);
+              }
+              setFocused(true);
+            }}
             onBlur={(e) => {
               setFocused(false);
             }}
