@@ -1,3 +1,4 @@
+import type {Theme} from 'nano-theme';
 import * as css from '../css';
 
 export const valueColor = (isDark: boolean, value: unknown): string | undefined => {
@@ -15,6 +16,7 @@ export const valueColor = (isDark: boolean, value: unknown): string | undefined 
 };
 
 export const inputColor = (isDark: boolean, input: string): string | undefined => {
+  if (!input) return;
   input = input.trim();
   if (input === 'true' || input === 'false') return css.ValueColor.bool[~~isDark];
   if (input === 'null') return css.ValueColor.nil[~~isDark];
@@ -31,4 +33,12 @@ export const inputColor = (isDark: boolean, input: string): string | undefined =
   }
   if (input[0] === '[' || input[0] === '{') return undefined;
   return css.ValueColor.str[~~isDark];
+};
+
+export const inputStyle = (theme: Theme, isDark: boolean, input: string): React.CSSProperties => {
+  return {
+    color: inputColor(isDark, input) || theme.g(0.1),
+    background: theme.bg,
+    borderColor: theme.g(0.7),
+  };
 };

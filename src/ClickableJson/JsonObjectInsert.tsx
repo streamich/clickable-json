@@ -4,6 +4,8 @@ import {escapeComponent} from 'json-joy/lib/json-pointer';
 import AutosizeInput from '../AutosizeInput';
 import {context} from './context';
 import * as css from '../css';
+import {inputStyle} from './utils';
+import {useTheme} from 'nano-theme';
 
 export interface JsonObjectInsertProps {
   pointer: string;
@@ -19,6 +21,7 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
   const inputPropertyRef = React.useRef<HTMLInputElement>(null);
   const inputValueRef = React.useRef<HTMLInputElement>(null);
   const insButtonClass = css.useInsButton();
+  const theme = useTheme();
 
   if (!onChange) return null;
 
@@ -44,6 +47,11 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
             if (el) el.focus();
           }}
           inputClassName={css.property + css.input + css.inputActive}
+          inputStyle={{
+            color: theme.g(0.1),
+            background: theme.bg,
+            borderColor: theme.g(0.7),
+          }}
           value={property}
           onChange={(e) => setProperty(e.target.value)}
           onFocus={() => {}}
@@ -67,7 +75,8 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
           inputRef={(el) => {
             (inputValueRef as any).current = el;
           }}
-          inputClassName={css.str + css.input + css.inputActive}
+          inputClassName={css.input + css.inputActive}
+          inputStyle={inputStyle(theme, !theme.isLight, value)}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => {}}

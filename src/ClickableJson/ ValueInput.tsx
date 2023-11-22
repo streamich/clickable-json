@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useTheme} from 'nano-theme';
 import AutosizeInput from '../AutosizeInput';
 import * as css from '../css';
-import {inputColor, valueColor} from './utils';
+import {inputStyle, valueColor} from './utils';
 
 export interface ValueInputProps {
   value: unknown;
@@ -50,11 +50,7 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
       inputClassName={css.input}
       inputStyle={
         focused
-          ? {
-              color: inputColor(!theme.isLight, proposed) || theme.g(0.1),
-              background: theme.bg,
-              borderColor: theme.g(0.7),
-            }
+          ? inputStyle(theme, !theme.isLight, proposed)
           : {color: valueColor(!theme.isLight, value)}
       }
       value={focused ? proposed : json}

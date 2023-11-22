@@ -3,6 +3,8 @@ import {useT} from 'use-t';
 import AutosizeInput from '../AutosizeInput';
 import {context} from './context';
 import * as css from '../css';
+import {inputStyle} from './utils';
+import {useTheme} from 'nano-theme';
 
 export interface JsonArrayInsertProps {
   pointer: string;
@@ -16,6 +18,7 @@ export const JsonArrayInsert: React.FC<JsonArrayInsertProps> = ({pointer, visibl
   const [value, setValue] = React.useState('');
   const inputRef = React.useRef<HTMLInputElement>(null);
   const insButtonClass = css.useInsButton();
+  const theme = useTheme();
 
   if (!onChange) return null;
 
@@ -39,7 +42,8 @@ export const JsonArrayInsert: React.FC<JsonArrayInsertProps> = ({pointer, visibl
             (inputRef as any).current = el;
             if (el) el.focus();
           }}
-          inputClassName={css.str + css.input}
+          inputClassName={css.input}
+          inputStyle={inputStyle(theme, !theme.isLight, value)}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onFocus={() => {}}
