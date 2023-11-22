@@ -51,7 +51,22 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
       inputStyle={focused ? inputStyle(theme, !theme.isLight, proposed) : {color: valueColor(!theme.isLight, value), background: value === false ? theme.red(.06) : undefined}}
       value={focused ? proposed : json}
       onChange={(e) => setProposed(e.target.value)}
-      onFocus={() => setFocused(true)}
+      onFocus={(e) => {
+        const input = e.target;
+        const value = input.value;
+        const length = value.length;
+        // Nicely select short strings. Always select very short strings, for
+        // a bit longer strings check if there are any spaces or newlines. The
+        // characters should allow to select UUIDs.
+        if (length < 40) {
+          if (value[0] === '"' && value[length - 1] === '"') {
+            if (length < 17 || (value.indexOf('\n') === -1 && value.indexOf(' ') === -1)) {
+              input.setSelectionRange(1, length - 1, 'forward');
+            }
+          }
+        }
+        setFocused(true);
+      }}
       onBlur={() => setFocused(false)}
       onKeyDown={(e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
