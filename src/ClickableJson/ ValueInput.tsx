@@ -48,7 +48,15 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
     <AutosizeInput
       inputRef={(el) => ((inputRef as any).current = el)}
       inputClassName={css.input}
-      inputStyle={focused ? {color: inputColor(!theme.isLight, proposed) || theme.g(0.1), background: theme.bg, borderColor: theme.g(.7)} : {color: valueColor(!theme.isLight, value)}}
+      inputStyle={
+        focused
+          ? {
+              color: inputColor(!theme.isLight, proposed) || theme.g(0.1),
+              background: theme.bg,
+              borderColor: theme.g(0.7),
+            }
+          : {color: valueColor(!theme.isLight, value)}
+      }
       value={focused ? proposed : json}
       onChange={(e) => setProposed(e.target.value)}
       onFocus={() => setFocused(true)}

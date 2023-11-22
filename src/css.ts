@@ -20,7 +20,7 @@ export const ValueColor = {
   bool: ['#411888', '#9168c8'],
   num: ['#0a8F3F', '#0FaF4F'],
   float: ['#015833', '#51a883'],
-}
+};
 
 export const quote = rule({
   col: '#E84D3D',
@@ -190,7 +190,7 @@ export const insButton = rule({
   },
 });
 
-export const useInsButton = makeRule(theme => ({
+export const useInsButton = makeRule((theme) => ({
   bg: theme.bg,
   '&:hover': {
     col: theme.bg,
