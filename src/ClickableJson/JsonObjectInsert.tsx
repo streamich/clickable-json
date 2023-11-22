@@ -54,7 +54,7 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
       >
         <FlexibleInput
           focus
-          inp={el => (inputPropertyRef as any).current = el}
+          inp={(el) => ((inputPropertyRef as any).current = el)}
           value={property}
           onChange={(e) => setProperty(e.target.value)}
           onBlur={() => {
@@ -71,7 +71,7 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
         />
       </span>
     );
-    
+
     const valueInput = (
       <span
         className={css.input}
@@ -84,7 +84,7 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
         }}
       >
         <FlexibleInput
-          inp={el => (inputValueRef as any).current = el}
+          inp={(el) => ((inputValueRef as any).current = el)}
           value={value}
           typeahead={typeahead(value)}
           onChange={(e) => setValue(e.target.value)}
@@ -94,7 +94,7 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
           }}
           onCancel={() => {
             if (value) setValue('');
-              else if (inputPropertyRef.current) inputPropertyRef.current.focus();
+            else if (inputPropertyRef.current) inputPropertyRef.current.focus();
           }}
           onTab={(e) => {
             const ahead = typeahead(value);

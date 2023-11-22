@@ -42,10 +42,7 @@ export const JsonArrayInsert: React.FC<JsonArrayInsertProps> = ({pointer, visibl
     style.border = `1px solid ${theme.g(0.85)}`;
 
     return (
-      <span
-        className={css.input}
-        style={style}
-      >
+      <span className={css.input} style={style}>
         <FlexibleInput
           focus
           inp={(el) => ((inputRef as any).current = el)}
@@ -61,7 +58,8 @@ export const JsonArrayInsert: React.FC<JsonArrayInsertProps> = ({pointer, visibl
             onSubmit();
           }}
           onCancel={() => {
-            if (value) setValue(''); else setEditing(false);
+            if (value) setValue('');
+            else setEditing(false);
           }}
           onTab={(e) => {
             const ahead = typeahead(value);

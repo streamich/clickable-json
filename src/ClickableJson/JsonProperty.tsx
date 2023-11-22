@@ -49,10 +49,7 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
           {formal ? JSON.stringify(property) : property}
         </span>
       ) : (
-        <span
-          className={css.property + css.input}
-          style={style}
-        >
+        <span className={css.property + css.input} style={style}>
           <FlexibleInput
             inp={(el) => ((inputRef as any).current = el)}
             value={focused ? proposed : property}
@@ -68,7 +65,7 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
               }
               setFocused(true);
             }}
-            onBlur={(e) => {
+            onBlur={() => {
               setFocused(false);
             }}
             onSubmit={(e) => {
