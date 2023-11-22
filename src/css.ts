@@ -56,6 +56,9 @@ export const input = rule({
     col: '#fff',
     bgc: blue,
   },
+  input: {
+    out: 0,
+  },
 });
 
 export const inputActive = rule(activeInput);

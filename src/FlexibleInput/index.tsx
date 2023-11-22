@@ -12,6 +12,8 @@ const inputClass = rule({
   pd: 0,
   mr: 0,
   bd: 0,
+  bg: 0,
+  col: 'inherit',
 });
 
 const sizerClass = rule({
@@ -26,6 +28,9 @@ const sizerClass = rule({
 });
 
 export interface FlexibleInputProps {
+  /** Ref to the input element. */
+  inp?: (el: HTMLInputElement | null) => void;
+
   /** Value to display. */
   value: string;
 
@@ -44,11 +49,17 @@ export interface FlexibleInputProps {
   /** Callback for when the value changes. */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
+  /** Callback for when the input is focused. */
   onFocus?: React.FocusEventHandler<HTMLInputElement>;
+
+  /** Callback for when the input is blurred. */
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
+
+  /** Callback for when a key is pressed. */
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
-export const FlexibleInput: React.FC<FlexibleInputProps> = ({value, typeahead = '', extraWidth, minWidth = 8, maxWidth, onChange, onFocus, onBlur}) => {
+export const FlexibleInput: React.FC<FlexibleInputProps> = ({inp, value, typeahead = '', extraWidth, minWidth = 8, maxWidth, onChange, onFocus, onBlur, onKeyDown}) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const sizerRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
@@ -62,13 +73,6 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({value, typeahead = 
       'lineHeight',
       'letterSpacing',
       'textTransform',
-      'margin',
-      'padding',
-      'paddingLeft',
-      'paddingRight',
-      'paddingTop',
-      'paddingBottom',
-      'borderWidth',
       'height',
       'boxSizing',
     ]);
@@ -84,10 +88,20 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({value, typeahead = 
 
   return (
     <div className={blockClass}>
-      <input ref={inputRef} className={inputClass} value={value} onChange={onChange} onFocus={onFocus} onBlur={onBlur} />
+      <input
+        ref={(input) => {
+          (inputRef as any).current = input;
+          if (inp) inp(input);
+        }}
+        className={inputClass}
+        value={value}
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onKeyDown={onKeyDown}
+      />
       <div ref={sizerRef} className={sizerClass}>
         <span style={{visibility: 'hidden'}}>{value}</span>
-        {/* {value} */}
         <span style={{opacity: .5}}>{typeahead}</span>
       </div>
     </div>
