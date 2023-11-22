@@ -50,7 +50,7 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
       style={
         focused
           ? inputStyle(theme, !theme.isLight, proposed)
-          : {color: valueColor(!theme.isLight, value), background: value === false ? theme.red(0.06) : undefined}
+          : {color: valueColor(!theme.isLight, value), background: value === false || (typeof value === 'number' && value < 0) ? theme.red(0.06) : undefined}
     }>
       <FlexibleInput
         inp={(el) => ((inputRef as any).current = el)}
