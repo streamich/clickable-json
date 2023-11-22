@@ -92,6 +92,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
   const theme = useTheme();
   React.useEffect(() => {
     if (!inputRef.current || !sizerRef.current) return;
+    if (focus) inputRef.current.focus();
     copyStyles(inputRef.current, sizerRef.current!, [
       'font',
       'fontSize',
@@ -118,7 +119,6 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
     <div className={blockClass}>
       <input
         ref={(input) => {
-          if (input && focus) input.focus();
           (inputRef as any).current = input;
           if (inp) inp(input);
         }}

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {useT} from 'use-t';
 import {escapeComponent} from 'json-joy/lib/json-pointer';
-import AutosizeInput from '../AutosizeInput';
 import {context} from './context';
 import * as css from '../css';
-import {inputStyle} from './utils';
+import {inputStyle, typeahead} from './utils';
 import {useTheme} from 'nano-theme';
+import {FlexibleInput} from '../FlexibleInput';
 
 export interface JsonObjectInsertProps {
   pointer: string;
@@ -39,60 +39,79 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
   };
 
   if (editing) {
-    return (
-      <span style={{display: visible ? undefined : 'none'}}>
-        <AutosizeInput
-          inputRef={(el) => {
-            (inputPropertyRef as any).current = el;
-            if (el) el.focus();
-          }}
-          inputClassName={css.property + css.input + css.inputActive}
-          inputStyle={{
-            color: theme.g(0.1),
-            background: theme.bg,
-            borderColor: theme.g(0.7),
-          }}
+    const keyInput = (
+      <span
+        className={css.property + css.input + css.inputActive}
+        style={{
+          display: visible ? undefined : 'none',
+          margin: '-1px 0 -1px -2px',
+          padding: '3px 4px',
+          border: `1px solid ${theme.g(0.85)}`,
+          fontWeight: 'bold',
+        }}
+      >
+        <FlexibleInput
+          focus
+          inp={el => (inputPropertyRef as any).current = el}
           value={property}
           onChange={(e) => setProperty(e.target.value)}
-          onFocus={() => {}}
           onBlur={() => {
             if (inputValueRef.current) inputValueRef.current.focus();
           }}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') {
-              if (property) setProperty('');
-              else if (value) setValue('');
-              else setEditing(false);
-            } else if (e.key === 'Enter') {
-              if (inputValueRef.current) inputValueRef.current.focus();
+          onSubmit={() => {
+            if (inputValueRef.current) inputValueRef.current.focus();
+          }}
+          onCancel={() => {
+            if (property) setProperty('');
+            else if (value) setValue('');
+            else setEditing(false);
+          }}
+        />
+      </span>
+    );
+    
+    const valueInput = (
+      <span
+        className={css.input}
+        style={{
+          ...inputStyle(theme, !theme.isLight, value),
+          display: visible ? undefined : 'none',
+          margin: '-1px 0 -1px -2px',
+          padding: '3px 4px',
+          border: `1px solid ${theme.g(0.85)}`,
+        }}
+      >
+        <FlexibleInput
+          inp={el => (inputValueRef as any).current = el}
+          value={value}
+          typeahead={typeahead(value)}
+          onChange={(e) => setValue(e.target.value)}
+          onSubmit={() => {
+            if (inputValueRef.current) inputValueRef.current.blur();
+            onSubmit();
+          }}
+          onCancel={() => {
+            if (value) setValue('');
+              else if (inputPropertyRef.current) inputPropertyRef.current.focus();
+          }}
+          onTab={(e) => {
+            const ahead = typeahead(value);
+            if (ahead) {
+              e.preventDefault();
+              setValue(value + ahead);
             }
           }}
         />
+      </span>
+    );
+
+    return (
+      <span style={{display: visible ? undefined : 'none'}}>
+        {keyInput}
         <span className={css.colon}>
           <span>{':'}</span>
         </span>
-        <AutosizeInput
-          inputRef={(el) => {
-            (inputValueRef as any).current = el;
-          }}
-          inputClassName={css.input + css.inputActive}
-          inputStyle={inputStyle(theme, !theme.isLight, value)}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onFocus={() => {}}
-          onBlur={() => {
-            // setEditing(false);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') {
-              if (value) setValue('');
-              else if (inputPropertyRef.current) inputPropertyRef.current.focus();
-            } else if (e.key === 'Enter') {
-              if (inputValueRef.current) inputValueRef.current.blur();
-              onSubmit();
-            }
-          }}
-        />
+        {valueInput}
       </span>
     );
   }
