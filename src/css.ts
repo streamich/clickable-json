@@ -1,4 +1,4 @@
-import {rule, theme} from 'nano-theme';
+import {makeRule, rule, theme, darkTheme} from 'nano-theme';
 
 export const blue = theme.color.sem.blue[0];
 export const negative = theme.color.sem.negative[0];
@@ -14,28 +14,16 @@ export const object = rule({
   d: 'inline-block',
 });
 
-export const nil = rule({
-  col: theme.g(0.6),
-});
-
-export const str = rule({
-  col: '#CC2336',
-});
+export const ValueColor = {
+  nil: [theme.g(0.6), darkTheme.g(0.6)],
+  str: ['#CC2336', '#CC2336'],
+  bool: ['#411888', '#9168c8'],
+  num: ['#0a8F3F', '#0FaF4F'],
+  float: ['#015833', '#51a883'],
+};
 
 export const quote = rule({
   col: '#E84D3D',
-});
-
-export const bool = rule({
-  col: '#812878',
-});
-
-export const num = rule({
-  col: '#0F9F4F',
-});
-
-export const float = rule({
-  col: '#015823',
 });
 
 export const property = rule({
@@ -59,7 +47,7 @@ export const input = rule({
   mar: 0,
   pad: 0,
   bg: 'transparent',
-  bdrad: '3px',
+  bdrad: '5px',
   d: 'inline-block',
   minW: 'auto',
   w: 'auto',
@@ -69,7 +57,6 @@ export const input = rule({
 export const inputActive = rule(activeInput);
 
 export const colon = rule({
-  col: theme.g(0.5),
   pad: '0 8px 0 0px',
   '&>span': {
     pad: '0 2px',
@@ -126,7 +113,6 @@ export const collapser = rule({
   left: '-24px',
   cur: 'default',
   userSelect: 'none',
-  col: theme.g(0.6),
 });
 
 export const collapsed = rule({
@@ -192,20 +178,25 @@ export const insButton = rule({
   lh: '16px',
   cur: 'pointer',
   bd: `1px dotted ${blue}`,
-  bg: theme.bg,
   col: blue,
   fw: 'normal',
   '&:hover': {
     fw: 'bold',
-    col: theme.bg,
-    bg: blue,
-  },
-  [`.${insArrBlock.trim()}:hover &`]: {
-    fw: 'bold',
-    col: theme.bg,
     bg: blue,
   },
 });
+
+export const useInsButton = makeRule((theme) => ({
+  bg: theme.bg,
+  '&:hover': {
+    col: theme.bg,
+  },
+  '&:active': {
+    col: theme.g(0.9),
+    bg: theme.g(0.1),
+    bd: `1px solid ${theme.g(0.1)}`,
+  },
+}));
 
 export const tooltip = rule({
   ...theme.font.ui1,

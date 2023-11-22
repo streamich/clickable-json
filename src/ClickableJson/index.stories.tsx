@@ -52,15 +52,29 @@ const doc2 = {
 
 export const Primary: StoryObj<typeof meta> = {
   args: {
-    value: doc1,
+    doc: doc1,
     onChange: (patch: unknown) => console.log('onChange', patch),
   } as any,
 };
 
 export const Post: StoryObj<typeof meta> = {
   args: {
-    value: doc2,
+    doc: doc2,
     onChange: (patch: unknown) => console.log('onChange', patch),
+  } as any,
+};
+
+export const Readonly: StoryObj<typeof meta> = {
+  args: {
+    doc: doc1,
+  } as any,
+};
+
+export const FormalAndCompact: StoryObj<typeof meta> = {
+  args: {
+    doc: doc1,
+    formal: true,
+    compact: true,
   } as any,
 };
 
@@ -84,6 +98,16 @@ export const Interactive: StoryObj<typeof meta> = {
   },
 };
 
+export const InteractiveEmpty: StoryObj<typeof meta> = {
+  render: () => <Demo doc={null} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
 export const InteractiveLarge: StoryObj<typeof meta> = {
   render: () => <Demo doc={doc2} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
