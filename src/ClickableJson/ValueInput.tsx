@@ -64,12 +64,23 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
           // Nicely select short strings. Always select very short strings, for
           // a bit longer strings check if there are any spaces or newlines. The
           // characters should allow to select UUIDs.
-          if (length < 40 && (value === proposed)) {
+          if (length && length < 40 && (value === proposed)) {
             setTimeout(() => {
               if (value[0] === '"' && value[length - 1] === '"') {
                 if (length < 17 || (value.indexOf('\n') === -1 && value.indexOf(' ') === -1)) {
                   input.setSelectionRange(1, length - 1, 'forward');
                 }
+              } else if (value === 'null') input.setSelectionRange(0, 4, 'forward');
+              else {
+                try {
+                  switch (typeof JSON.parse(value)) {
+                    case 'number':
+                    case 'boolean': {
+                      input.setSelectionRange(0, length, 'forward');
+                      break;
+                    }
+                  }
+                } catch {}
               }
             }, 155);
           }
