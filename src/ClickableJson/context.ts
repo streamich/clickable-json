@@ -15,10 +15,4 @@ export interface ClickableJsonContextValue {
   isInputFocused: boolean;
 }
 
-export const context = React.createContext<ClickableJsonContextValue>({
-  hoverPointer: null,
-  setHoverPointer: () => {},
-  activePointer: null,
-  setActivePointer: () => {},
-  isInputFocused: false,
-});
+export const context = React.createContext<ClickableJsonContextValue>(null!);
