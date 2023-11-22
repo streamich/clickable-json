@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useTheme} from 'nano-theme';
 import {context} from './context';
 import {JsonProperty} from './JsonProperty';
 import {JsonValue} from './JsonValue';
@@ -7,23 +8,23 @@ import * as css from '../css';
 import {JsonObjectInsert} from './JsonObjectInsert';
 import {JsonArrayInsert} from './JsonArrayInsert';
 import type {OnChange} from './types';
-import {useTheme} from 'nano-theme';
 
 interface JsonObjectProps {
   property?: string | number;
   doc: object;
   pointer: string;
+  parentCollapsed?: boolean;
   comma?: boolean;
   onChange?: OnChange;
 }
 
-const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, onChange}) => {
-  const {activePointer, formal, keepOrder} = React.useContext(context);
+const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, parentCollapsed, comma, onChange}) => {
+  const {activePointer, formal, keepOrder, collapsed: startsCollapsed} = React.useContext(context);
   const keys = React.useMemo(() => {
     const k = Object.keys(doc);
     return keepOrder ? k : k.sort();
   }, [doc]);
-  const [collapsed, setCollapsed] = React.useState(false);
+  const [collapsed, setCollapsed] = React.useState(startsCollapsed);
   const [brackedHovered, setBracketHovered] = React.useState(false);
   const theme = useTheme();
 
@@ -52,7 +53,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
         {collapsed ? '+' : '—'}
       </span>
       <span>
-        {typeof property === 'string' && <JsonProperty pointer={pointer} onChange={onChange} />}
+        {typeof property === 'string' && <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />}
         <span
           className={css.bracket + (brackedHovered ? css.bracketHovered : '')}
           style={{display: collapsed ? 'none' : undefined, color: bracketColor}}
@@ -79,6 +80,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, o
                     property={key}
                     doc={(doc as Record<string, unknown>)[key]}
                     pointer={itemPointer}
+                    parentCollapsed={collapsed}
                     comma={formal && index < keys.length - 1}
                     onChange={onChange}
                   />
@@ -107,14 +109,15 @@ interface JsonArrayProps {
   property?: string | number;
   doc: unknown[];
   pointer: string;
+  parentCollapsed?: boolean;
   comma?: boolean;
   onChange?: OnChange;
 }
 
-const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onChange}) => {
-  const [collapsed, setCollapsed] = React.useState(false);
+const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, parentCollapsed, comma, onChange}) => {
+  const {activePointer, formal: selectable, collapsed: startsCollapsed} = React.useContext(context);
+  const [collapsed, setCollapsed] = React.useState(startsCollapsed);
   const [brackedHovered, setBracketHovered] = React.useState(false);
-  const {activePointer, formal: selectable} = React.useContext(context);
   const theme = useTheme();
 
   const onBracketMouseEnter = () => {
@@ -142,7 +145,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
         {collapsed ? '+' : '—'}
       </span>
       <span>
-        {typeof property === 'string' && <JsonProperty pointer={pointer} onChange={onChange} />}
+        {typeof property === 'string' && <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />}
         <span
           className={css.bracket + (brackedHovered ? css.bracketHovered : '')}
           style={{display: collapsed ? 'none' : undefined, color: bracketColor}}
@@ -170,6 +173,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onC
                     <JsonDoc
                       doc={doc[index]}
                       pointer={itemPointer}
+                      parentCollapsed={collapsed}
                       comma={selectable && index < doc.length - 1}
                       onChange={onChange}
                     />
@@ -199,6 +203,7 @@ export interface JsonDocProps {
   property?: string | number;
   doc: unknown;
   pointer: string;
+  parentCollapsed?: boolean;
   comma?: boolean;
   onChange?: OnChange;
 }

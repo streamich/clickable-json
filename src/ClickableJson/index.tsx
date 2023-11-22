@@ -54,6 +54,13 @@ export interface ClickableJsonProps {
   compact?: boolean;
 
   /**
+   * If true, the JSON starts collapsed, but can be expanded by clicking on it.
+   *
+   * @default false
+   */
+  collapsed?: boolean;
+
+  /**
    * Callback called when the JSON is changed. The callback receives a [JSON Patch
    * (RFC 6902)](https://datatracker.ietf.org/doc/html/rfc6902) as an argument.
    */
@@ -100,6 +107,7 @@ export const ClickableJson: React.FC<ClickableJsonProps> = (props) => {
         onChange,
         formal: props.formal,
         compact: props.compact,
+        collapsed: !!props.collapsed,
         keepOrder: props.keepOrder,
         isInputFocused,
       }}

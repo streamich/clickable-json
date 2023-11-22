@@ -10,6 +10,7 @@ export interface ClickableJsonContextValue {
   formal?: boolean;
   keepOrder?: boolean;
   compact?: boolean;
+  collapsed?: boolean;
   onChange?: OnChange;
   isInputFocused: boolean;
 }
