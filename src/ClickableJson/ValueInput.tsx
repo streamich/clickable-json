@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useTheme} from 'nano-theme';
 import * as css from '../css';
-import {inputStyle, valueColor} from './utils';
+import {inputStyle, typeahead, valueColor} from './utils';
 import {FlexibleInput} from '../FlexibleInput';
 
 export interface ValueInputProps {
@@ -55,6 +55,7 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
       <FlexibleInput
         inp={(el) => ((inputRef as any).current = el)}
         value={focused ? proposed : json}
+        typeahead={focused ? typeahead(proposed) : ''}
         onChange={(e) => setProposed(e.target.value)}
         onFocus={(e) => {
           const input = e.target;

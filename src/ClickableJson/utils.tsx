@@ -42,3 +42,13 @@ export const inputStyle = (theme: Theme, isDark: boolean, input: string): React.
     borderColor: theme.g(0.7),
   };
 };
+
+export const typeahead = (value: string): string => {
+  if (!value) return '';
+  const length = value.length;
+  if (length >= 5) return '';
+  if ('true'.startsWith(value)) return 'true'.slice(length);
+  if ('false'.startsWith(value)) return 'false'.slice(length);
+  if ('null'.startsWith(value)) return 'null'.slice(length);
+  return '';
+};
