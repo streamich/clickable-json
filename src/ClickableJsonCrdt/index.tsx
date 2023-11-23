@@ -28,7 +28,7 @@ export interface ClickableJsonCrdtProps {
 
 export const ClickableJsonCrdt: React.FC<ClickableJsonCrdtProps> = (props) => {
   const {model} = props;
-  const node = React.useMemo(() => new NodeRef(model.root, null), [model]);
+  const node = React.useMemo(() => new NodeRef(model.root.child(), null, ''), [model]);
 
   return (
     <context.Provider
