@@ -14,7 +14,7 @@ export interface JsonCrdtObjNodeProps {
 }
 
 export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
-  const {renderNode} = useJsonCrdt();
+  const {render: renderNode} = useJsonCrdt();
   const theme = useTheme();
   const startsCollapsed = false;
   const [collapsed, setCollapsed] = React.useState(startsCollapsed);

@@ -9,7 +9,7 @@ export interface JsonCrdtValNodeProps {
 }
 
 export const JsonCrdtValNode: React.FC<JsonCrdtValNodeProps> = ({node}) => {
-  const {renderNode} = useJsonCrdt();
+  const {render: renderNode} = useJsonCrdt();
   const child = React.useMemo(() => new NodeRef(node.node.child(), node, ''), [node]);
 
   return (
