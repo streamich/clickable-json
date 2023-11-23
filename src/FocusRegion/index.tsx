@@ -1,12 +1,21 @@
 import * as React from 'react';
+import {rule} from 'nano-theme';
 import {useT} from 'use-t';
 import Svg from 'iconista';
 import * as css from '../css';
+
+const asideClass = rule({
+  d: 'inline-block',
+  pos: 'absolute',
+  top: '-2px',
+  l: 'calc(100% + 0.5em)',
+});
 
 export interface FocusRegionProps {
   focused?: boolean;
   pointed?: boolean;
   compact?: boolean;
+  aside?: React.ReactElement;
   children: React.ReactElement;
   onClick?: React.MouseEventHandler;
   onMouseMove?: React.MouseEventHandler;
@@ -19,6 +28,7 @@ export const FocusRegion: React.FC<FocusRegionProps> = ({
   focused,
   pointed,
   compact,
+  aside,
   children,
   onClick,
   onMouseMove,
@@ -69,6 +79,7 @@ export const FocusRegion: React.FC<FocusRegionProps> = ({
       onClick={onClick}
     >
       {children}
+      {!!aside && <span className={asideClass}>{aside}</span>}
     </span>
   );
 };

@@ -29,7 +29,7 @@ const doc1 = {
 const model = Model.withLogicalClock();
 // model.api.root(s.con([123, null]));
 // model.api.root(s.val(s.con([123, null])));
-model.api.root({foo: s.con([123, null]), bar: true});
+model.api.root({foo: s.con([123, null]), bar: true, baz: {x: 1}});
 
 console.log(model + '');
 
