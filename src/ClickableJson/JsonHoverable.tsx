@@ -41,7 +41,11 @@ export const JsonHoverable: React.FC<JsonHoverableProps> = ({pointer, children})
       onMouseMove={onMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onDelete={!!onChange && !isInputFocused && pointer === activePointer ? () => onChange([{op: 'remove', path: pointer}]) : undefined}
+      onDelete={
+        !!onChange && !isInputFocused && pointer === activePointer
+          ? () => onChange([{op: 'remove', path: pointer}])
+          : undefined
+      }
     >
       {children}
     </FocusRegion>

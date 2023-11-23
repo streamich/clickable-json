@@ -22,9 +22,9 @@ export const TypeAndId: React.FC<TypeAndIdProps> = React.memo(({node}) => {
   const id = '...' + String(sid).slice(String(sid).length - 4) + '.' + time;
 
   return (
-    <span className={blockClass} style={{color: theme.g(.5)}}>
+    <span className={blockClass} style={{color: theme.g(0.5)}}>
       {(node.node as JsonNode).name()}
-      <span style={{opacity: .5, display: 'block'}}>{id}</span>
+      <span style={{opacity: 0.5, display: 'block'}}>{id}</span>
     </span>
   );
 });

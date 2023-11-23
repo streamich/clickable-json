@@ -31,9 +31,7 @@ export const ClickableJsonCrdt: React.FC<ClickableJsonCrdtProps> = (props) => {
     <styles.Provider value={{compact, readonly}}>
       <context.Provider value={{model, render}}>
         <FocusProvider>
-          <Root>
-            {render(node)}
-          </Root>
+          <Root>{render(node)}</Root>
         </FocusProvider>
       </context.Provider>
     </styles.Provider>

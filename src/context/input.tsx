@@ -27,9 +27,5 @@ export const InputProvider: React.FC<{children: React.ReactNode}> = ({children})
 
   if (parentContext) return children;
 
-  return (
-    <context.Provider value={{focused}}>
-      {children}
-    </context.Provider>
-  );
+  return <context.Provider value={{focused}}>{children}</context.Provider>;
 };

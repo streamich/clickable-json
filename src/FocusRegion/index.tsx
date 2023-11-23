@@ -15,7 +15,17 @@ export interface FocusRegionProps {
   onDelete?: React.MouseEventHandler;
 }
 
-export const FocusRegion: React.FC<FocusRegionProps> = ({focused, pointed, compact, children, onClick, onMouseMove, onMouseEnter, onMouseLeave, onDelete}) => {
+export const FocusRegion: React.FC<FocusRegionProps> = ({
+  focused,
+  pointed,
+  compact,
+  children,
+  onClick,
+  onMouseMove,
+  onMouseEnter,
+  onMouseLeave,
+  onDelete,
+}) => {
   const [t] = useT();
   const [deleteHovered, setDeleteHovered] = React.useState(false);
   const useInsButtonClass = css.useInsButton();
@@ -38,7 +48,8 @@ export const FocusRegion: React.FC<FocusRegionProps> = ({focused, pointed, compa
     );
   }
 
-  const className = (children.props.className || '') +
+  const className =
+    (children.props.className || '') +
     css.hoverable +
     (compact ? css.hoverableCompact : '') +
     (pointed ? css.hovered : '') +

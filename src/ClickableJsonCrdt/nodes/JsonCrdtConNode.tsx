@@ -18,10 +18,9 @@ export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node, parentCol
 
   return (
     <>
-      {(node.parent && node.parent.node.name() === 'obj') && (
+      {node.parent && node.parent.node.name() === 'obj' && (
         <PropertyLayout key={'k' + String(parentCollapsed)} property={node.step} />
-      )}
-      {' '}
+      )}{' '}
       <JsonCrdtNodeOutline node={node}>
         <ClickableJson readonly compact collapsed doc={node.node.view()} />
       </JsonCrdtNodeOutline>

@@ -14,9 +14,7 @@ export const JsonCrdtValNode: React.FC<JsonCrdtValNodeProps> = ({node}) => {
 
   return (
     <span>
-      <JsonCrdtNodeOutline type={'val'}>
-        {renderNode(child)}
-      </JsonCrdtNodeOutline>
+      <JsonCrdtNodeOutline type={'val'}>{renderNode(child)}</JsonCrdtNodeOutline>
     </span>
   );
 };

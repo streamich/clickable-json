@@ -34,7 +34,7 @@ export interface JsonCrdtNodeOutlineProps {
 }
 
 export const JsonCrdtNodeOutline: React.FC<JsonCrdtNodeOutlineProps> = ({node, children}) => {
-  const blockClassDynamic = useRule(theme => ({
+  const blockClassDynamic = useRule((theme) => ({
     '&:hover': {
       bd: `1px solid ${theme.g(0, 0.1)}`,
     },

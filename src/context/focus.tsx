@@ -15,9 +15,5 @@ export const FocusProvider: React.FC<{children: React.ReactNode}> = ({children})
   const [focused, focus] = React.useState('');
   const [pointed, point] = React.useState('');
 
-  return (
-    <context.Provider value={{focused, focus, pointed, point}}>
-      {children}
-    </context.Provider>
-  );
+  return <context.Provider value={{focused, focus, pointed, point}}>{children}</context.Provider>;
 };

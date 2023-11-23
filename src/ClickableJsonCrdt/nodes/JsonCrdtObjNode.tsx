@@ -29,16 +29,14 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
             {renderNode(new NodeRef(child, node, key))}
           </span>
         </FocusRegion>
-      </span>
+      </span>,
     );
   });
 
   return (
     // <JsonCrdtNodeOutline type={'obj'}>
     <JsonCrdtRegion node={node}>
-      <ObjectLayout>
-        {entries}
-      </ObjectLayout>
+      <ObjectLayout>{entries}</ObjectLayout>
     </JsonCrdtRegion>
     // </JsonCrdtNodeOutline>
   );

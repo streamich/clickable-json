@@ -55,9 +55,11 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, parentCo
       collapsed={collapsed}
       collapsedView={!!keys.length && <strong>{keys.length}</strong>}
       comma={comma}
-      property={typeof property === 'string' && (
-        <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />
-      )}
+      property={
+        typeof property === 'string' && (
+          <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />
+        )
+      }
       onClick={() => {
         if (collapsed) setCollapsed(false);
       }}
@@ -114,9 +116,11 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, parentColl
       collapsed={collapsed}
       collapsedView={!!doc.length && <strong>{doc.length}</strong>}
       comma={comma}
-      property={typeof property === 'string' && (
-        <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />
-      )}
+      property={
+        typeof property === 'string' && (
+          <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />
+        )
+      }
       onClick={() => {
         if (collapsed) setCollapsed(false);
       }}
