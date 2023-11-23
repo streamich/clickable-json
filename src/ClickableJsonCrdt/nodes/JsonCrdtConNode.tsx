@@ -1,7 +1,8 @@
 import * as React from 'react';
+import {ClickableJson} from '../../ClickableJson';
+import {JsonCrdtNodeOutline} from '../JsonCrdtNodeOutline';
 import type {ConNode} from 'json-joy/es2020/json-crdt';
 import type {NodeRef} from '../NodeRef';
-import {ClickableJson} from '../../ClickableJson';
 
 export interface JsonCrdtConNodeProps {
   node: NodeRef<ConNode>;
@@ -10,7 +11,9 @@ export interface JsonCrdtConNodeProps {
 export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node}) => {
   return (
     <span>
-      <ClickableJson readonly compact collapsed doc={node.node.view()} />
+      <JsonCrdtNodeOutline type={'con'}>
+        <ClickableJson readonly compact collapsed doc={node.node.view()} />
+      </JsonCrdtNodeOutline>
     </span>
   );
 };
