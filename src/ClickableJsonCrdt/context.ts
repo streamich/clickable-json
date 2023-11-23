@@ -5,6 +5,7 @@ import type {NodeRef} from './NodeRef';
 export interface ClickableJsonCrdtContextValue {
   model: Model;
   renderNode: (node: NodeRef<any>) => React.ReactNode;
+  compact?: boolean;
 }
 
 export const context = React.createContext<ClickableJsonCrdtContextValue>(null!);

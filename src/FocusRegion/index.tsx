@@ -20,12 +20,10 @@ export const FocusRegion: React.FC<FocusRegionProps> = ({focused, pointed, compa
   const [deleteHovered, setDeleteHovered] = React.useState(false);
   const useInsButtonClass = css.useInsButton();
 
-  let subChildren = children.props.children;
-
   if (onDelete) {
-    subChildren = (
+    children = (
       <>
-        {subChildren}
+        {children}
         <button
           className={css.insButton + useInsButtonClass + css.deleteButton}
           onClick={onDelete}
@@ -40,25 +38,26 @@ export const FocusRegion: React.FC<FocusRegionProps> = ({focused, pointed, compa
     );
   }
 
-  return React.cloneElement(
-    children,
-    {
-      onMouseMove,
-      onMouseEnter,
-      onMouseLeave,
-      onClick,
-      className:
-        (children.props.className || '') +
-        css.hoverable +
-        (compact ? css.hoverableCompact : '') +
-        (pointed ? css.hovered : '') +
-        (deleteHovered ? css.hoveredDanger : '') +
-        (focused ? css.active : ''),
-      style: {
+  const className = (children.props.className || '') +
+    css.hoverable +
+    (compact ? css.hoverableCompact : '') +
+    (pointed ? css.hovered : '') +
+    (deleteHovered ? css.hoveredDanger : '') +
+    (focused ? css.active : '');
+
+  return (
+    <span
+      className={className}
+      style={{
         ...(children.props.style || {}),
         outline: deleteHovered ? `1px dotted ${css.negative}` : undefined,
-      },
-    },
-    subChildren,
+      }}
+      onMouseMove={onMouseMove}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onClick={onClick}
+    >
+      {children}
+    </span>
   );
 };

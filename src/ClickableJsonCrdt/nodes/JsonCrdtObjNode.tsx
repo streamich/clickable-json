@@ -7,6 +7,7 @@ import {useTheme} from 'nano-theme';
 import {ObjectLayout} from '../../ObjectLayout';
 import type {ObjNode} from 'json-joy/es2020/json-crdt';
 import {FocusRegion} from '../../FocusRegion';
+import {JsonCrdtRegion} from '../JsonCrdtRegion';
 
 export interface JsonCrdtObjNodeProps {
   node: NodeRef<ObjNode>;
@@ -34,9 +35,11 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
 
   return (
     // <JsonCrdtNodeOutline type={'obj'}>
+    <JsonCrdtRegion node={node}>
       <ObjectLayout>
         {entries}
       </ObjectLayout>
+    </JsonCrdtRegion>
     // </JsonCrdtNodeOutline>
   );
 };
