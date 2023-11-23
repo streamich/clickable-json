@@ -162,10 +162,10 @@ export const insArrDot = rule({
   bg: blue,
   pe: 'none',
   [`.${insArrBlock.trim()}:hover &`]: {
-    top: '-1px',
-    left: '-5px',
-    w: '5px',
-    h: '5px',
+    top: '-2px',
+    left: '2px',
+    w: '7px',
+    h: '7px',
   },
 });
 
@@ -178,8 +178,8 @@ export const insArrLine = rule({
   bdt: `1px dotted ${blue}`,
   pe: 'none',
   [`.${insArrBlock.trim()}:hover &`]: {
-    l: '-58px',
-    w: '54px',
+    l: '-56px',
+    w: '56px',
     bdt: `1px solid ${blue}`,
   },
 });
