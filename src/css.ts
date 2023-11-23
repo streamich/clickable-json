@@ -96,6 +96,7 @@ export const lineInner = rule({
 });
 
 export const hoverable = rule({
+  va: 'top',
   bxz: 'border-box',
   pd: '3px',
   bdrad: '4px',

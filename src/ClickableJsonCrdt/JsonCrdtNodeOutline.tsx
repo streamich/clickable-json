@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {rule, useRule, theme} from 'nano-theme';
+import {TypeAndId} from './TypeAndId';
+import {NodeRef} from './NodeRef';
 
 const blockClass = rule({
   d: 'inline-block',
@@ -15,36 +17,33 @@ const blockClass = rule({
 const typeClass = rule({
   ...theme.font.mono,
   pos: 'absolute',
-  fz: '10px',
-  t: '-14px',
-  r: 0,
+  l: 'calc(100% + 8px)',
+  t: '-6px',
   us: 'none',
   pe: 'none',
-  col: 'transparent',
-  trs: 'color 0.15s ease-in-out',
+  op: 0,
+  trs: 'opacity 0.15s',
+  [`.${blockClass.trim()}:hover &`]: {
+    op: 1,
+  },
 });
 
 export interface JsonCrdtNodeOutlineProps {
-  type: string;
+  node: NodeRef<any>;
   children: React.ReactNode;
 }
 
-export const JsonCrdtNodeOutline: React.FC<JsonCrdtNodeOutlineProps> = ({type, children}) => {
+export const JsonCrdtNodeOutline: React.FC<JsonCrdtNodeOutlineProps> = ({node, children}) => {
   const blockClassDynamic = useRule(theme => ({
     '&:hover': {
       bd: `1px solid ${theme.g(0, 0.1)}`,
     },
   }));
-  const typeClassDynamic = useRule(theme => ({
-    [`.${blockClass.trim()}:hover &`]: {
-      col: theme.g(.5),
-    },
-  }));
 
   return (
     <span className={blockClass + blockClassDynamic}>
-      <span className={typeClass + typeClassDynamic}>
-        {type}
+      <span className={typeClass}>
+        <TypeAndId node={node} />
       </span>
       {children}
     </span>

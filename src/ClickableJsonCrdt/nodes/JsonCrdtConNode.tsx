@@ -12,12 +12,17 @@ export interface JsonCrdtConNodeProps {
 
 export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node, parentCollapsed}) => {
   const comma = false;
+
+  const {sid, time} = node.node.id;
+  const id = '...' + String(sid).slice(String(sid).length - 4) + '.' + time;
+
   return (
     <>
       {(node.parent && node.parent.node.name() === 'obj') && (
         <PropertyLayout key={'k' + String(parentCollapsed)} property={node.step} />
       )}
-      <JsonCrdtNodeOutline type={'con'}>
+      {' '}
+      <JsonCrdtNodeOutline node={node}>
         <ClickableJson readonly compact collapsed doc={node.node.view()} />
       </JsonCrdtNodeOutline>
       {!!comma && ','}

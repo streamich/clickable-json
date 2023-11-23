@@ -22,7 +22,7 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
   node.node.nodes((child, key) => {
     entries.push(
       <span key={key} className={css.line}>
-        <FocusRegion pointed>
+        <FocusRegion>
           <span className={css.lineInner}>
             {/* {key} : {renderNode(new NodeRef(child, node, key))} */}
             {renderNode(new NodeRef(child, node, key))}
