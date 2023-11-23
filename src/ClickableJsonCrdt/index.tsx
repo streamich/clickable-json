@@ -1,11 +1,20 @@
 import * as React from 'react';
 import {context} from './context';
-import {StyleContextValue, context as styleContext} from '../context/style';
-import {JsonCrdtNode} from './JsonCrdtNode';
+import {StyleContextValue, context as styles} from '../context/style';
 import {NodeRef} from './NodeRef';
 import {Root} from '../Root';
-import type {Model} from 'json-joy/es2020/json-crdt';
 import {FocusProvider} from '../context/focus';
+import {ConNode, ValNode, type JsonNode, type Model, ObjNode} from 'json-joy/es2020/json-crdt';
+import {JsonCrdtConNode} from './nodes/JsonCrdtConNode';
+import {JsonCrdtValNode} from './nodes/JsonCrdtValNode';
+import {JsonCrdtObjNode} from './nodes/JsonCrdtObjNode';
+
+const render = (node: NodeRef<JsonNode>): React.ReactNode => {
+  if (node.node instanceof ConNode) return <JsonCrdtConNode node={node as NodeRef<ConNode>} />;
+  if (node.node instanceof ValNode) return <JsonCrdtValNode node={node as NodeRef<ValNode>} />;
+  if (node.node instanceof ObjNode) return <JsonCrdtObjNode node={node as NodeRef<ObjNode>} />;
+  return '∅';
+};
 
 export interface ClickableJsonCrdtProps extends StyleContextValue {
   /**
@@ -17,10 +26,9 @@ export interface ClickableJsonCrdtProps extends StyleContextValue {
 export const ClickableJsonCrdt: React.FC<ClickableJsonCrdtProps> = (props) => {
   const {model, compact, readonly} = props;
   const node = React.useMemo(() => new NodeRef(model.root.child(), null, ''), [model]);
-  const render = (node: NodeRef<any>) => <JsonCrdtNode node={node} />
 
   return (
-    <styleContext.Provider value={{compact, readonly}}>
+    <styles.Provider value={{compact, readonly}}>
       <context.Provider value={{model, render}}>
         <FocusProvider>
           <Root>
@@ -28,6 +36,6 @@ export const ClickableJsonCrdt: React.FC<ClickableJsonCrdtProps> = (props) => {
           </Root>
         </FocusProvider>
       </context.Provider>
-    </styleContext.Provider>
+    </styles.Provider>
   );
 };
