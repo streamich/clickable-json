@@ -72,6 +72,7 @@ export const JsonHoverable: React.FC<JsonHoverableProps> = ({pointer, children})
         css.hoverable +
         (compact ? css.hoverableCompact : '') +
         (isHovered ? css.hovered : '') +
+        (deleteHovered ? css.hoveredDanger : '') +
         (isActive ? css.active : ''),
       style: {
         ...(children.props.style || {}),

@@ -110,6 +110,10 @@ export const hovered = rule({
   bgc: theme.blue(0.1),
 });
 
+export const hoveredDanger = rule({
+  bgc: theme.red(0.08),
+});
+
 export const active = rule({
   out: `1px dotted ${blue}`,
   pos: 'relative',
