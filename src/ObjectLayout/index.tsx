@@ -48,9 +48,9 @@ export const ObjectLayout: React.FC<ObjectLayoutProps> = ({property, collapsedVi
           {brackets[0]}
         </span>
         <span className={css.collapsed} style={{display: !collapsed ? 'none' : undefined}}>
-          <span style={{color: css.blue}}>{'{'}</span>
+          <span style={{color: css.blue}}>{brackets[0]}</span>
           {collapsedView}
-          <span style={{color: css.blue}}>{'}'}</span>
+          <span style={{color: css.blue}}>{brackets[1]}</span>
         </span>
       </span>
       <span className={css.list} style={{display: collapsed ? 'none' : undefined}}>
