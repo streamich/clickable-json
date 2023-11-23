@@ -8,11 +8,11 @@ import {TypeAndId} from './TypeAndId';
 
 export interface JsonCrdtRegionProps {
   node: NodeRef<any>;
-  aside?: React.ReactElement;
-  children: React.ReactElement;
+  aside?: React.ReactNode;
+  children: React.ReactNode;
 }
 
-export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, aside, children}) => {
+export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) => {
   const {compact} = useStyles();
   const {focused, focus, pointed, point} = useFocus();
   const nodeId = id(node);
@@ -40,12 +40,20 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, aside, chil
 
   const isFocused = focused === nodeId;
 
+  const aside = (
+    isFocused ? (
+      <span style={{display: 'inline-block', margin: '-4px 0 0'}}>
+        <TypeAndId node={node} />
+      </span>
+    ) : undefined
+  );
+
   return (
     <FocusRegion
       pointed={pointed === nodeId}
       focused={isFocused}
       compact={compact}
-      aside={isFocused ? <TypeAndId node={node} /> : undefined}
+      aside={aside}
       onClick={onClick}
       onMouseMove={onMouseMove}
       onMouseEnter={onMouseEnter}

@@ -7,7 +7,7 @@ import * as css from '../css';
 const asideClass = rule({
   d: 'inline-block',
   pos: 'absolute',
-  top: '-2px',
+  top: '-1px',
   l: 'calc(100% + 0.5em)',
 });
 
@@ -15,8 +15,8 @@ export interface FocusRegionProps {
   focused?: boolean;
   pointed?: boolean;
   compact?: boolean;
-  aside?: React.ReactElement;
-  children: React.ReactElement;
+  aside?: React.ReactNode;
+  children: React.ReactNode;
   onClick?: React.MouseEventHandler;
   onMouseMove?: React.MouseEventHandler;
   onMouseEnter?: React.MouseEventHandler;
@@ -24,18 +24,19 @@ export interface FocusRegionProps {
   onDelete?: React.MouseEventHandler;
 }
 
-export const FocusRegion: React.FC<FocusRegionProps> = ({
-  focused,
-  pointed,
-  compact,
-  aside,
-  children,
-  onClick,
-  onMouseMove,
-  onMouseEnter,
-  onMouseLeave,
-  onDelete,
-}) => {
+export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
+  const {
+    focused,
+    pointed,
+    compact,
+    aside,
+    onClick,
+    onMouseMove,
+    onMouseEnter,
+    onMouseLeave,
+    onDelete,
+  } = props;
+  let {children} = props;
   const [t] = useT();
   const [deleteHovered, setDeleteHovered] = React.useState(false);
   const useInsButtonClass = css.useInsButton();
@@ -59,7 +60,6 @@ export const FocusRegion: React.FC<FocusRegionProps> = ({
   }
 
   const className =
-    (children.props.className || '') +
     css.hoverable +
     (compact ? css.hoverableCompact : '') +
     (pointed ? css.hovered : '') +
@@ -70,7 +70,6 @@ export const FocusRegion: React.FC<FocusRegionProps> = ({
     <span
       className={className}
       style={{
-        ...(children.props.style || {}),
         outline: deleteHovered ? `1px dotted ${css.negative}` : undefined,
       }}
       onMouseMove={onMouseMove}
