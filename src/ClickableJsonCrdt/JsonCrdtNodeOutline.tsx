@@ -5,7 +5,7 @@ const blockClass = rule({
   d: 'inline-block',
   pos: 'relative',
   bd: '1px solid transparent',
-  pad: '0.2em',
+  pad: 'calc(0.2em + 16px) 0.2em 0.2em',
   bdrad: '4px',
 });
 

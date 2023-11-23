@@ -27,7 +27,8 @@ const doc1 = {
 };
 
 const model = Model.withLogicalClock();
-model.api.root(s.con([123, null]));
+// model.api.root(s.con([123, null]));
+model.api.root(s.val(s.con([123, null])));
 
 console.log(model + '');
 
