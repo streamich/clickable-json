@@ -5,8 +5,10 @@ const blockClass = rule({
   d: 'inline-block',
   pos: 'relative',
   bd: '1px solid transparent',
-  mr: '16px 0 0',
-  pad: '0.2em',
+  mar: '-3px',
+  pad: '2px',
+  // mr: '16px 0 0',
+  // pad: '0.2em',
   bdrad: '4px',
 });
 
