@@ -8,12 +8,13 @@ export interface ObjectLayoutProps {
   collapsedView?: React.ReactNode;
   collapsed?: boolean;
   comma?: boolean;
+  brackets?: [opening: string, closing: string];
   onClick?: React.MouseEventHandler;
   onCollapserClick?: React.MouseEventHandler;
   onBracketClick?: () => void;
 }
 
-export const ObjectLayout: React.FC<ObjectLayoutProps> = ({property, collapsedView, collapsed, comma, children, onClick, onCollapserClick, onBracketClick}) => {
+export const ObjectLayout: React.FC<ObjectLayoutProps> = ({property, collapsedView, collapsed, comma, brackets = ['{', '}'], children, onClick, onCollapserClick, onBracketClick}) => {
   const [brackedHovered, setBracketHovered] = React.useState(false);
   const theme = useTheme();
 
@@ -44,7 +45,7 @@ export const ObjectLayout: React.FC<ObjectLayoutProps> = ({property, collapsedVi
           onMouseLeave={onBracketMouseLeave}
           onClick={onBracketClick}
         >
-          {'{'}
+          {brackets[0]}
         </span>
         <span className={css.collapsed} style={{display: !collapsed ? 'none' : undefined}}>
           <span style={{color: css.blue}}>{'{'}</span>
@@ -62,7 +63,7 @@ export const ObjectLayout: React.FC<ObjectLayoutProps> = ({property, collapsedVi
         onMouseLeave={onBracketMouseLeave}
         onClick={onBracketClick}
       >
-        {'}'}
+        {brackets[1]}
       </span>
       {!!comma && ','}
     </span>
