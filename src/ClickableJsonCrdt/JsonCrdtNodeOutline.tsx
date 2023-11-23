@@ -5,7 +5,8 @@ const blockClass = rule({
   d: 'inline-block',
   pos: 'relative',
   bd: '1px solid transparent',
-  pad: 'calc(0.2em + 16px) 0.2em 0.2em',
+  mr: '16px 0 0',
+  pad: '0.2em',
   bdrad: '4px',
 });
 
@@ -29,12 +30,12 @@ export interface JsonCrdtNodeOutlineProps {
 export const JsonCrdtNodeOutline: React.FC<JsonCrdtNodeOutlineProps> = ({type, children}) => {
   const blockClassDynamic = useRule(theme => ({
     '&:hover': {
-      bd: `1px solid ${theme.g(.92)}`,
+      bd: `1px solid ${theme.g(0, 0.1)}`,
     },
   }));
   const typeClassDynamic = useRule(theme => ({
     [`.${blockClass.trim()}:hover &`]: {
-      col: theme.g(.6),
+      col: theme.g(.5),
     },
   }));
 
