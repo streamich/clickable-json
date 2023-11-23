@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {ClickableJson} from '../../ClickableJson';
-import {JsonCrdtNodeOutline} from '../JsonCrdtNodeOutline';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import type {ConNode} from 'json-joy/es2020/json-crdt';
@@ -17,9 +16,7 @@ export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node, parentCol
   return (
     <JsonCrdtRegion node={node}>
       <JsonCrdtProperty node={node} />
-      <JsonCrdtNodeOutline node={node}>
-        <ClickableJson readonly compact collapsed doc={node.node.view()} />
-      </JsonCrdtNodeOutline>
+      <ClickableJson readonly compact collapsed doc={node.node.view()} />
       {!!comma && ','}
     </JsonCrdtRegion>
   );
