@@ -122,6 +122,7 @@ export const active = rule({
 });
 
 export const bracket = rule({
+  pos: 'relative',
   cur: 'default',
 });
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {context} from './context';
+import {context as crdt} from './context';
 import {StyleContextValue, context as styles} from '../context/style';
 import {NodeRef} from './NodeRef';
 import {Root} from '../Root';
@@ -29,11 +29,11 @@ export const ClickableJsonCrdt: React.FC<ClickableJsonCrdtProps> = (props) => {
 
   return (
     <styles.Provider value={{compact, readonly}}>
-      <context.Provider value={{model, render}}>
+      <crdt.Provider value={{model, render}}>
         <FocusProvider>
           <Root>{render(node)}</Root>
         </FocusProvider>
-      </context.Provider>
+      </crdt.Provider>
     </styles.Provider>
   );
 };

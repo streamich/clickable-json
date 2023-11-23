@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {useJsonCrdt} from './context';
 import {FocusRegion} from '../FocusRegion';
 import {NodeRef} from './NodeRef';
 import {useFocus} from '../context/focus';
 import {id} from './utils';
+import {useStyles} from '../context/style';
 
 export interface JsonCrdtRegionProps {
   node: NodeRef<any>;
@@ -11,7 +11,7 @@ export interface JsonCrdtRegionProps {
 }
 
 export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) => {
-  const {compact} = useJsonCrdt();
+  const {compact} = useStyles();
   const {focused, focus, pointed, point} = useFocus();
   const nodeId = id(node);
 
