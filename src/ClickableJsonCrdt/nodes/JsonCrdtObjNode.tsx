@@ -6,6 +6,8 @@ import {ObjectLayout} from '../../ObjectLayout';
 import {FocusRegion} from '../../FocusRegion';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import type {ObjNode} from 'json-joy/es2020/json-crdt';
+import {PropertyLayout} from '../../PropertyLayout';
+import {JsonCrdtProperty} from '../JsonCrdtProperty';
 
 export interface JsonCrdtObjNodeProps {
   node: NodeRef<ObjNode>;
@@ -30,7 +32,11 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
 
   return (
   <JsonCrdtRegion node={node}>
-    <ObjectLayout>{entries}</ObjectLayout>
+    <ObjectLayout
+      property={<JsonCrdtProperty node={node} />}
+    >
+      {entries}
+    </ObjectLayout>
   </JsonCrdtRegion>
   );
 };
