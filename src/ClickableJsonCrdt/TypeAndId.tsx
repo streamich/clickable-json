@@ -13,19 +13,20 @@ const blockClass = rule({
 
 export interface TypeAndIdProps {
   node: NodeRef<any>;
+  active?: boolean;
 }
 
-export const TypeAndId: React.FC<TypeAndIdProps> = React.memo(({node}) => {
+export const TypeAndId: React.FC<TypeAndIdProps> = React.memo(({node, active}) => {
   const theme = useTheme();
 
   const {sid, time} = node.node.id;
 
   return (
-    <span className={blockClass} style={{color: theme.color.sem.blue[0]}}>
+    <span className={blockClass} style={{color: active ? theme.color.sem.blue[0] : theme.g(0, 0.5)}}>
       {(node.node as JsonNode).name()}
-      <span style={{color: theme.g(0, 0.45), display: 'block'}}>
-        {'...' + String(sid).slice(String(sid).length - 4)}
-        <span style={{color: theme.g(0, 0.7)}}>{'.' + time}</span>
+      <span style={{color: active ? theme.g(0, 0.45) : theme.g(0, 0.2), display: 'block'}}>
+        {active ? ('...' + String(sid).slice(String(sid).length - 4)) : null}
+        <span style={{color: active ? theme.g(0, 0.7) : theme.g(0, 0.3)}}>{'.' + time}</span>
       </span>
     </span>
   );
