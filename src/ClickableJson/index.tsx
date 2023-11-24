@@ -4,8 +4,8 @@ import {StyleContextValue, context as styles} from '../context/style';
 import {JsonDoc} from './JsonDoc';
 import {Root} from '../Root';
 import {FocusProvider} from '../context/focus';
-import type {OnChange} from './types';
 import {JsonHoverable} from './JsonHoverable';
+import type {OnChange} from './types';
 
 export interface ClickableJsonProps extends StyleContextValue {
   /**
@@ -23,16 +23,22 @@ export interface ClickableJsonProps extends StyleContextValue {
    * (RFC 6902)](https://datatracker.ietf.org/doc/html/rfc6902) as an argument.
    */
   onChange?: OnChange;
+
+  /**
+   * Callback called when the JSON is clicked, returns the clicked JSON pointer.
+   */
+  onFocus?: (pointer: string | null) => void;
 }
 
 export const ClickableJson: React.FC<ClickableJsonProps> = (props) => {
+  const {onFocus} = props;
   const onChange = props.readonly ? undefined : props.onChange;
 
   return (
     <FocusProvider>
       <styles.Provider value={props}>
         <json.Provider value={{pfx: props.pfx ?? '', onChange}}>
-          <Root>
+          <Root onFocus={onFocus}>
             <JsonHoverable pointer="">
               <JsonDoc {...props} pointer="" onChange={onChange} />
             </JsonHoverable>

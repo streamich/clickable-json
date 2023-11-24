@@ -13,18 +13,25 @@ const blockClass = rule({
 
 export interface RootProps {
   children: React.ReactNode;
+  onFocus?: (pointer: string | null) => void;
 }
 
-export const Root: React.FC<RootProps> = ({children}) => {
+export const Root: React.FC<RootProps> = ({children, onFocus}) => {
   const isMounted = useMountedState();
   const styles = useStyles();
-  const {focus, point} = useFocus();
+  const {focused, focus, point} = useFocus();
   const ref = React.useRef(null);
+  const focusRef = React.useRef(focused);
   useClickAway(ref, () => {
     if (!isMounted) return;
     point(null);
     focus(null);
   });
+
+  if (onFocus && focused !== focusRef.current) {
+    focusRef.current = focused;
+    onFocus(focused);
+  }
 
   return (
     <InputProvider>

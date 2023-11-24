@@ -39,16 +39,17 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
   };
 
   const isFocused = focused === nodeId;
+  const isPointed = pointed === nodeId;
 
   const aside = isFocused ? (
     <span style={{display: 'inline-block', margin: '-4px 0 0'}}>
-      <TypeAndId node={node} />
+      <TypeAndId node={node} active={isFocused} />
     </span>
   ) : undefined;
 
   return (
     <FocusRegion
-      pointed={pointed === nodeId}
+      pointed={isPointed}
       focused={isFocused}
       compact={compact}
       aside={aside}

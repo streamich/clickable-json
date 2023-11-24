@@ -4,13 +4,13 @@ import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonAtom} from '../../JsonAtom';
 import {useStyles} from '../../context/style';
-import type {StrNode} from 'json-joy/es2020/json-crdt';
+import type {BinNode} from 'json-joy/es2020/json-crdt';
 
-export interface JsonCrdtStrNodeProps {
-  node: NodeRef<StrNode>;
+export interface JsonCrdtBinNodeProps {
+  node: NodeRef<BinNode>;
 }
 
-export const JsonCrdtStrNode: React.FC<JsonCrdtStrNodeProps> = ({node}) => {
+export const JsonCrdtBinNode: React.FC<JsonCrdtBinNodeProps> = ({node}) => {
   const {formal} = useStyles();
 
   return (
