@@ -22,9 +22,7 @@ export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node}) => {
 
   const handleAtomClick = () => {
     if (view && typeof view === 'object') {
-      // if (focused === id(node)) {
       setViewJson(!viewJson);
-      // }
     }
   };
 
@@ -36,7 +34,6 @@ export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node}) => {
           <ClickableJson
             readonly
             compact
-            // collapsed
             noCollapseToggles
             pfx={id(node)}
             doc={node.node.view()}

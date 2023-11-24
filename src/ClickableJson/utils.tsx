@@ -6,11 +6,15 @@ export const valueColor = (isDark: boolean, value: unknown): string | undefined 
     case 'boolean':
       return css.ValueColor.bool[~~isDark];
     case 'string':
-      return css.ValueColor.str[~~isDark];
+        return css.ValueColor.str[~~isDark];
     case 'number':
-      return value === Math.round(value) ? css.ValueColor.num[~~isDark] : css.ValueColor.float[~~isDark];
+      return !value ? css.ValueColor.zero[~~isDark] : value === Math.round(value) ? css.ValueColor.num[~~isDark] : css.ValueColor.float[~~isDark];
+    case 'bigint':
+      return css.ValueColor.float[~~isDark];
     case 'object':
       return value === null ? css.ValueColor.nil[~~isDark] : undefined;
+    case 'undefined':
+      return css.ValueColor.undef[~~isDark];
   }
   return;
 };
@@ -20,6 +24,7 @@ export const inputColor = (isDark: boolean, input: string): string | undefined =
   input = input.trim();
   if (input === 'true' || input === 'false') return css.ValueColor.bool[~~isDark];
   if (input === 'null') return css.ValueColor.nil[~~isDark];
+  if (input === '0') return css.ValueColor.zero[~~isDark];
   if (input.length < 24) {
     if (input[0] === '-' || (input[0] >= '0' && input[0] <= '9')) {
       try {
