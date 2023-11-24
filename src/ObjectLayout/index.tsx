@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useTheme} from 'nano-theme';
 import * as css from '../css';
+import {useStyles} from '../context/style';
 
 export interface ObjectLayoutProps {
   property?: React.ReactNode;
@@ -29,6 +30,7 @@ export const ObjectLayout: React.FC<ObjectLayoutProps> = ({
 }) => {
   const [brackedHovered, setBracketHovered] = React.useState(false);
   const theme = useTheme();
+  const {noCollapseToggles} = useStyles();
 
   const onBracketMouseEnter = () => {
     setBracketHovered(true);
@@ -68,9 +70,11 @@ export const ObjectLayout: React.FC<ObjectLayoutProps> = ({
 
   return (
     <span className={css.object} onClick={onClick}>
-      <span className={css.collapser} style={{color: theme.g(0.6)}} onClick={onCollapserClick}>
-        {collapsed ? '+' : '—'}
-      </span>
+      {!noCollapseToggles && (
+        <span className={css.collapser} style={{color: theme.g(0.6)}} onClick={onCollapserClick}>
+          {collapsed ? '+' : '—'}
+        </span>
+      )}
       {bracket1}
       {collapsedView}
       <span className={css.list} style={{display: collapsed ? 'none' : undefined}}>

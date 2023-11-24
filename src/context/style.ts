@@ -47,8 +47,15 @@ export interface StyleContextValue {
    * @default false
    */
   collapsed?: boolean;
+
+  /**
+   * Whether to show +/- buttons to expand/collapse objects and arrays.
+   *
+   * @default false
+   */
+  noCollapseToggles?: boolean;
 }
 
-export const context = React.createContext<StyleContextValue>(null!);
+export const context = React.createContext<StyleContextValue>({});
 
 export const useStyles = () => React.useContext(context);

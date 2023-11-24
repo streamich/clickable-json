@@ -16,7 +16,7 @@ export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node, parentCol
   return (
     <JsonCrdtRegion node={node}>
       <JsonCrdtProperty node={node} />
-      <ClickableJson readonly compact collapsed doc={node.node.view()} />
+      <ClickableJson readonly compact collapsed noCollapseToggles doc={node.node.view()} />
       {!!comma && ','}
     </JsonCrdtRegion>
   );
