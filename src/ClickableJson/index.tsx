@@ -28,7 +28,7 @@ export const ClickableJson: React.FC<ClickableJsonProps> = (props) => {
       <styles.Provider value={props}>
         <json.Provider value={{onChange}}>
           <Root>
-            <JsonHoverable pointer=''>
+            <JsonHoverable pointer="">
               <JsonDoc {...props} pointer="" onChange={onChange} />
             </JsonHoverable>
           </Root>

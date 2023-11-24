@@ -31,11 +31,7 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
 
   return (
     <JsonCrdtRegion node={node}>
-      <ObjectLayout
-        property={<JsonCrdtProperty node={node} />}
-      >
-        {entries}
-      </ObjectLayout>
+      <ObjectLayout property={<JsonCrdtProperty node={node} />}>{entries}</ObjectLayout>
     </JsonCrdtRegion>
   );
 };

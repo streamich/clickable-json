@@ -10,7 +10,5 @@ export interface JsonCrdtPropertyProps {
 export const JsonCrdtProperty: React.FC<JsonCrdtPropertyProps> = ({node}) => {
   if (!node.parent || node.parent.node.name() !== 'obj') return null;
 
-  return (
-    <PropertyLayout property={node.step} />
-  );
+  return <PropertyLayout property={node.step} />;
 };

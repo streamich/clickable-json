@@ -59,7 +59,9 @@ export const ObjectLayout: React.FC<ObjectLayoutProps> = ({
         onClick={onBracketClick}
       >
         {brackets[0]}
-        {!!header && <span style={{display: 'inline-block', position: 'absolute', top: '-0.27em', left: '1em'}}>{header}</span>}
+        {!!header && (
+          <span style={{display: 'inline-block', position: 'absolute', top: '-0.27em', left: '1em'}}>{header}</span>
+        )}
       </span>
     </span>
   );
