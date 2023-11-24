@@ -14,6 +14,11 @@ export interface ClickableJsonProps extends StyleContextValue {
   doc: unknown;
 
   /**
+   * Prefix specified by the parent JSON. Used internally.
+   */
+  pfx?: string;
+
+  /**
    * Callback called when the JSON is changed. The callback receives a [JSON Patch
    * (RFC 6902)](https://datatracker.ietf.org/doc/html/rfc6902) as an argument.
    */
@@ -26,7 +31,7 @@ export const ClickableJson: React.FC<ClickableJsonProps> = (props) => {
   return (
     <FocusProvider>
       <styles.Provider value={props}>
-        <json.Provider value={{onChange}}>
+        <json.Provider value={{pfx: props.pfx ?? '', onChange}}>
           <Root>
             <JsonHoverable pointer="">
               <JsonDoc {...props} pointer="" onChange={onChange} />

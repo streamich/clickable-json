@@ -1,25 +1,51 @@
 import * as React from 'react';
-import {ClickableJson} from '../../ClickableJson';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
+import {JsonAtom} from '../../JsonAtom/JsonAtom';
+import {useStyles} from '../../context/style';
+import {ClickableJson} from '../../ClickableJson';
+import {useFocus} from '../../context/focus';
+import {id} from '../utils';
 import type {ConNode} from 'json-joy/es2020/json-crdt';
 import type {NodeRef} from '../NodeRef';
-import {JsonAtom} from '../../JsonAtom/JsonAtom';
 
 export interface JsonCrdtConNodeProps {
   node: NodeRef<ConNode>;
-  parentCollapsed?: boolean;
 }
 
-export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node, parentCollapsed}) => {
-  const comma = false;
+export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node}) => {
+  const {formal} = useStyles();
+  const [viewJson, setViewJson] = React.useState(false);
+  const {focused} = useFocus();
+
+  const view = node.node.view();
+
+  const handleAtomClick = () => {
+    if (view && typeof view === 'object') {
+      // if (focused === id(node)) {
+        setViewJson(!viewJson);
+      // }
+    }
+  };
 
   return (
     <JsonCrdtRegion node={node}>
       <JsonCrdtProperty node={node} />
-      <JsonAtom value={node.node.view()} />
-      {/* <ClickableJson readonly compact collapsed noCollapseToggles doc={node.node.view()} /> */}
-      {!!comma && ','}
+      {viewJson ? (
+        <span style={{display: 'inline-block', verticalAlign: 'top', margin: '-1px'}}>
+          <ClickableJson
+            readonly
+            compact
+            collapsed
+            noCollapseToggles
+            pfx={id(node)}
+            doc={node.node.view()}
+          />
+        </span>
+      ) : (
+        <JsonAtom value={node.node.view()} onClick={handleAtomClick} />
+      )}
+      {!!formal && ','}
     </JsonCrdtRegion>
   );
 };

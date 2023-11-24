@@ -12,19 +12,21 @@ export interface JsonHoverableProps {
 
 export const JsonHoverable: React.FC<JsonHoverableProps> = ({pointer, children}) => {
   const {focused, focus, pointed, point} = useFocus();
-  const {onChange} = React.useContext(context);
+  const {pfx, onChange} = React.useContext(context);
   const {compact} = useStyles();
   const input = useInput();
 
+  const prefixedPointer = pfx + pointer;
+
   const onMouseMove = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (pointed !== pointer) point(pointer);
+    if (pointed !== prefixedPointer) point(prefixedPointer);
   };
 
   const onMouseEnter = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    point(pointer);
+    point(prefixedPointer);
   };
 
   const onMouseLeave = () => {
@@ -34,20 +36,20 @@ export const JsonHoverable: React.FC<JsonHoverableProps> = ({pointer, children})
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    focus(pointer);
+    focus(prefixedPointer);
   };
 
   return (
     <FocusRegion
-      pointed={pointed === pointer}
-      focused={focused === pointer}
+      pointed={pointed === prefixedPointer}
+      focused={focused === prefixedPointer}
       compact={compact}
       onClick={onClick}
       onMouseMove={onMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onDelete={
-        !!onChange && !input.focused && pointer === focused
+        !!onChange && !input.focused && prefixedPointer === focused
           ? () => onChange([{op: 'remove', path: pointer}])
           : undefined
       }

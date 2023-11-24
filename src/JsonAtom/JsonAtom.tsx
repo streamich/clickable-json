@@ -6,33 +6,40 @@ const blue = theme.color.sem.blue[0];
 
 export interface JsonAtomProps {
   value: unknown;
+  onClick?: React.MouseEventHandler
 }
 
 export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
-  const {value} = props;
+  const {value, onClick} = props;
   const theme = useTheme();
 
+  let color = theme.g(.2);
+  let formatted = '∅';
+
   if (Array.isArray(value)) {
-    return <span style={{color: blue}}>{'['}{value.length}{']'}</span>;
+    color = blue;
+    formatted = '[' + value.length + ']';
   } else if (value && typeof value === 'object') {
-    return <span style={{color: blue}}>{'{'}{Object.keys(value).length}{'}'}</span>;
+    color = blue;
+    formatted = '{' + Object.keys(value).length + '}';
+  } else {
+    color = valueColor(!theme.isLight, value) ?? color;
+    formatted = React.useMemo(
+      () =>
+        value === null
+          ? 'null'
+          : typeof value === 'boolean'
+            ? value
+              ? 'true'
+              : 'false'
+            : typeof value === 'string'
+              ? JSON.stringify(value)
+              : String(value),
+      [value, theme],
+    );
   }
 
-  const formatted = React.useMemo(
-    () =>
-      value === null
-        ? 'null'
-        : typeof value === 'boolean'
-          ? value
-            ? 'true'
-            : 'false'
-          : typeof value === 'string'
-            ? JSON.stringify(value)
-            : String(value),
-    [value, theme],
-  );
-
   return (
-    <span style={{color: valueColor(!theme.isLight, value)}}>{formatted}</span>
+    <span style={{color}} onClick={onClick}>{formatted}</span>
   );
 };
