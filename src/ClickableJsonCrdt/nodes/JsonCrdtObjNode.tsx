@@ -16,15 +16,11 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
   const {render} = useJsonCrdt();
 
   const entries: React.ReactNode[] = [];
+
   node.node.nodes((child, key) => {
     entries.push(
       <span key={key} className={css.line}>
-        <FocusRegion>
-          <span className={css.lineInner}>
-            {/* {key} : {renderNode(new NodeRef(child, node, key))} */}
-            {render(new NodeRef(child, node, key))}
-          </span>
-        </FocusRegion>
+        {render(new NodeRef(child, node, key))}
       </span>,
     );
   });

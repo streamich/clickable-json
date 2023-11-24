@@ -29,10 +29,23 @@ const doc1 = {
 const model = Model.withLogicalClock();
 // model.api.root(s.con([123, null]));
 // model.api.root(s.val(s.con([123, null])));
-model.api.root({foo: s.con([123, null]), bar: true, baz: {x: 1}});
+// model.api.root({foo: s.con([123, null]), bar: true, baz: {x: 1}});
+model.api.root({
+  foo: s.con([123, null]),
+  bar: true,
+  baz: {x: 1},
+  qux: s.vec(s.con(1), s.con(2), s.con('three'), s.con({four: 4})),
+});
 
 console.log(model + '');
 
 export const Primary: StoryObj<typeof meta> = {
-  render: () => <ClickableJsonCrdt model={model} />,
+  render: () => (
+    <div style={{padding: '32px 64px'}}>
+      <ClickableJsonCrdt model={model} />
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+  },
 };

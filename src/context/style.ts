@@ -29,7 +29,7 @@ export interface StyleContextValue {
   /**
    * Font size of the JSON.
    *
-   * @default '13.4px'
+   * @default 13.4px
    */
   fontSize?: string;
 
