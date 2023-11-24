@@ -5,12 +5,6 @@ import type {NodeRef} from './NodeRef';
 
 export const useRerender = (node: NodeRef<JsonNode>) => {
   const {model} = useJsonCrdt();
-  const [, setCnt] = React.useState(0);
-  React.useLayoutEffect(() => {
-    const nodeApi = model.api.wrap(node.node);
-    const events = nodeApi.events;
-    const listener = () => setCnt((cnt) => cnt + 1);
-    events.on('view', listener);
-    return () => events.off('view', listener);
-  });
+  const api = model.api.wrap(node.node);
+  React.useSyncExternalStore(api.events.subscribe, api.events.getSnapshot);
 };

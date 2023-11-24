@@ -5999,7 +5999,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-storybook: "npm:^0.6.15"
     jest: "npm:^29.7.0"
-    json-joy: "npm:^11.3.0"
+    json-joy: "npm:^11.4.1"
     nano-theme: "npm:^1.2.0"
     p4-ui: "npm:^1.15.0"
     prettier: "npm:^3.1.0"
@@ -9665,12 +9665,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-joy@npm:^11.3.0":
-  version: 11.3.0
-  resolution: "json-joy@npm:11.3.0"
+"json-joy@npm:^11.4.1":
+  version: 11.4.1
+  resolution: "json-joy@npm:11.4.1"
   dependencies:
     arg: "npm:^5.0.2"
     hyperdyperid: "npm:^1.2.0"
+    thingies: "npm:^1.14.1"
   peerDependencies:
     quill-delta: ^5
     rxjs: 7
@@ -9684,7 +9685,7 @@ __metadata:
     json-pointer: bin/json-pointer.js
     json-pointer-test: bin/json-pointer-test.js
     json-unpack: bin/json-unpack.js
-  checksum: 4ba8ebd3f3a690e11cdc915f60c23946cbee18b7dc4474c21f7dfcb2d0e80007300cd8fafdb50304ff609557d761cd00c0acd00424087b37e1abd686620afebc
+  checksum: 247327e71de42ca5b71c8d3d75321a3bbed7878eac2dda67274307f5c683d11525401173b17758eb535589e3f7ea446bdef66441a7742ee1c60aab1f832ea44d
   languageName: node
   linkType: hard
 
@@ -13019,6 +13020,15 @@ __metadata:
   peerDependencies:
     tslib: ^2
   checksum: 74a8ddc5a31cc0cc8f14975aec7f5d7723cf03733a5681b95d3c697da52d544bb0c2a387793dc3b38799a68aa7907cb3145a61c9d0b6cfc3d9ada7d9cf8eb8d6
+  languageName: node
+  linkType: hard
+
+"thingies@npm:^1.14.1":
+  version: 1.14.1
+  resolution: "thingies@npm:1.14.1"
+  peerDependencies:
+    tslib: ^2
+  checksum: fd7dbd0f728d10ef27ca1f02765bb9e4fcca8d0aa2fdc56990f8b9bd864e1b1b10966fd6cdf5843e75ef4c4486e9cdc96c2aa08284c8f4b88f2fb51b242327a7
   languageName: node
   linkType: hard
 

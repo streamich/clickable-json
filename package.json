@@ -41,6 +41,11 @@
     "react",
     "json-crdt"
   ],
+  "dependencies": {
+    "json-joy": "^11.4.1",
+    "nano-theme": "^1.2.0",
+    "p4-ui": "^1.15.0"
+  },
   "peerDependencies": {
     "react": "*",
     "react-dom": "*",
@@ -125,10 +130,5 @@
       }
     }
   },
-  "packageManager": "yarn@4.0.2",
-  "dependencies": {
-    "json-joy": "^11.3.0",
-    "nano-theme": "^1.2.0",
-    "p4-ui": "^1.15.0"
-  }
+  "packageManager": "yarn@4.0.2"
 }
