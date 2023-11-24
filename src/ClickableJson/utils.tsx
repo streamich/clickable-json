@@ -6,9 +6,13 @@ export const valueColor = (isDark: boolean, value: unknown): string | undefined 
     case 'boolean':
       return css.ValueColor.bool[~~isDark];
     case 'string':
-        return css.ValueColor.str[~~isDark];
+      return css.ValueColor.str[~~isDark];
     case 'number':
-      return !value ? css.ValueColor.zero[~~isDark] : value === Math.round(value) ? css.ValueColor.num[~~isDark] : css.ValueColor.float[~~isDark];
+      return !value
+        ? css.ValueColor.zero[~~isDark]
+        : value === Math.round(value)
+          ? css.ValueColor.num[~~isDark]
+          : css.ValueColor.float[~~isDark];
     case 'bigint':
       return css.ValueColor.float[~~isDark];
     case 'object':

@@ -20,11 +20,11 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
     color = blue;
     formatted = '[' + value.length + ']';
   } else if (value instanceof Uint8Array) {
-    color = theme.g(.45);
+    color = theme.g(0.45);
     formatted = (
       <span>
         <span style={{color: theme.red(1), fontSize: '0.8em', fontWeight: 'bold'}}>0x</span>
-        {[...value].map((n) => n < 16 ? '0' + n.toString(16) : n.toString(16)).join(' ')}
+        {[...value].map((n) => (n < 16 ? '0' + n.toString(16) : n.toString(16))).join(' ')}
       </span>
     );
   } else if (value && typeof value === 'object') {
@@ -33,7 +33,7 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
   } else {
     color = valueColor(!theme.isLight, value) ?? color;
     formatted = React.useMemo(
-      () => typeof value === 'string' ? JSON.stringify(value) : String(value),
+      () => (typeof value === 'string' ? JSON.stringify(value) : String(value)),
       [value, theme],
     );
   }

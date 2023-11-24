@@ -115,9 +115,8 @@ export const Collapsed: StoryObj<typeof meta> = {
 };
 
 export const Binary: StoryObj<typeof meta> = {
-  render: () => <Demo doc={{foo: new Uint8Array([1,2,3])}} />,
+  render: () => <Demo doc={{foo: new Uint8Array([1, 2, 3])}} />,
   parameters: {
     layout: 'fullscreen',
   },
 };
-
