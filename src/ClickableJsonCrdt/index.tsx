@@ -13,6 +13,7 @@ import {
   VecNode,
   ArrNode,
   StrNode,
+  BinNode,
 } from 'json-joy/es2020/json-crdt';
 import {JsonCrdtConNode} from './nodes/JsonCrdtConNode';
 import {JsonCrdtValNode} from './nodes/JsonCrdtValNode';
@@ -20,6 +21,7 @@ import {JsonCrdtObjNode} from './nodes/JsonCrdtObjNode';
 import {JsonCrdtVecNode} from './nodes/JsonCrdtVecNode';
 import {JsonCrdtArrNode} from './nodes/JsonCrdtArrNode';
 import {JsonCrdtStrNode} from './nodes/JsonCrdtStrNode';
+import {JsonCrdtBinNode} from './nodes/JsonCrdtBinNode';
 
 const render = (node: NodeRef<JsonNode>): React.ReactNode => {
   if (node.node instanceof ConNode) return <JsonCrdtConNode node={node as NodeRef<ConNode>} />;
@@ -28,6 +30,7 @@ const render = (node: NodeRef<JsonNode>): React.ReactNode => {
   if (node.node instanceof StrNode) return <JsonCrdtStrNode node={node as NodeRef<StrNode>} />;
   if (node.node instanceof VecNode) return <JsonCrdtVecNode node={node as NodeRef<VecNode>} />;
   if (node.node instanceof ArrNode) return <JsonCrdtArrNode node={node as NodeRef<ArrNode>} />;
+  if (node.node instanceof BinNode) return <JsonCrdtBinNode node={node as NodeRef<BinNode>} />;
   return '∅';
 };
 
