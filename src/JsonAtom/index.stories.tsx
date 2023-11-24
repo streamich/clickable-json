@@ -55,6 +55,12 @@ export const Null: StoryObj<typeof meta> = {
   } as any,
 };
 
+export const Undefined: StoryObj<typeof meta> = {
+  args: {
+    value: undefined,
+  } as any,
+};
+
 export const True: StoryObj<typeof meta> = {
   args: {
     value: true,

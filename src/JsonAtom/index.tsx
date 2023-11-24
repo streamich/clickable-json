@@ -33,16 +33,7 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
   } else {
     color = valueColor(!theme.isLight, value) ?? color;
     formatted = React.useMemo(
-      () =>
-        value === null
-          ? 'null'
-          : typeof value === 'boolean'
-            ? value
-              ? 'true'
-              : 'false'
-            : typeof value === 'string'
-              ? JSON.stringify(value)
-              : String(value),
+      () => typeof value === 'string' ? JSON.stringify(value) : String(value),
       [value, theme],
     );
   }
