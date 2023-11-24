@@ -36,11 +36,16 @@ export interface ClickableJsonCrdtProps extends StyleContextValue {
    * The JSON CRDT model to display.
    */
   model: Model;
+
+  /**
+   * Whether to display the root node.
+   */
+  showRoot?: boolean;
 }
 
 export const ClickableJsonCrdt: React.FC<ClickableJsonCrdtProps> = (props) => {
-  const {model, compact, readonly} = props;
-  const node = React.useMemo(() => new NodeRef(model.root.child(), null, ''), [model]);
+  const {model, compact, readonly, showRoot} = props;
+  const node = React.useMemo(() => new NodeRef(showRoot ? model.root : model.root.child(), null, ''), [model]);
 
   return (
     <styles.Provider value={{compact, readonly}}>
