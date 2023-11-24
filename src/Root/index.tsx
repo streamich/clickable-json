@@ -18,7 +18,7 @@ export interface RootProps {
 export const Root: React.FC<RootProps> = ({children}) => {
   const isMounted = useMountedState();
   const styles = useStyles();
-  const {focused, focus, pointed, point} = useFocus();
+  const {focus, point} = useFocus();
   const ref = React.useRef(null);
   useClickAway(ref, () => {
     if (!isMounted) return;

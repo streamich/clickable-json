@@ -3,7 +3,6 @@ import {useJsonCrdt} from '../context';
 import {NodeRef} from '../NodeRef';
 import * as css from '../../css';
 import {ObjectLayout} from '../../ObjectLayout';
-import {FocusRegion} from '../../FocusRegion';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import type {ObjNode} from 'json-joy/es2020/json-crdt';

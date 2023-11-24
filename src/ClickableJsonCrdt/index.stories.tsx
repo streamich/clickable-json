@@ -16,16 +16,6 @@ const meta: Meta<typeof Text> = {
 
 export default meta;
 
-const doc1 = {
-  support: 'https://github.com/sponsors/streamich',
-  license: 'use it if you support me',
-  foo: null,
-  test: 123,
-  developer: {
-    name: '@streamich',
-  },
-};
-
 const model = Model.withLogicalClock();
 // model.api.root(s.con([123, null]));
 // model.api.root(s.val(s.con([123, null])));

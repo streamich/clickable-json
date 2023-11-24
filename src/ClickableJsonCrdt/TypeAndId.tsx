@@ -19,7 +19,6 @@ export const TypeAndId: React.FC<TypeAndIdProps> = React.memo(({node}) => {
   const theme = useTheme();
 
   const {sid, time} = node.node.id;
-  const id = '...' + String(sid).slice(String(sid).length - 4) + '.' + time;
 
   return (
     <span className={blockClass} style={{color: theme.color.sem.blue[0]}}>

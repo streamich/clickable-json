@@ -4,7 +4,6 @@ import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonAtom} from '../../JsonAtom/JsonAtom';
 import {useStyles} from '../../context/style';
 import {ClickableJson} from '../../ClickableJson';
-import {useFocus} from '../../context/focus';
 import {id} from '../utils';
 import type {ConNode} from 'json-joy/es2020/json-crdt';
 import type {NodeRef} from '../NodeRef';
@@ -16,7 +15,6 @@ export interface JsonCrdtConNodeProps {
 export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node}) => {
   const {formal} = useStyles();
   const [viewJson, setViewJson] = React.useState(false);
-  const {focused} = useFocus();
 
   const view = node.node.view();
 

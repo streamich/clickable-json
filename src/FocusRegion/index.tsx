@@ -25,8 +25,8 @@ export interface FocusRegionProps {
 }
 
 export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
-  const {focused, pointed, compact, aside, onClick, onMouseMove, onMouseEnter, onMouseLeave, onDelete} = props;
-  let {children} = props;
+  const {focused, pointed, compact, aside, children, onClick, onMouseMove, onMouseEnter, onMouseLeave, onDelete} =
+    props;
   const [t] = useT();
   const [deleteHovered, setDeleteHovered] = React.useState(false);
   const useInsButtonClass = css.useInsButton();
