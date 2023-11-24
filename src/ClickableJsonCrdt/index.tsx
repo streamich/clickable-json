@@ -4,17 +4,19 @@ import {StyleContextValue, context as styles} from '../context/style';
 import {NodeRef} from './NodeRef';
 import {Root} from '../Root';
 import {FocusProvider} from '../context/focus';
-import {ConNode, ValNode, type JsonNode, type Model, ObjNode, VecNode} from 'json-joy/es2020/json-crdt';
+import {ConNode, ValNode, type JsonNode, type Model, ObjNode, VecNode, ArrNode} from 'json-joy/es2020/json-crdt';
 import {JsonCrdtConNode} from './nodes/JsonCrdtConNode';
 import {JsonCrdtValNode} from './nodes/JsonCrdtValNode';
 import {JsonCrdtObjNode} from './nodes/JsonCrdtObjNode';
 import {JsonCrdtVecNode} from './nodes/JsonCrdtVecNode';
+import {JsonCrdtArrNode} from './nodes/JsonCrdtArrNode';
 
 const render = (node: NodeRef<JsonNode>): React.ReactNode => {
   if (node.node instanceof ConNode) return <JsonCrdtConNode node={node as NodeRef<ConNode>} />;
   if (node.node instanceof ValNode) return <JsonCrdtValNode node={node as NodeRef<ValNode>} />;
   if (node.node instanceof ObjNode) return <JsonCrdtObjNode node={node as NodeRef<ObjNode>} />;
   if (node.node instanceof VecNode) return <JsonCrdtVecNode node={node as NodeRef<VecNode>} />;
+  if (node.node instanceof ArrNode) return <JsonCrdtArrNode node={node as NodeRef<ArrNode>} />;
   return '∅';
 };
 

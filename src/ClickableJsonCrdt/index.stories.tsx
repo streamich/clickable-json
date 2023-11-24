@@ -34,7 +34,8 @@ model.api.root({
   foo: s.con([123, [null]]),
   bar: true,
   baz: {x: 1},
-  qux: s.vec(s.con(1), s.con(2), s.con('three'), s.con({four: 4})),
+  qux: s.vec(s.con(1), s.con(-2), s.con('three'), s.con({four: 4})),
+  arr: [s.con(0)],
 });
 
 console.log(model + '');

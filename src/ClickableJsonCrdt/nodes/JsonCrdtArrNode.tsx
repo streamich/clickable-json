@@ -5,13 +5,13 @@ import {NodeRef} from '../NodeRef';
 import {ObjectLayout} from '../../ObjectLayout';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
-import type {VecNode} from 'json-joy/es2020/json-crdt';
+import type {ArrNode} from 'json-joy/es2020/json-crdt';
 
-export interface JsonCrdtVecNodeProps {
-  node: NodeRef<VecNode>;
+export interface JsonCrdtArrNodeProps {
+  node: NodeRef<ArrNode>;
 }
 
-export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
+export const JsonCrdtArrNode: React.FC<JsonCrdtArrNodeProps> = ({node}) => {
   const {render} = useJsonCrdt();
 
   const entries: React.ReactNode[] = [];
@@ -28,7 +28,7 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
 
   return (
     <JsonCrdtRegion node={node}>
-      <ObjectLayout property={<JsonCrdtProperty node={node} />} brackets={['[', ']']} header={<span style={{opacity: .5, display: 'inline-block', margin: '0.275em 0 0 -0.3em'}}>→</span>}>
+      <ObjectLayout property={<JsonCrdtProperty node={node} />} brackets={['[', ']']}>
         {entries}
       </ObjectLayout>
     </JsonCrdtRegion>
