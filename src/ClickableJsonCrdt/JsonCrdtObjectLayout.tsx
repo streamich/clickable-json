@@ -24,6 +24,9 @@ export const JsonCrdtObjectLayout: React.FC<JsonCrdtObjectLayoutProps> = ({node,
       collapsed={collapsed}
       onCollapserClick={() => setCollapsed(!collapsed)}
       onBracketClick={handleBracketClick}
+      onCollapsedClick={() => {
+        if (collapsed) setCollapsed(false);
+      }}
       {...rest}
     />
   );
