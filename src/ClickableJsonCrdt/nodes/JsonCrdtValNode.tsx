@@ -5,7 +5,7 @@ import {useJsonCrdt} from '../context';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
-import {JsonAtom} from '../../JsonAtom/JsonAtom';
+import {JsonAtom} from '../../JsonAtom';
 import type {ValNode} from 'json-joy/es2020/json-crdt';
 
 export interface JsonCrdtValNodeProps {

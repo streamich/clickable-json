@@ -2,7 +2,7 @@ import * as React from 'react';
 import {NodeRef} from '../NodeRef';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
-// import {JsonAtom} from '../../JsonAtom/JsonAtom';
+import {JsonAtom} from '../../JsonAtom';
 import {useStyles} from '../../context/style';
 import type {BinNode} from 'json-joy/es2020/json-crdt';
 
@@ -16,8 +16,7 @@ export const JsonCrdtBinNode: React.FC<JsonCrdtBinNodeProps> = ({node}) => {
   return (
     <JsonCrdtRegion node={node}>
       <JsonCrdtProperty node={node} />
-      {/* <JsonAtom value={node.node.view()} /> */}
-      bin ...
+      <JsonAtom value={node.node.view()} />
       {!!formal && ','}
     </JsonCrdtRegion>
   );

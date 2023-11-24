@@ -152,14 +152,16 @@ export interface JsonDocProps {
 export const JsonDoc: React.FC<JsonDocProps> = (props) => {
   const {doc, comma} = props;
   return !doc ? (
-    <JsonValue {...props} comma={comma} />
+    <JsonValue {...props} />
   ) : typeof doc === 'object' ? (
     Array.isArray(doc) ? (
-      <JsonArray {...props} doc={doc} comma={comma} />
+      <JsonArray {...props} doc={doc} />
+    ) : doc instanceof Uint8Array ? (
+      <JsonValue {...props} comma={comma} />
     ) : (
-      <JsonObject {...props} doc={doc} comma={comma} />
+      <JsonObject {...props} doc={doc} />
     )
   ) : (
-    <JsonValue {...props} comma={comma} />
+    <JsonValue {...props} />
   );
 };

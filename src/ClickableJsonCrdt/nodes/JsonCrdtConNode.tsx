@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
-import {JsonAtom} from '../../JsonAtom/JsonAtom';
+import {JsonAtom} from '../../JsonAtom';
 import {useStyles} from '../../context/style';
 import {ClickableJson} from '../../ClickableJson';
 import {id} from '../utils';
