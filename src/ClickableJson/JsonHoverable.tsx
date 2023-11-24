@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {useT} from 'use-t';
-import Svg from 'iconista';
 import {context} from './context';
-import * as css from '../css';
+import {FocusRegion} from '../FocusRegion';
+import {useFocus} from '../context/focus';
+import {useStyles} from '../context/style';
+import {useInput} from '../context/input';
 
 export interface JsonHoverableProps {
   pointer: string;
@@ -10,74 +11,50 @@ export interface JsonHoverableProps {
 }
 
 export const JsonHoverable: React.FC<JsonHoverableProps> = ({pointer, children}) => {
-  const [t] = useT();
-  const {hoverPointer, setHoverPointer, activePointer, setActivePointer, compact, onChange, isInputFocused} =
-    React.useContext(context);
-  const [deleteHovered, setDeleteHovered] = React.useState(false);
-  const useInsButtonClass = css.useInsButton();
+  const {focused, focus, pointed, point} = useFocus();
+  const {pfx, onChange} = React.useContext(context);
+  const {compact} = useStyles();
+  const input = useInput();
+
+  const prefixedPointer = pfx + pointer;
 
   const onMouseMove = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (hoverPointer !== pointer) setHoverPointer(pointer);
+    if (pointed !== prefixedPointer) point(prefixedPointer);
   };
 
   const onMouseEnter = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setHoverPointer(pointer);
+    point(prefixedPointer);
   };
 
   const onMouseLeave = () => {
-    setHoverPointer(null);
+    point(null);
   };
 
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setActivePointer(pointer);
+    focus(prefixedPointer);
   };
 
-  const isHovered = hoverPointer === pointer;
-  const isActive = activePointer === pointer;
-
-  let subChildren = children.props.children;
-
-  if (!!onChange && !isInputFocused && pointer === activePointer) {
-    subChildren = (
-      <>
-        {subChildren}
-        <button
-          className={css.insButton + useInsButtonClass + css.deleteButton}
-          onClick={() => onChange([{op: 'remove', path: pointer}])}
-          onMouseEnter={() => setDeleteHovered(true)}
-          onMouseOver={() => setDeleteHovered(true)}
-          onMouseLeave={() => setDeleteHovered(false)}
-        >
-          <Svg set="atlaskit" icon="cross" width={10} height={10} />
-          <span className={css.tooltip + css.deleteButtonTooltip}>{t('Delete')}</span>
-        </button>
-      </>
-    );
-  }
-
-  return React.cloneElement(
-    children,
-    {
-      onMouseMove,
-      onMouseEnter,
-      onMouseLeave,
-      onClick,
-      className:
-        (children.props.className || '') +
-        css.hoverable +
-        (compact ? css.hoverableCompact : '') +
-        (isHovered ? css.hovered : '') +
-        (isActive ? css.active : ''),
-      style: {
-        ...(children.props.style || {}),
-        outline: deleteHovered ? `1px dotted ${css.negative}` : undefined,
-      },
-    },
-    subChildren,
+  return (
+    <FocusRegion
+      pointed={pointed === prefixedPointer}
+      focused={focused === prefixedPointer}
+      compact={compact}
+      onClick={onClick}
+      onMouseMove={onMouseMove}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onDelete={
+        !!onChange && !input.focused && prefixedPointer === focused
+          ? () => onChange([{op: 'remove', path: pointer}])
+          : undefined
+      }
+    >
+      {children}
+    </FocusRegion>
   );
 };

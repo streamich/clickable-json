@@ -9,12 +9,13 @@ export interface JsonValueProps {
   pointer: string;
   property?: string | number;
   doc: unknown;
+  parentCollapsed?: boolean;
   comma?: boolean;
   onChange?: OnChange;
 }
 
 export const JsonValue: React.FC<JsonValueProps> = (props) => {
-  const {pointer, property, doc, comma, onChange} = props;
+  const {pointer, property, doc, parentCollapsed, comma, onChange} = props;
   const theme = useTheme();
   const value = React.useMemo(
     () =>
@@ -36,11 +37,13 @@ export const JsonValue: React.FC<JsonValueProps> = (props) => {
 
   return (
     <>
-      {typeof property === 'string' && <JsonProperty pointer={pointer} onChange={onChange} />}
+      {typeof property === 'string' && (
+        <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />
+      )}
       {!onChange ? (
         <span style={{color: valueColor(!theme.isLight, doc)}}>{value}</span>
       ) : (
-        <ValueInput value={doc} onChange={handleChange} />
+        <ValueInput key={String(parentCollapsed)} value={doc} onChange={handleChange} />
       )}
       {!!comma && ','}
     </>

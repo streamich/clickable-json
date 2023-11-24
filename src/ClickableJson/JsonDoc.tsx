@@ -1,105 +1,78 @@
 import * as React from 'react';
+import * as css from '../css';
 import {context} from './context';
 import {JsonProperty} from './JsonProperty';
 import {JsonValue} from './JsonValue';
 import {JsonHoverable} from './JsonHoverable';
-import * as css from '../css';
 import {JsonObjectInsert} from './JsonObjectInsert';
 import {JsonArrayInsert} from './JsonArrayInsert';
+import {ObjectLayout} from '../ObjectLayout';
+import {useFocus} from '../context/focus';
+import {useStyles} from '../context/style';
 import type {OnChange} from './types';
-import {useTheme} from 'nano-theme';
 
 interface JsonObjectProps {
   property?: string | number;
   doc: object;
   pointer: string;
+  parentCollapsed?: boolean;
   comma?: boolean;
   onChange?: OnChange;
 }
 
-const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, comma, onChange}) => {
-  const {activePointer, formal, keepOrder} = React.useContext(context);
+const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, parentCollapsed, comma, onChange}) => {
+  const {pfx} = React.useContext(context);
+  const {focused} = useFocus();
+  const {formal, keepOrder, collapsed: startsCollapsed} = useStyles();
   const keys = React.useMemo(() => {
     const k = Object.keys(doc);
     return keepOrder ? k : k.sort();
   }, [doc]);
-  const [collapsed, setCollapsed] = React.useState(false);
-  const [brackedHovered, setBracketHovered] = React.useState(false);
-  const theme = useTheme();
-
-  const onBracketMouseEnter = () => {
-    setBracketHovered(true);
-  };
-
-  const onBracketMouseLeave = () => {
-    setBracketHovered(false);
-  };
+  const [collapsed, setCollapsed] = React.useState(startsCollapsed);
 
   const handleBracketClick = () => {
-    if (!collapsed && pointer === activePointer) setCollapsed(true);
+    if (!collapsed && pfx + pointer === focused) setCollapsed(true);
   };
 
-  const bracketColor = theme.g(0.3);
+  const entries = keys.map((key, index) => {
+    const itemPointer = `${pointer}/${key}`;
+    return (
+      <span key={key} className={css.line}>
+        <JsonHoverable pointer={itemPointer}>
+          <span className={css.lineInner}>
+            <JsonDoc
+              property={key}
+              doc={(doc as Record<string, unknown>)[key]}
+              pointer={itemPointer}
+              parentCollapsed={collapsed}
+              comma={formal && index < keys.length - 1}
+              onChange={onChange}
+            />
+          </span>
+        </JsonHoverable>
+      </span>
+    );
+  });
 
   return (
-    <span
-      className={css.object}
+    <ObjectLayout
+      collapsed={collapsed}
+      collapsedView={!!keys.length && <strong>{keys.length}</strong>}
+      comma={comma}
+      property={
+        typeof property === 'string' && (
+          <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />
+        )
+      }
       onClick={() => {
         if (collapsed) setCollapsed(false);
       }}
+      onCollapserClick={() => setCollapsed((x) => !x)}
+      onBracketClick={handleBracketClick}
     >
-      <span className={css.collapser} style={{color: theme.g(0.6)}} onClick={() => setCollapsed((x) => !x)}>
-        {collapsed ? '+' : '—'}
-      </span>
-      <span>
-        {typeof property === 'string' && <JsonProperty pointer={pointer} onChange={onChange} />}
-        <span
-          className={css.bracket + (brackedHovered ? css.bracketHovered : '')}
-          style={{display: collapsed ? 'none' : undefined, color: bracketColor}}
-          onMouseEnter={onBracketMouseEnter}
-          onMouseLeave={onBracketMouseLeave}
-          onClick={handleBracketClick}
-        >
-          {'{'}
-        </span>
-        <span className={css.collapsed} style={{display: !collapsed ? 'none' : undefined}}>
-          <span style={{color: css.blue}}>{'{'}</span>
-          {!!keys.length && <strong>{keys.length}</strong>}
-          <span style={{color: css.blue}}>{'}'}</span>
-        </span>
-      </span>
-      <span className={css.list} style={{display: collapsed ? 'none' : undefined}}>
-        {keys.map((key, index) => {
-          const itemPointer = `${pointer}/${key}`;
-          return (
-            <span key={key} className={css.line}>
-              <JsonHoverable pointer={itemPointer}>
-                <span className={css.lineInner}>
-                  <JsonDoc
-                    property={key}
-                    doc={(doc as Record<string, unknown>)[key]}
-                    pointer={itemPointer}
-                    comma={formal && index < keys.length - 1}
-                    onChange={onChange}
-                  />
-                </span>
-              </JsonHoverable>
-            </span>
-          );
-        })}
-        <JsonObjectInsert pointer={pointer} visible={activePointer === pointer} />
-      </span>
-      <span
-        className={css.bracket + (brackedHovered ? css.bracketHovered : '')}
-        style={{display: collapsed ? 'none' : undefined, color: bracketColor}}
-        onMouseEnter={onBracketMouseEnter}
-        onMouseLeave={onBracketMouseLeave}
-        onClick={handleBracketClick}
-      >
-        {'}'}
-      </span>
-      {!!comma && ','}
-    </span>
+      {entries}
+      <JsonObjectInsert pointer={pointer} visible={focused === pfx + pointer} />
+    </ObjectLayout>
   );
 };
 
@@ -107,91 +80,63 @@ interface JsonArrayProps {
   property?: string | number;
   doc: unknown[];
   pointer: string;
+  parentCollapsed?: boolean;
   comma?: boolean;
   onChange?: OnChange;
 }
 
-const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, comma, onChange}) => {
-  const [collapsed, setCollapsed] = React.useState(false);
-  const [brackedHovered, setBracketHovered] = React.useState(false);
-  const {activePointer, formal: selectable} = React.useContext(context);
-  const theme = useTheme();
-
-  const onBracketMouseEnter = () => {
-    setBracketHovered(true);
-  };
-
-  const onBracketMouseLeave = () => {
-    setBracketHovered(false);
-  };
+const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, parentCollapsed, comma, onChange}) => {
+  const {pfx} = React.useContext(context);
+  const {focused} = useFocus();
+  const {formal: selectable, collapsed: startsCollapsed} = useStyles();
+  const [collapsed, setCollapsed] = React.useState(startsCollapsed);
 
   const handleBracketClick = () => {
-    if (!collapsed && pointer === activePointer) setCollapsed(true);
+    if (!collapsed && pfx + pointer === focused) setCollapsed(true);
   };
 
-  const bracketColor = theme.g(0.3);
+  const entries = doc.map((value, index) => {
+    const itemPointer = `${pointer}/${index}`;
+    return (
+      <React.Fragment key={index}>
+        <JsonArrayInsert pointer={`${pointer}/${index}`} visible={focused === pfx + pointer} />
+        <span className={css.line}>
+          <JsonHoverable pointer={itemPointer}>
+            <span className={css.lineInner}>
+              <JsonDoc
+                doc={doc[index]}
+                pointer={itemPointer}
+                parentCollapsed={collapsed}
+                comma={selectable && index < doc.length - 1}
+                onChange={onChange}
+              />
+            </span>
+          </JsonHoverable>
+        </span>
+      </React.Fragment>
+    );
+  });
 
   return (
-    <span
-      className={css.object}
+    <ObjectLayout
+      collapsed={collapsed}
+      collapsedView={!!doc.length && <strong>{doc.length}</strong>}
+      comma={comma}
+      property={
+        typeof property === 'string' && (
+          <JsonProperty key={'k' + String(parentCollapsed)} pointer={pointer} onChange={onChange} />
+        )
+      }
       onClick={() => {
         if (collapsed) setCollapsed(false);
       }}
+      onCollapserClick={() => setCollapsed((x) => !x)}
+      onBracketClick={handleBracketClick}
+      brackets={['[', ']']}
     >
-      <span className={css.collapser} style={{color: theme.g(0.6)}} onClick={() => setCollapsed((x) => !x)}>
-        {collapsed ? '+' : '—'}
-      </span>
-      <span>
-        {typeof property === 'string' && <JsonProperty pointer={pointer} onChange={onChange} />}
-        <span
-          className={css.bracket + (brackedHovered ? css.bracketHovered : '')}
-          style={{display: collapsed ? 'none' : undefined, color: bracketColor}}
-          onMouseEnter={onBracketMouseEnter}
-          onMouseLeave={onBracketMouseLeave}
-          onClick={handleBracketClick}
-        >
-          {'['}
-        </span>
-        <span className={css.collapsed} style={{display: !collapsed ? 'none' : undefined}}>
-          <span style={{color: css.blue}}>{'['}</span>
-          {!!doc.length && <strong>{doc.length}</strong>}
-          <span style={{color: css.blue}}>{']'}</span>
-        </span>
-      </span>
-      <span className={css.list} style={{display: collapsed ? 'none' : undefined}}>
-        {doc.map((value, index) => {
-          const itemPointer = `${pointer}/${index}`;
-          return (
-            <React.Fragment key={index}>
-              <JsonArrayInsert pointer={`${pointer}/${index}`} visible={activePointer === pointer} />
-              <span className={css.line}>
-                <JsonHoverable pointer={itemPointer}>
-                  <span className={css.lineInner}>
-                    <JsonDoc
-                      doc={doc[index]}
-                      pointer={itemPointer}
-                      comma={selectable && index < doc.length - 1}
-                      onChange={onChange}
-                    />
-                  </span>
-                </JsonHoverable>
-              </span>
-            </React.Fragment>
-          );
-        })}
-        <JsonArrayInsert pointer={`${pointer}/-`} visible={activePointer === pointer} />
-      </span>
-      <span
-        className={css.bracket + (brackedHovered ? css.bracketHovered : '')}
-        style={{display: collapsed ? 'none' : undefined, color: bracketColor}}
-        onMouseEnter={onBracketMouseEnter}
-        onMouseLeave={onBracketMouseLeave}
-        onClick={handleBracketClick}
-      >
-        {']'}
-      </span>
-      {!!comma && ','}
-    </span>
+      {entries}
+      <JsonArrayInsert pointer={`${pointer}/-`} visible={focused === pfx + pointer} />
+    </ObjectLayout>
   );
 };
 
@@ -199,6 +144,7 @@ export interface JsonDocProps {
   property?: string | number;
   doc: unknown;
   pointer: string;
+  parentCollapsed?: boolean;
   comma?: boolean;
   onChange?: OnChange;
 }

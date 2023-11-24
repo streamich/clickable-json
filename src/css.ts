@@ -96,6 +96,9 @@ export const lineInner = rule({
 });
 
 export const hoverable = rule({
+  d: 'inline-block',
+  pos: 'relative',
+  va: 'top',
   bxz: 'border-box',
   pd: '3px',
   bdrad: '4px',
@@ -110,12 +113,17 @@ export const hovered = rule({
   bgc: theme.blue(0.1),
 });
 
+export const hoveredDanger = rule({
+  bgc: theme.red(0.08),
+});
+
 export const active = rule({
   out: `1px dotted ${blue}`,
   pos: 'relative',
 });
 
 export const bracket = rule({
+  pos: 'relative',
   cur: 'default',
 });
 
@@ -158,10 +166,10 @@ export const insArrDot = rule({
   bg: blue,
   pe: 'none',
   [`.${insArrBlock.trim()}:hover &`]: {
-    top: '-1px',
-    left: '-5px',
-    w: '5px',
-    h: '5px',
+    top: '-2px',
+    left: '2px',
+    w: '7px',
+    h: '7px',
   },
 });
 
@@ -174,8 +182,8 @@ export const insArrLine = rule({
   bdt: `1px dotted ${blue}`,
   pe: 'none',
   [`.${insArrBlock.trim()}:hover &`]: {
-    l: '-58px',
-    w: '54px',
+    l: '-56px',
+    w: '56px',
     bdt: `1px solid ${blue}`,
   },
 });

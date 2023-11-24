@@ -106,3 +106,10 @@ export const InteractiveLarge: StoryObj<typeof meta> = {
     layout: 'fullscreen',
   },
 };
+
+export const Collapsed: StoryObj<typeof meta> = {
+  render: () => <Demo doc={doc2} collapsed />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
