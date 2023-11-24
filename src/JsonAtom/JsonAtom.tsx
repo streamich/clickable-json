@@ -6,14 +6,14 @@ const blue = theme.color.sem.blue[0];
 
 export interface JsonAtomProps {
   value: unknown;
-  onClick?: React.MouseEventHandler
+  onClick?: React.MouseEventHandler;
 }
 
 export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
   const {value, onClick} = props;
   const theme = useTheme();
 
-  let color = theme.g(.2);
+  let color = theme.g(0.2);
   let formatted = '∅';
 
   if (Array.isArray(value)) {
@@ -40,6 +40,8 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
   }
 
   return (
-    <span style={{color}} onClick={onClick}>{formatted}</span>
+    <span style={{color}} onClick={onClick}>
+      {formatted}
+    </span>
   );
 };

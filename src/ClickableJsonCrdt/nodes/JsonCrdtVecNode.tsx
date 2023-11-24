@@ -20,9 +20,7 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
   node.node.children((child) => {
     entries.push(
       <span key={child.id.sid + '.' + child.id.time} className={css.line}>
-        <span className={css.lineInner}>
-          {render(new NodeRef(child, node, String(i)))}
-        </span>
+        <span className={css.lineInner}>{render(new NodeRef(child, node, String(i)))}</span>
       </span>,
     );
     i++;
@@ -30,10 +28,9 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
 
   return (
     <JsonCrdtRegion node={node}>
-      <ObjectLayout
-        property={<JsonCrdtProperty node={node} />}
-        brackets={['[', ']']}
-      >{entries}</ObjectLayout>
+      <ObjectLayout property={<JsonCrdtProperty node={node} />} brackets={['[', ']']}>
+        {entries}
+      </ObjectLayout>
     </JsonCrdtRegion>
   );
 };

@@ -31,7 +31,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, parentCo
   const [collapsed, setCollapsed] = React.useState(startsCollapsed);
 
   const handleBracketClick = () => {
-    if (!collapsed && (pfx + pointer === focused)) setCollapsed(true);
+    if (!collapsed && pfx + pointer === focused) setCollapsed(true);
   };
 
   const entries = keys.map((key, index) => {
@@ -92,7 +92,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, parentColl
   const [collapsed, setCollapsed] = React.useState(startsCollapsed);
 
   const handleBracketClick = () => {
-    if (!collapsed && (pfx + pointer === focused)) setCollapsed(true);
+    if (!collapsed && pfx + pointer === focused) setCollapsed(true);
   };
 
   const entries = doc.map((value, index) => {
