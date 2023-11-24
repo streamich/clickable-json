@@ -22,8 +22,6 @@ export const JsonCrdtObjInsert: React.FC<JsonCrdtObjInsertProps> = ({node}) => {
     const api = model.api;
     const nodeApi = api.wrap(node.node);
     nodeApi.set({[key]: value});
-    console.log('insert', key, value);
-    console.log(model + '');
   }, [node.node]);
 
   return (

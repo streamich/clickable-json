@@ -28,6 +28,8 @@ export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, onSubmit}) =
     setEditing(false);
   };
 
+  if (!visible) return null;
+
   if (editing) {
     const keyInput = (
       <span
