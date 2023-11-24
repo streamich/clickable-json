@@ -4,6 +4,7 @@ import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import type {ConNode} from 'json-joy/es2020/json-crdt';
 import type {NodeRef} from '../NodeRef';
+import {JsonAtom} from '../../JsonAtom/JsonAtom';
 
 export interface JsonCrdtConNodeProps {
   node: NodeRef<ConNode>;
@@ -16,7 +17,8 @@ export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node, parentCol
   return (
     <JsonCrdtRegion node={node}>
       <JsonCrdtProperty node={node} />
-      <ClickableJson readonly compact collapsed noCollapseToggles doc={node.node.view()} />
+      <JsonAtom value={node.node.view()} />
+      {/* <ClickableJson readonly compact collapsed noCollapseToggles doc={node.node.view()} /> */}
       {!!comma && ','}
     </JsonCrdtRegion>
   );
