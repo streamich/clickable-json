@@ -15,7 +15,7 @@ export interface JsonCrdtValNodeProps {
 export const JsonCrdtValNode: React.FC<JsonCrdtValNodeProps> = ({node}) => {
   const {render} = useJsonCrdt();
 
-  const childNode = node.node.child();
+  const childNode = node.node.node();
   const child = <span className={css.line}>{render(new NodeRef(childNode, node, ''))}</span>;
 
   let collapsedView: React.ReactNode = '…';

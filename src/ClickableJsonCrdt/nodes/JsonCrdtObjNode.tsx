@@ -4,8 +4,9 @@ import {NodeRef} from '../NodeRef';
 import * as css from '../../css';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
-import type {ObjNode} from 'json-joy/es2020/json-crdt';
 import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
+import {JsonCrdtObjInsert} from './JsonCrdtObjInsert';
+import type {ObjNode} from 'json-joy/es2020/json-crdt';
 
 export interface JsonCrdtObjNodeProps {
   node: NodeRef<ObjNode>;
@@ -32,6 +33,7 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
         collapsedView={!!entries.length && entries.length}
       >
         {entries}
+        <JsonCrdtObjInsert node={node} />
       </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
   );

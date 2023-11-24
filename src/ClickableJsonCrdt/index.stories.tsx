@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ClickableJsonCrdt} from '.';
+import {ClickableJsonCrdt, ClickableJsonCrdtProps} from '.';
 import {Model} from 'json-joy/es2020/json-crdt';
 import {s} from 'json-joy/es2020/json-crdt-patch';
 import type {Meta, StoryObj} from '@storybook/react';
@@ -23,7 +23,7 @@ const model = Model.withLogicalClock();
 model.api.root({
   foo: s.con([123, [null]]),
   bar: true,
-  baz: {x: 1},
+  baz: {x: 1, val: s.val(s.con(true))},
   emptyObject: {},
   qux: s.vec(s.con(1), s.con(-2), s.con('three'), s.con({four: 4})),
   arr: [s.con(0), 'hello world', -5, s.val(s.val(s.con(null))), s.val(s.con({foo: 'bar'}))],
@@ -54,7 +54,7 @@ export const ShowRoot: StoryObj<typeof meta> = {
   },
 };
 
-const Demo: React.FC<{view?: unknown}> = ({view}) => {
+const Demo: React.FC<{view?: unknown} & Omit<ClickableJsonCrdtProps, 'model'>> = ({view, ...rest}) => {
   const model = React.useMemo(() => {
     const model = Model.withLogicalClock();
     if (view !== undefined) model.api.root(view);
@@ -63,7 +63,7 @@ const Demo: React.FC<{view?: unknown}> = ({view}) => {
 
   return (
     <div style={{padding: '32px 64px'}}>
-      <ClickableJsonCrdt model={model} />
+      <ClickableJsonCrdt {...rest} model={model} />
     </div>
   );
 };
