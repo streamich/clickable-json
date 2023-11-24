@@ -14,18 +14,11 @@ export interface JsonCrdtValNodeProps {
 export const JsonCrdtValNode: React.FC<JsonCrdtValNodeProps> = ({node}) => {
   const {render} = useJsonCrdt();
 
-  const child = (
-    <span className={css.line}>
-      {render(new NodeRef(node.node.child(), node, ''))}
-    </span>
-  );
+  const child = <span className={css.line}>{render(new NodeRef(node.node.child(), node, ''))}</span>;
 
   return (
     <JsonCrdtRegion node={node}>
-      <JsonCrdtObjectLayout
-        property={<JsonCrdtProperty node={node} />}
-        brackets={['(', ')']}
-      >
+      <JsonCrdtObjectLayout property={<JsonCrdtProperty node={node} />} brackets={['(', ')']}>
         {child}
       </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
