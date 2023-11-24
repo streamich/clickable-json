@@ -11,6 +11,7 @@ export interface ObjectLayoutProps {
   collapsed?: boolean;
   comma?: boolean;
   brackets?: [opening: string, closing: string];
+  manageCollapse?: boolean;
   onClick?: React.MouseEventHandler;
   onCollapserClick?: React.MouseEventHandler;
   onBracketClick?: () => void;

@@ -3,9 +3,9 @@ import * as css from '../../css';
 import {NodeRef} from '../NodeRef';
 import {useJsonCrdt} from '../context';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
-import {ObjectLayout} from '../../ObjectLayout';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import type {ValNode} from 'json-joy/es2020/json-crdt';
+import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
 
 export interface JsonCrdtValNodeProps {
   node: NodeRef<ValNode>;
@@ -22,12 +22,12 @@ export const JsonCrdtValNode: React.FC<JsonCrdtValNodeProps> = ({node}) => {
 
   return (
     <JsonCrdtRegion node={node}>
-      <ObjectLayout
+      <JsonCrdtObjectLayout
         property={<JsonCrdtProperty node={node} />}
         brackets={['(', ')']}
       >
         {child}
-      </ObjectLayout>
+      </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
   );
 };

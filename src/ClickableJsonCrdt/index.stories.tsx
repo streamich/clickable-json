@@ -24,6 +24,7 @@ model.api.root({
   foo: s.con([123, [null]]),
   bar: true,
   baz: {x: 1},
+  emptyObject: {},
   qux: s.vec(s.con(1), s.con(-2), s.con('three'), s.con({four: 4})),
   arr: [s.con(0), 'hello world', -5, s.val(s.val(s.con(null)))],
   bin: s.bin(new Uint8Array([1, 2, 3, 4, 5])),

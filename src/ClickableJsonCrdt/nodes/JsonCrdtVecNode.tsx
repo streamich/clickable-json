@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as css from '../../css';
 import {useJsonCrdt} from '../context';
 import {NodeRef} from '../NodeRef';
-import {ObjectLayout} from '../../ObjectLayout';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
+import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
 import type {VecNode} from 'json-joy/es2020/json-crdt';
 
 export interface JsonCrdtVecNodeProps {
@@ -28,13 +28,14 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
 
   return (
     <JsonCrdtRegion node={node}>
-      <ObjectLayout
+      <JsonCrdtObjectLayout
         property={<JsonCrdtProperty node={node} />}
+        collapsedView={!!entries.length && entries.length}
         brackets={['[', ']']}
         header={<span style={{opacity: 0.5, display: 'inline-block', margin: '0.25em 0 0 -0.3em'}}>→</span>}
       >
         {entries}
-      </ObjectLayout>
+      </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
   );
 };

@@ -2,10 +2,10 @@ import * as React from 'react';
 import {useJsonCrdt} from '../context';
 import {NodeRef} from '../NodeRef';
 import * as css from '../../css';
-import {ObjectLayout} from '../../ObjectLayout';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import type {ObjNode} from 'json-joy/es2020/json-crdt';
+import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
 
 export interface JsonCrdtObjNodeProps {
   node: NodeRef<ObjNode>;
@@ -26,7 +26,12 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
 
   return (
     <JsonCrdtRegion node={node}>
-      <ObjectLayout property={<JsonCrdtProperty node={node} />}>{entries}</ObjectLayout>
+      <JsonCrdtObjectLayout
+        property={<JsonCrdtProperty node={node} />}
+        collapsedView={!!entries.length && entries.length}
+      >
+        {entries}
+      </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
   );
 };
