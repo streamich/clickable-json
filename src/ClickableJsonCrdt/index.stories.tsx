@@ -25,7 +25,7 @@ model.api.root({
   bar: true,
   baz: {x: 1},
   qux: s.vec(s.con(1), s.con(-2), s.con('three'), s.con({four: 4})),
-  arr: [s.con(0), 'hello world'],
+  arr: [s.con(0), 'hello world', -5],
 });
 
 console.log(model + '');
