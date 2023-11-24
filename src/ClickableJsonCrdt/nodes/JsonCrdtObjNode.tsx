@@ -6,6 +6,7 @@ import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
 import {JsonCrdtObjInsert} from './JsonCrdtObjInsert';
+import {useRerender} from '../hooks';
 import type {ObjNode} from 'json-joy/es2020/json-crdt';
 
 export interface JsonCrdtObjNodeProps {
@@ -14,6 +15,7 @@ export interface JsonCrdtObjNodeProps {
 
 export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
   const {render} = useJsonCrdt();
+  useRerender(node);
 
   const entries: React.ReactNode[] = [];
 
