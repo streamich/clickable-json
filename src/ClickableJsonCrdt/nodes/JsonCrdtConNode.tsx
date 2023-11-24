@@ -7,6 +7,7 @@ import {ClickableJson} from '../../ClickableJson';
 import {id} from '../utils';
 import type {ConNode} from 'json-joy/es2020/json-crdt';
 import type {NodeRef} from '../NodeRef';
+import {useFocus} from '../../context/focus';
 
 export interface JsonCrdtConNodeProps {
   node: NodeRef<ConNode>;
@@ -14,6 +15,7 @@ export interface JsonCrdtConNodeProps {
 
 export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node}) => {
   const {formal} = useStyles();
+  const {focus} = useFocus();
   const [viewJson, setViewJson] = React.useState(false);
 
   const view = node.node.view();
@@ -31,7 +33,17 @@ export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node}) => {
       <JsonCrdtProperty node={node} />
       {viewJson ? (
         <span style={{display: 'inline-block', verticalAlign: 'top', margin: '-1px'}}>
-          <ClickableJson readonly compact collapsed noCollapseToggles pfx={id(node)} doc={node.node.view()} />
+          <ClickableJson
+            readonly
+            compact
+            // collapsed
+            noCollapseToggles
+            pfx={id(node)}
+            doc={node.node.view()}
+            onFocus={(p) => {
+              if (p !== null) focus(id(node));
+            }}
+          />
         </span>
       ) : (
         <JsonAtom value={node.node.view()} onClick={handleAtomClick} />

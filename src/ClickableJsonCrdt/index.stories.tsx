@@ -40,3 +40,38 @@ export const Primary: StoryObj<typeof meta> = {
     layout: 'fullscreen',
   },
 };
+
+const Demo: React.FC<{view?: unknown}> = ({view}) => {
+  const model = React.useMemo(() => {
+    const model = Model.withLogicalClock();
+    if (view !== undefined) model.api.root(view);
+    return model;
+  }, []);
+
+  return (
+    <div style={{padding: '32px 64px'}}>
+      <ClickableJsonCrdt model={model} />
+    </div>
+  );
+};
+
+export const EmptyDoc: StoryObj<typeof meta> = {
+  render: () => <Demo />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const ConstantRoot: StoryObj<typeof meta> = {
+  render: () => <Demo view={s.con(123456789)} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const ConstantRootJson: StoryObj<typeof meta> = {
+  render: () => <Demo view={s.con({foo: [123, 'bar']})} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
