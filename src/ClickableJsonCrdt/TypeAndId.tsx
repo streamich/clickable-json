@@ -25,7 +25,7 @@ export const TypeAndId: React.FC<TypeAndIdProps> = React.memo(({node, active}) =
     <span className={blockClass} style={{color: active ? theme.color.sem.blue[0] : theme.g(0, 0.5)}}>
       {(node.node as JsonNode).name()}
       <span style={{color: active ? theme.g(0, 0.45) : theme.g(0, 0.2), display: 'block'}}>
-        {active ? ('...' + String(sid).slice(String(sid).length - 4)) : null}
+        {active ? ((sid > 999 ? '...' : '') + String(sid).slice(String(sid).length - 4)) : null}
         <span style={{color: active ? theme.g(0, 0.7) : theme.g(0, 0.3)}}>{'.' + time}</span>
       </span>
     </span>
