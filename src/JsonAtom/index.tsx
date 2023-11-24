@@ -20,7 +20,7 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
     color = blue;
     formatted = '[' + value.length + ']';
   } else if (value instanceof Uint8Array) {
-    color = theme.g(0, 0.5);
+    color = theme.g(.45);
     formatted = (
       <span>
         <span style={{color: theme.red(1), fontSize: '0.8em', fontWeight: 'bold'}}>0x</span>
