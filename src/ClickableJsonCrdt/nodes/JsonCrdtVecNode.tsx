@@ -29,6 +29,7 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
   return (
     <JsonCrdtRegion node={node}>
       <JsonCrdtObjectLayout
+        node={node}
         property={<JsonCrdtProperty node={node} />}
         collapsedView={!!entries.length && entries.length}
         brackets={['[', ']']}

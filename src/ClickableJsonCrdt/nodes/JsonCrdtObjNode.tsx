@@ -27,6 +27,7 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
   return (
     <JsonCrdtRegion node={node}>
       <JsonCrdtObjectLayout
+        node={node}
         property={<JsonCrdtProperty node={node} />}
         collapsedView={!!entries.length && entries.length}
       >
