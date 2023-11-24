@@ -4,7 +4,16 @@ import {StyleContextValue, context as styles} from '../context/style';
 import {NodeRef} from './NodeRef';
 import {Root} from '../Root';
 import {FocusProvider} from '../context/focus';
-import {ConNode, ValNode, type JsonNode, type Model, ObjNode, VecNode, ArrNode, StrNode} from 'json-joy/es2020/json-crdt';
+import {
+  ConNode,
+  ValNode,
+  type JsonNode,
+  type Model,
+  ObjNode,
+  VecNode,
+  ArrNode,
+  StrNode,
+} from 'json-joy/es2020/json-crdt';
 import {JsonCrdtConNode} from './nodes/JsonCrdtConNode';
 import {JsonCrdtValNode} from './nodes/JsonCrdtValNode';
 import {JsonCrdtObjNode} from './nodes/JsonCrdtObjNode';

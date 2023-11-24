@@ -28,7 +28,11 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
 
   return (
     <JsonCrdtRegion node={node}>
-      <ObjectLayout property={<JsonCrdtProperty node={node} />} brackets={['[', ']']} header={<span style={{opacity: .5, display: 'inline-block', margin: '0.275em 0 0 -0.3em'}}>→</span>}>
+      <ObjectLayout
+        property={<JsonCrdtProperty node={node} />}
+        brackets={['[', ']']}
+        header={<span style={{opacity: 0.5, display: 'inline-block', margin: '0.275em 0 0 -0.3em'}}>→</span>}
+      >
         {entries}
       </ObjectLayout>
     </JsonCrdtRegion>
