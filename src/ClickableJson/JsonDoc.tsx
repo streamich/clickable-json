@@ -7,6 +7,8 @@ import {JsonHoverable} from './JsonHoverable';
 import {JsonObjectInsert} from './JsonObjectInsert';
 import {JsonArrayInsert} from './JsonArrayInsert';
 import {ObjectLayout} from '../ObjectLayout';
+import {useFocus} from '../context/focus';
+import {useStyles} from '../context/style';
 import type {OnChange} from './types';
 
 interface JsonObjectProps {
@@ -19,7 +21,8 @@ interface JsonObjectProps {
 }
 
 const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, parentCollapsed, comma, onChange}) => {
-  const {activePointer, formal, keepOrder, collapsed: startsCollapsed} = React.useContext(context);
+  const {focused} = useFocus();
+  const {formal, keepOrder, collapsed: startsCollapsed} = useStyles();
   const keys = React.useMemo(() => {
     const k = Object.keys(doc);
     return keepOrder ? k : k.sort();
@@ -27,7 +30,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, parentCo
   const [collapsed, setCollapsed] = React.useState(startsCollapsed);
 
   const handleBracketClick = () => {
-    if (!collapsed && pointer === activePointer) setCollapsed(true);
+    if (!collapsed && pointer === focused) setCollapsed(true);
   };
 
   const entries = keys.map((key, index) => {
@@ -67,7 +70,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, parentCo
       onBracketClick={handleBracketClick}
     >
       {entries}
-      <JsonObjectInsert pointer={pointer} visible={activePointer === pointer} />
+      <JsonObjectInsert pointer={pointer} visible={focused === pointer} />
     </ObjectLayout>
   );
 };
@@ -82,18 +85,19 @@ interface JsonArrayProps {
 }
 
 const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, parentCollapsed, comma, onChange}) => {
-  const {activePointer, formal: selectable, collapsed: startsCollapsed} = React.useContext(context);
+  const {focused} = useFocus();
+  const {formal: selectable, collapsed: startsCollapsed} = useStyles();
   const [collapsed, setCollapsed] = React.useState(startsCollapsed);
 
   const handleBracketClick = () => {
-    if (!collapsed && pointer === activePointer) setCollapsed(true);
+    if (!collapsed && pointer === focused) setCollapsed(true);
   };
 
   const entries = doc.map((value, index) => {
     const itemPointer = `${pointer}/${index}`;
     return (
       <React.Fragment key={index}>
-        <JsonArrayInsert pointer={`${pointer}/${index}`} visible={activePointer === pointer} />
+        <JsonArrayInsert pointer={`${pointer}/${index}`} visible={focused === pointer} />
         <span className={css.line}>
           <JsonHoverable pointer={itemPointer}>
             <span className={css.lineInner}>
@@ -129,7 +133,7 @@ const JsonArray: React.FC<JsonArrayProps> = ({property, doc, pointer, parentColl
       brackets={['[', ']']}
     >
       {entries}
-      <JsonArrayInsert pointer={`${pointer}/-`} visible={activePointer === pointer} />
+      <JsonArrayInsert pointer={`${pointer}/-`} visible={focused === pointer} />
     </ObjectLayout>
   );
 };

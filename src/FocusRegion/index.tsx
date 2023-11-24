@@ -41,23 +41,18 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
   const [deleteHovered, setDeleteHovered] = React.useState(false);
   const useInsButtonClass = css.useInsButton();
 
-  if (onDelete) {
-    children = (
-      <>
-        {children}
-        <button
-          className={css.insButton + useInsButtonClass + css.deleteButton}
-          onClick={onDelete}
-          onMouseEnter={() => setDeleteHovered(true)}
-          onMouseOver={() => setDeleteHovered(true)}
-          onMouseLeave={() => setDeleteHovered(false)}
-        >
-          <Svg set="atlaskit" icon="cross" width={10} height={10} />
-          <span className={css.tooltip + css.deleteButtonTooltip}>{t('Delete')}</span>
-        </button>
-      </>
-    );
-  }
+  const deleteButton = onDelete ? (
+    <button
+      className={css.insButton + useInsButtonClass + css.deleteButton}
+      onClick={onDelete}
+      onMouseEnter={() => setDeleteHovered(true)}
+      onMouseOver={() => setDeleteHovered(true)}
+      onMouseLeave={() => setDeleteHovered(false)}
+    >
+      <Svg set="atlaskit" icon="cross" width={10} height={10} />
+      <span className={css.tooltip + css.deleteButtonTooltip}>{t('Delete')}</span>
+    </button>
+  ) : undefined;
 
   const className =
     css.hoverable +
@@ -78,6 +73,7 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
       onClick={onClick}
     >
       {children}
+      {deleteButton}
       {!!aside && <span className={asideClass}>{aside}</span>}
     </span>
   );

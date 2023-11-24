@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useTheme} from 'nano-theme';
-import {context} from './context';
 import * as css from '../css';
 import {FlexibleInput} from '../FlexibleInput';
+import {useStyles} from '../context/style';
 import type {OnChange} from './types';
 
 export interface JsonPropertyProps {
@@ -11,7 +11,7 @@ export interface JsonPropertyProps {
 }
 
 export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) => {
-  const {formal} = React.useContext(context);
+  const {formal} = useStyles();
   const steps = React.useMemo(() => pointer.split('/'), [pointer]);
   const property = React.useMemo(() => steps[steps.length - 1], [steps]);
   const [proposed, setProposed] = React.useState(property);
