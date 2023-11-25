@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as css from '../../css';
-import {NodeRef} from '../NodeRef';
+import {NodeRef, nodeRef} from '../NodeRef';
 import {useJsonCrdt} from '../context';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
@@ -16,7 +16,7 @@ export const JsonCrdtValNode: React.FC<JsonCrdtValNodeProps> = ({node}) => {
   const {render} = useJsonCrdt();
 
   const childNode = node.node.node();
-  const child = <span className={css.line}>{render(new NodeRef(childNode, node, ''))}</span>;
+  const child = <span className={css.line}>{render(nodeRef(childNode, node, ''))}</span>;
 
   let collapsedView: React.ReactNode = '…';
   if (childNode.name() === 'con') {

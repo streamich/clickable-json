@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as css from '../../css';
 import {useJsonCrdt} from '../context';
-import {NodeRef} from '../NodeRef';
+import {NodeRef, nodeRef} from '../NodeRef';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
@@ -20,7 +20,7 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
   node.node.children((child) => {
     entries.push(
       <span key={child.id.sid + '.' + child.id.time} className={css.line}>
-        {render(new NodeRef(child, node, String(i)))}
+        {render(nodeRef(child, node, String(i)))}
       </span>,
     );
     i++;
