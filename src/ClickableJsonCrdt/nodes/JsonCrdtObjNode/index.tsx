@@ -42,7 +42,7 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
       >
         {entries}
         <AddKey node={node} />
-        {!!tombstones.length && <Tombstones node={node} tombstones={tombstones} />}
+        {!!tombstones.length && <Tombstones tombstones={tombstones} />}
       </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
   );

@@ -71,7 +71,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onDelete={
-        isFocused && (node.parent?.node.name() === 'obj') && !isTombstone
+        isFocused && node.parent?.node.name() === 'obj' && !isTombstone
           ? () => {
               // eslint-disable-next-line
               const api = model.api.wrap(node.parent?.node! as ObjNode);

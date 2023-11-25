@@ -1,9 +1,7 @@
 import * as React from 'react';
 import {rule, theme} from 'nano-theme';
 import {useT} from 'use-t';
-import type {ObjNode} from 'json-joy/es2020/json-crdt';
 import {MiniTitle} from 'p4-ui/lib/src/3-list-item/MiniTitle';
-import {NodeRef} from '../../NodeRef';
 
 const blockClass = rule({
   d: 'block',
@@ -25,11 +23,10 @@ const titleClass = rule({
 });
 
 export interface TombstonesProps {
-  node: NodeRef<ObjNode>;
   tombstones: React.ReactNode[];
 }
 
-export const Tombstones: React.FC<TombstonesProps> = ({node, tombstones}) => {
+export const Tombstones: React.FC<TombstonesProps> = ({tombstones}) => {
   const [showTombstones, setShowTombstones] = React.useState(false);
   const [t] = useT();
 
@@ -37,8 +34,8 @@ export const Tombstones: React.FC<TombstonesProps> = ({node, tombstones}) => {
 
   return (
     <span className={blockClass}>
-      <style className={titleClass} onClick={() => setShowTombstones(x => !x)}>
-        <MiniTitle style={{fontSize: '0.6em', color: theme.red(.75)}}>
+      <style className={titleClass} onClick={() => setShowTombstones((x) => !x)}>
+        <MiniTitle style={{fontSize: '0.6em', color: theme.red(0.75)}}>
           {tombstones.length + ' ' + (tombstones.length === 1 ? t('tombstone') : t('tombstones'))}
         </MiniTitle>
       </style>
