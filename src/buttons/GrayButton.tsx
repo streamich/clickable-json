@@ -5,7 +5,7 @@ const buttonClass = rule({
   cur: 'pointer',
   fz: '0.95em',
   bd: 0,
-  pd: '4px',
+  pd: '4px 8px',
   mr: '4px 0',
   bdrad: '4px',
   trs: 'background .15s',
@@ -18,12 +18,12 @@ const buttonClass = rule({
   },
 });
 
-export interface MorePlaceholderButtonProps {
+export interface GrayButtonProps {
   children: React.ReactNode;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const MorePlaceholderButton: React.FC<MorePlaceholderButtonProps> = ({children, onClick}) => {
+export const GrayButton: React.FC<GrayButtonProps> = ({children, onClick}) => {
   const theme = useTheme();
 
   const buttonClassDynamic = useRule(theme => ({
