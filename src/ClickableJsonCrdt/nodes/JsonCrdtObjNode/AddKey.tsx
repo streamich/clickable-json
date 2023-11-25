@@ -6,11 +6,11 @@ import {id} from '../../utils';
 import {useJsonCrdt} from '../../context';
 import type {ObjNode} from 'json-joy/es2020/json-crdt';
 
-export interface JsonCrdtObjInsertProps {
+export interface AddKeyProps {
   node: NodeRef<ObjNode>;
 }
 
-export const JsonCrdtObjInsert: React.FC<JsonCrdtObjInsertProps> = ({node}) => {
+export const AddKey: React.FC<AddKeyProps> = ({node}) => {
   const {model} = useJsonCrdt();
   const isFocused = useIsFocused(id(node));
 

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {useT} from 'use-t';
 import {ConNode, type JsonNode, type ObjNode} from 'json-joy/es2020/json-crdt';
 import * as css from '../../../css';
 import {useJsonCrdt} from '../../context';
@@ -8,9 +7,8 @@ import {JsonCrdtRegion} from '../../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../../JsonCrdtProperty';
 import {JsonCrdtObjectLayout} from '../../JsonCrdtObjectLayout';
 import {useRerender} from '../../hooks';
-import {GrayButton} from '../../../buttons/GrayButton';
-import {GrayCard} from '../../../cards/GrayCard';
-import {JsonCrdtObjInsert} from './Insert';
+import {AddKey} from './AddKey';
+import {Tombstones} from './Tombstones';
 
 const isTombstone = (node: JsonNode) => node instanceof ConNode && node.val === undefined;
 
@@ -19,8 +17,6 @@ export interface JsonCrdtObjNodeProps {
 }
 
 export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
-  const [showTombstones, setShowTombstones] = React.useState(false);
-  const [t] = useT();
   const {render} = useJsonCrdt();
   useRerender(node);
 
@@ -45,19 +41,8 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
         collapsedView={!!entries.length && entries.length}
       >
         {entries}
-        <JsonCrdtObjInsert node={node} />
-        {showTombstones && (
-          <span style={{display: 'inline-block', margin: '4px 0 0 -16px', width: 'calc(100% + 16px)'}}>
-            <GrayCard title={'Tombstones'}>
-              {tombstones}
-            </GrayCard>
-          </span>
-        )}
-        {!showTombstones && tombstones.length > 0 && (
-          <span style={{display: 'inline-block', width: '100%'}}>
-            <GrayButton onClick={() => setShowTombstones(true)}>{tombstones.length} tombstones</GrayButton>
-          </span>
-        )}
+        <AddKey node={node} />
+        {!!tombstones.length && <Tombstones node={node} tombstones={tombstones} />}
       </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
   );
