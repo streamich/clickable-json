@@ -19,7 +19,7 @@ const titleClass = rule({
   d: 'block',
   w: '100%',
   bxz: 'border-box',
-  pd: '4px 3px',
+  pd: '4px 8px 4px 3px',
   cur: 'default',
   us: 'none',
 });
