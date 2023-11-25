@@ -16,44 +16,6 @@ const meta: Meta<typeof Text> = {
 
 export default meta;
 
-const model = Model.withLogicalClock();
-// model.api.root(s.con([123, null]));
-// model.api.root(s.val(s.con([123, null])));
-// model.api.root({foo: s.con([123, null]), bar: true, baz: {x: 1}});
-model.api.root({
-  foo: s.con([123, [null]]),
-  bar: true,
-  baz: {x: 1, val: s.val(s.con(true))},
-  emptyObject: {},
-  qux: s.vec(s.con(1), s.con(-2), s.con('three'), s.con({four: 4})),
-  arr: [s.con(0), 'hello world', -5, s.val(s.val(s.con(null))), s.val(s.con({foo: 'bar'}))],
-  bin: s.bin(new Uint8Array([1, 2, 3, 4, 5])),
-});
-
-console.log(model + '');
-
-export const Primary: StoryObj<typeof meta> = {
-  render: () => (
-    <div style={{padding: '32px 64px'}}>
-      <ClickableJsonCrdt model={model} />
-    </div>
-  ),
-  parameters: {
-    layout: 'fullscreen',
-  },
-};
-
-export const ShowRoot: StoryObj<typeof meta> = {
-  render: () => (
-    <div style={{padding: '32px 64px'}}>
-      <ClickableJsonCrdt showRoot model={model} />
-    </div>
-  ),
-  parameters: {
-    layout: 'fullscreen',
-  },
-};
-
 const Demo: React.FC<{view?: unknown} & Omit<ClickableJsonCrdtProps, 'model'>> = ({view, ...rest}) => {
   const model = React.useMemo(() => {
     const model = Model.withLogicalClock();
@@ -66,6 +28,30 @@ const Demo: React.FC<{view?: unknown} & Omit<ClickableJsonCrdtProps, 'model'>> =
       <ClickableJsonCrdt {...rest} model={model} />
     </div>
   );
+};
+
+const schema1 = {
+  foo: s.con([123, [null]]),
+  bar: true,
+  baz: {x: 1, val: s.val(s.con(true))},
+  emptyObject: {},
+  qux: s.vec(s.con(1), s.con(-2), s.con('three'), s.con({four: 4})),
+  arr: [s.con(0), 'hello world', -5, s.val(s.val(s.con(null))), s.val(s.con({foo: 'bar'}))],
+  bin: s.bin(new Uint8Array([1, 2, 3, 4, 5])),
+};
+
+export const Primary: StoryObj<typeof meta> = {
+  render: () => <Demo view={schema1} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const ShowRoot: StoryObj<typeof meta> = {
+  render: () => <Demo view={schema1} showRoot />,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 export const EmptyDoc: StoryObj<typeof meta> = {
