@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {useTheme} from 'nano-theme';
+import {escapeComponent, unescapeComponent} from 'json-joy/es2020/json-pointer';
 import * as css from '../css';
 import {FlexibleInput} from '../FlexibleInput';
 import {useStyles} from '../context/style';
@@ -13,7 +14,7 @@ export interface JsonPropertyProps {
 export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) => {
   const {formal} = useStyles();
   const steps = React.useMemo(() => pointer.split('/'), [pointer]);
-  const property = React.useMemo(() => steps[steps.length - 1], [steps]);
+  const property = React.useMemo(() => unescapeComponent(steps[steps.length - 1]), [steps]);
   const [proposed, setProposed] = React.useState(property);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [focused, setFocused] = React.useState(false);
@@ -39,7 +40,7 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
     if (e) e.preventDefault();
     if (e) e.stopPropagation();
     if (onChange)
-      onChange([{op: 'move', from: pointer, path: steps.slice(0, steps.length - 1).join('/') + '/' + proposed}]);
+      onChange([{op: 'move', from: pointer, path: steps.slice(0, steps.length - 1).join('/') + '/' + escapeComponent(proposed)}]);
   };
 
   return (
