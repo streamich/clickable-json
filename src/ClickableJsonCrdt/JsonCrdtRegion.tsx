@@ -5,6 +5,8 @@ import {useFocus} from '../context/focus';
 import {id} from './utils';
 import {useStyles} from '../context/style';
 import {TypeAndId} from './TypeAndId';
+import {useJsonCrdt} from './context';
+import type {ObjNode} from 'json-joy/es2020/json-crdt';
 
 export interface JsonCrdtRegionProps {
   node: NodeRef<any>;
@@ -13,6 +15,7 @@ export interface JsonCrdtRegionProps {
 }
 
 export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) => {
+  const {model} = useJsonCrdt();
   const {compact} = useStyles();
   const {focused, focus, pointed, point} = useFocus();
   const nodeId = id(node);
@@ -57,6 +60,10 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
       onMouseMove={onMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onDelete={isFocused && (node.parent?.node.name() === 'obj') ? () => {
+        const api = model.api.wrap(node.parent?.node! as ObjNode);
+        api.del([node.step]);
+      } : undefined}
     >
       {children}
     </FocusRegion>
