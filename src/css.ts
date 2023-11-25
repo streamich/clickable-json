@@ -16,7 +16,7 @@ export const object = rule({
 
 export const ValueColor = {
   nil: [theme.g(0.6), darkTheme.g(0.6)],
-  undef: [theme.g(0.8), darkTheme.g(0.8)],
+  undef: [theme.g(0, 0.2), darkTheme.g(0, 0.2)],
   str: ['#e00e44', '#f01e54'],
   bool: ['#411888', '#9168c8'],
   num: ['#0a8F3F', '#0FaF4F'],

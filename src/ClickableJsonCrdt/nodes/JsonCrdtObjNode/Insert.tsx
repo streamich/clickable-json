@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {NodeRef} from '../NodeRef';
-import {ObjectInsert} from '../../inserts/ObjectInsert';
-import {useIsFocused} from '../../context/focus';
-import {id} from '../utils';
+import {NodeRef} from '../../NodeRef';
+import {ObjectInsert} from '../../../inserts/ObjectInsert';
+import {useIsFocused} from '../../../context/focus';
+import {id} from '../../utils';
+import {useJsonCrdt} from '../../context';
 import type {ObjNode} from 'json-joy/es2020/json-crdt';
-import {useJsonCrdt} from '../context';
 
 export interface JsonCrdtObjInsertProps {
   node: NodeRef<ObjNode>;

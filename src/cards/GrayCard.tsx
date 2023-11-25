@@ -6,7 +6,7 @@ const blockClass = rule({
   d: 'inline-block',
   bxz: 'border-box',
   w: '100%',
-  pd: '16px',
+  pd: '4px 16px',
   bdrad: '8px',
 });
 
@@ -17,13 +17,16 @@ export interface GrayCardProps {
 
 export const GrayCard: React.FC<GrayCardProps> = ({title, children}) => {
   const blockClassDynamic = useRule((theme) => ({
-    bg: theme.g(0, 0.05),
+    // bg: theme.g(0, 0.05),
+    bg: theme.red(0.05),
   }));
 
   return (
-    <span className={blockClass + blockClassDynamic}>
-      {!!title && <MiniTitle>{title}</MiniTitle>}
-      {children}
+    <span>
+      <span className={blockClass + blockClassDynamic}>
+        {!!title && <MiniTitle style={{fontSize: '0.6em'}}>{title}</MiniTitle>}
+        {children}
+      </span>
     </span>
   );
 };

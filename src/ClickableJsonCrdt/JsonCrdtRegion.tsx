@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {FocusRegion} from '../FocusRegion';
-import {NodeRef} from './NodeRef';
 import {useFocus} from '../context/focus';
-import {id} from './utils';
 import {useStyles} from '../context/style';
-import {TypeAndId} from './TypeAndId';
 import {useJsonCrdt} from './context';
+import {TypeAndId} from './TypeAndId';
+import {NodeRef} from './NodeRef';
+import {id} from './utils';
 import type {ObjNode} from 'json-joy/es2020/json-crdt';
 
 export interface JsonCrdtRegionProps {

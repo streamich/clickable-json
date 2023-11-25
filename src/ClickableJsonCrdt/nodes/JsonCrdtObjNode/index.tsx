@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {useT} from 'use-t';
-import * as css from '../../css';
-import {useJsonCrdt} from '../context';
-import {NodeRef, nodeRef} from '../NodeRef';
-import {JsonCrdtRegion} from '../JsonCrdtRegion';
-import {JsonCrdtProperty} from '../JsonCrdtProperty';
-import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
-import {JsonCrdtObjInsert} from './JsonCrdtObjInsert';
-import {useRerender} from '../hooks';
 import {ConNode, type JsonNode, type ObjNode} from 'json-joy/es2020/json-crdt';
-import {GrayButton} from '../../buttons/GrayButton';
-import {GrayCard} from '../../cards/GrayCard';
+import * as css from '../../../css';
+import {useJsonCrdt} from '../../context';
+import {NodeRef, nodeRef} from '../../NodeRef';
+import {JsonCrdtRegion} from '../../JsonCrdtRegion';
+import {JsonCrdtProperty} from '../../JsonCrdtProperty';
+import {JsonCrdtObjectLayout} from '../../JsonCrdtObjectLayout';
+import {useRerender} from '../../hooks';
+import {GrayButton} from '../../../buttons/GrayButton';
+import {GrayCard} from '../../../cards/GrayCard';
+import {JsonCrdtObjInsert} from './Insert';
 
 const isTombstone = (node: JsonNode) => node instanceof ConNode && node.val === undefined;
 
@@ -45,21 +45,19 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
         collapsedView={!!entries.length && entries.length}
       >
         {entries}
+        <JsonCrdtObjInsert node={node} />
         {showTombstones && (
-          <span style={{display: 'inline-block', margin: '8px 0 0 -16px', width: 'calc(100% + 16px)'}}>
-            <GrayCard>
+          <span style={{display: 'inline-block', margin: '4px 0 0 -16px', width: 'calc(100% + 16px)'}}>
+            <GrayCard title={'Tombstones'}>
               {tombstones}
-              <br />
-              <GrayButton onClick={() => setShowTombstones(false)}>{t('Hide tombstones')}</GrayButton>
             </GrayCard>
           </span>
         )}
         {!showTombstones && tombstones.length > 0 && (
-          <span>
+          <span style={{display: 'inline-block', width: '100%'}}>
             <GrayButton onClick={() => setShowTombstones(true)}>{tombstones.length} tombstones</GrayButton>
           </span>
         )}
-        <JsonCrdtObjInsert node={node} />
       </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
   );

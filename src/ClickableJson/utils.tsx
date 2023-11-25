@@ -28,6 +28,7 @@ export const inputColor = (isDark: boolean, input: string): string | undefined =
   input = input.trim();
   if (input === 'true' || input === 'false') return css.ValueColor.bool[~~isDark];
   if (input === 'null') return css.ValueColor.nil[~~isDark];
+  if (input === 'undefined') return css.ValueColor.undef[~~isDark];
   if (input === '0') return css.ValueColor.zero[~~isDark];
   if (input.length < 24) {
     if (input[0] === '-' || (input[0] >= '0' && input[0] <= '9')) {
