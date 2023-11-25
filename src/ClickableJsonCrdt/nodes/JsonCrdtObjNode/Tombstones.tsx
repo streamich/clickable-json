@@ -8,7 +8,7 @@ import {NodeRef} from '../../NodeRef';
 const blockClass = rule({
   d: 'block',
   bxz: 'border-box',
-  pd: '0 16px 4px',
+  pd: '0 4px 4px 16px',
   bdrad: '8px',
   mr: '4px 0 0 -16px',
   w: 'calc(100% + 16px)',
