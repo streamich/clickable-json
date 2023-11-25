@@ -7,10 +7,11 @@ import {FlexibleInput} from '../FlexibleInput';
 
 export interface ObjectInsertProps {
   visible?: boolean;
+  beforeValue?: React.ReactNode;
   onSubmit: (key: string, value: string) => void;
 }
 
-export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, onSubmit}) => {
+export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, beforeValue: valueOptions, onSubmit}) => {
   const [t] = useT();
   const [editing, setEditing] = React.useState(false);
   const [property, setProperty] = React.useState('');
@@ -102,6 +103,7 @@ export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, onSubmit}) =
         <span className={css.colon}>
           <span>{':'}</span>
         </span>
+        {valueOptions}
         {valueInput}
       </span>
     );
