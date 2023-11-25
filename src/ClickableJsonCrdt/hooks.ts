@@ -3,8 +3,13 @@ import {useJsonCrdt} from './context';
 import type {JsonNode} from 'json-joy/es2020/json-crdt';
 import type {NodeRef} from './NodeRef';
 
-export const useRerender = (node: NodeRef<JsonNode>) => {
+export const useNodeApi = <N extends JsonNode>(node: NodeRef<N>) => {
   const {model} = useJsonCrdt();
-  const api = model.api.wrap(node.node);
-  React.useSyncExternalStore(api.events.subscribe, api.events.getSnapshot);
+  return model.api.wrap(node.node);
+};
+
+export const useRerender = (node: NodeRef<JsonNode>) => {
+  const api = useNodeApi(node);
+  const {subscribe, getSnapshot} = api.events;
+  React.useSyncExternalStore(subscribe, getSnapshot);
 };
