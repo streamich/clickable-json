@@ -6,7 +6,15 @@ import {useJsonCrdt} from './context';
 import {TypeAndId} from './TypeAndId';
 import {NodeRef} from './NodeRef';
 import {id} from './utils';
-import type {ObjNode} from 'json-joy/es2020/json-crdt';
+import type {ConNode, JsonNode, ObjNode} from 'json-joy/es2020/json-crdt';
+
+const isObjTombstone = (node: NodeRef<JsonNode>): boolean => {
+  const parent = node.parent;
+  if (!parent) return false;
+  if (parent.node.name() !== 'obj') return false;
+  if (node.node.name() !== 'con') return false;
+  return (node.node as ConNode).val === undefined;
+};
 
 export interface JsonCrdtRegionProps {
   node: NodeRef<any>;
@@ -61,7 +69,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onDelete={
-        isFocused && node.parent?.node.name() === 'obj'
+        isFocused && (node.parent?.node.name() === 'obj') && !isObjTombstone(node)
           ? () => {
               // eslint-disable-next-line
               const api = model.api.wrap(node.parent?.node! as ObjNode);
