@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useJsonCrdt} from '../context';
-import {NodeRef} from '../NodeRef';
+import {NodeRef, nodeRef} from '../NodeRef';
 import * as css from '../../css';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
@@ -22,7 +22,7 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
   node.node.nodes((child, key) => {
     entries.push(
       <span key={key} className={css.line}>
-        {render(new NodeRef(child, node, key))}
+        {render(nodeRef(child, node, key))}
       </span>,
     );
   });
