@@ -1,8 +1,42 @@
 import * as React from 'react';
-import {rule} from 'nano-theme';
+import {rule, theme} from 'nano-theme';
 import {useT} from 'use-t';
 import Svg from 'iconista';
 import * as css from '../css';
+
+const hoverableClass = rule({
+  d: 'inline-block',
+  pos: 'relative',
+  va: 'top',
+  bxz: 'border-box',
+  pd: '3px',
+  bdrad: '4px',
+  trs: 'background-color .3s ease-out',
+});
+
+const hoverableCompactClass = rule({
+  pd: '1px 3px',
+});
+
+const hoveredClass = rule({
+  bgc: theme.blue(0.1),
+});
+
+const hoveredNegativeClass = rule({
+  bgc: theme.red(0.1),
+});
+
+const hoveredDangerClass = rule({
+  bgc: theme.red(0.08),
+});
+
+const activeClass = rule({
+  out: `1px dotted ${css.blue}`,
+});
+
+const activeNegativeClass = rule({
+  out: `1px dotted ${css.negative}`,
+});
 
 const asideClass = rule({
   d: 'inline-block',
@@ -16,6 +50,7 @@ export interface FocusRegionProps {
   pointed?: boolean;
   compact?: boolean;
   aside?: React.ReactNode;
+  negative?: boolean;
   children: React.ReactNode;
   onClick?: React.MouseEventHandler;
   onMouseMove?: React.MouseEventHandler;
@@ -25,7 +60,7 @@ export interface FocusRegionProps {
 }
 
 export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
-  const {focused, pointed, compact, aside, children, onClick, onMouseMove, onMouseEnter, onMouseLeave, onDelete} =
+  const {focused, pointed, compact, aside, negative, children, onClick, onMouseMove, onMouseEnter, onMouseLeave, onDelete} =
     props;
   const [t] = useT();
   const [deleteHovered, setDeleteHovered] = React.useState(false);
@@ -45,11 +80,11 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
   ) : undefined;
 
   const className =
-    css.hoverable +
-    (compact ? css.hoverableCompact : '') +
-    (pointed ? css.hovered : '') +
-    (deleteHovered ? css.hoveredDanger : '') +
-    (focused ? css.active : '');
+    hoverableClass +
+    (compact ? hoverableCompactClass : '') +
+    (pointed ? (negative ? hoveredNegativeClass : hoveredClass) : '') +
+    (deleteHovered ? hoveredDangerClass : '') +
+    (focused ? (negative ? activeNegativeClass : activeClass) : '');
 
   return (
     <span

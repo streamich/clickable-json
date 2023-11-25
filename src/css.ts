@@ -97,33 +97,6 @@ export const lineInner = rule({
   d: 'inline-block',
 });
 
-export const hoverable = rule({
-  d: 'inline-block',
-  pos: 'relative',
-  va: 'top',
-  bxz: 'border-box',
-  pd: '3px',
-  bdrad: '4px',
-  trs: 'background-color .3s ease-out',
-});
-
-export const hoverableCompact = rule({
-  pd: '1px 3px',
-});
-
-export const hovered = rule({
-  bgc: theme.blue(0.1),
-});
-
-export const hoveredDanger = rule({
-  bgc: theme.red(0.08),
-});
-
-export const active = rule({
-  out: `1px dotted ${blue}`,
-  pos: 'relative',
-});
-
 export const bracket = rule({
   pos: 'relative',
   cur: 'default',

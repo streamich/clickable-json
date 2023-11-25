@@ -51,6 +51,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
 
   const isFocused = focused === nodeId;
   const isPointed = pointed === nodeId;
+  const isTombstone = isObjTombstone(node);
 
   const aside = isFocused ? (
     <span style={{display: 'inline-block', margin: '-4px 0 0'}}>
@@ -63,13 +64,14 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
       pointed={isPointed}
       focused={isFocused}
       compact={compact}
+      negative={isTombstone}
       aside={aside}
       onClick={onClick}
       onMouseMove={onMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onDelete={
-        isFocused && (node.parent?.node.name() === 'obj') && !isObjTombstone(node)
+        isFocused && (node.parent?.node.name() === 'obj') && !isTombstone
           ? () => {
               // eslint-disable-next-line
               const api = model.api.wrap(node.parent?.node! as ObjNode);
