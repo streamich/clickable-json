@@ -42,7 +42,7 @@
     "json-crdt"
   ],
   "dependencies": {
-    "json-joy": "^11.4.1",
+    "json-joy": "^11.5.0",
     "nano-theme": "^1.2.0",
     "p4-ui": "^1.15.0"
   },
@@ -58,7 +58,6 @@
     "@storybook/addon-essentials": "^7.5.3",
     "@storybook/addon-interactions": "^7.5.3",
     "@storybook/addon-links": "^7.5.3",
-    "@storybook/addon-onboarding": "^1.0.8",
     "@storybook/addons": "^7.5.3",
     "@storybook/blocks": "^7.5.3",
     "@storybook/react": "^7.5.3",
