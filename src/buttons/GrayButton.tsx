@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {rule, useTheme, useRule} from 'nano-theme';
+import {rule, useRule} from 'nano-theme';
 
 const buttonClass = rule({
   cur: 'pointer',
@@ -24,17 +24,15 @@ export interface GrayButtonProps {
 }
 
 export const GrayButton: React.FC<GrayButtonProps> = ({children, onClick}) => {
-  const theme = useTheme();
-
-  const buttonClassDynamic = useRule(theme => ({
-    col: theme.g(0, .5),
-    bg: theme.g(0, .05),
+  const buttonClassDynamic = useRule((theme) => ({
+    col: theme.g(0, 0.5),
+    bg: theme.g(0, 0.05),
     '&:hover': {
-      col: theme.g(0, .7),
-      bg: theme.g(0, .1),
+      col: theme.g(0, 0.7),
+      bg: theme.g(0, 0.1),
     },
     '&:active': {
-      bg: theme.g(0, .2),
+      bg: theme.g(0, 0.2),
     },
   }));
 

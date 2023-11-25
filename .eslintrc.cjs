@@ -32,5 +32,6 @@ module.exports = {
     'react/prop-types': 'off',
     'no-extra-boolean-cast': 'off',
     'no-empty': 'off',
+    quotes: 'off',
   },
 };

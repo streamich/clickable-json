@@ -16,8 +16,8 @@ export interface GrayCardProps {
 }
 
 export const GrayCard: React.FC<GrayCardProps> = ({title, children}) => {
-  const blockClassDynamic = useRule(theme => ({
-    bg: theme.g(0, .05),
+  const blockClassDynamic = useRule((theme) => ({
+    bg: theme.g(0, 0.05),
   }));
 
   return (

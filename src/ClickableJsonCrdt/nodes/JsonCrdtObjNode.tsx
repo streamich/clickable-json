@@ -12,8 +12,7 @@ import {ConNode, type JsonNode, type ObjNode} from 'json-joy/es2020/json-crdt';
 import {GrayButton} from '../../buttons/GrayButton';
 import {GrayCard} from '../../cards/GrayCard';
 
-const isTombstone = (node: JsonNode) =>
-  node instanceof ConNode && node.val === undefined;
+const isTombstone = (node: JsonNode) => node instanceof ConNode && node.val === undefined;
 
 export interface JsonCrdtObjNodeProps {
   node: NodeRef<ObjNode>;
@@ -51,17 +50,13 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
             <GrayCard>
               {tombstones}
               <br />
-              <GrayButton onClick={() => setShowTombstones(false)}>
-                {t('Hide tombstones')}
-              </GrayButton>
+              <GrayButton onClick={() => setShowTombstones(false)}>{t('Hide tombstones')}</GrayButton>
             </GrayCard>
           </span>
         )}
         {!showTombstones && tombstones.length > 0 && (
           <span>
-            <GrayButton onClick={() => setShowTombstones(true)}>
-              {tombstones.length} tombstones
-            </GrayButton>
+            <GrayButton onClick={() => setShowTombstones(true)}>{tombstones.length} tombstones</GrayButton>
           </span>
         )}
         <JsonCrdtObjInsert node={node} />
