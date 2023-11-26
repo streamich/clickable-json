@@ -17,7 +17,7 @@ const titleClass = rule({
   d: 'block',
   w: '100%',
   bxz: 'border-box',
-  pd: '4px 8px 4px 3px',
+  pd: '4px 8px 3px 3px',
   cur: 'default',
   us: 'none',
 });
@@ -35,7 +35,7 @@ export const Tombstones: React.FC<TombstonesProps> = ({tombstones}) => {
   return (
     <span className={blockClass}>
       <style className={titleClass} onClick={() => setShowTombstones((x) => !x)}>
-        <MiniTitle style={{fontSize: '0.6em', color: theme.red(0.75)}}>
+        <MiniTitle style={{fontSize: '0.65em', color: theme.red(0.75)}}>
           {tombstones.length + ' ' + (tombstones.length === 1 ? t('tombstone') : t('tombstones'))}
         </MiniTitle>
       </style>
