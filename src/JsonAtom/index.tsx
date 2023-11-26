@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {theme, useTheme} from 'nano-theme';
-import {valueColor} from '../ClickableJson/utils';
+import {valueBg, valueColor} from '../ClickableJson/utils';
 
 const blue = theme.color.sem.blue[0];
 
@@ -49,8 +49,11 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
     }
   }
 
+
+  const background = valueBg(value);
+
   return (
-    <span style={{color}} onClick={onClick}>
+    <span style={{color, background}} onClick={onClick}>
       {formatted}
     </span>
   );

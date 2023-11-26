@@ -1,4 +1,4 @@
-import type {Theme} from 'nano-theme';
+import {theme, type Theme} from 'nano-theme';
 import * as css from '../css';
 
 export const valueColor = (isDark: boolean, value: unknown): string | undefined => {
@@ -21,6 +21,10 @@ export const valueColor = (isDark: boolean, value: unknown): string | undefined 
       return css.ValueColor.undef[~~isDark];
   }
   return;
+};
+
+export const valueBg = (value: unknown): string | undefined => {
+  return value === false || (typeof value === 'number' && value < 0) ? theme.red(0.06) : undefined;
 };
 
 export const inputColor = (isDark: boolean, input: string): string | undefined => {
