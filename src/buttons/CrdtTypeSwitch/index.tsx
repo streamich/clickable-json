@@ -7,7 +7,7 @@ export interface CrdtTypeSwitchProps {
 }
 
 export const CrdtTypeSwitch: React.FC<CrdtTypeSwitchProps> = ({types =  ['any', 'con', 'vec', 'val'] as const, type}) => {
-  const [typeIndex, setTypeIndex] = React.useState(0);
+  const [typeIndex, setTypeIndex] = React.useState(types.findIndex((t) => t === type.current));
   React.useLayoutEffect(() => {
     (type as any).current = types[typeIndex];
   }, []);
@@ -29,7 +29,7 @@ export const CrdtTypeSwitch: React.FC<CrdtTypeSwitchProps> = ({types =  ['any', 
   };
 
   return (
-    <span style={{display: 'inline-block', padding: '0 4px 0 0', margin: '0 0 0 -4px'}}>
+    <span style={{display: 'inline-block', padding: '0 4px 0 0'}}>
       <TypeSwitch
         value={types[typeIndex]}
         onClick={() => onNext()}

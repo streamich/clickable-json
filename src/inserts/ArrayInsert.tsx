@@ -19,6 +19,13 @@ export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, beforeValue, o
   const insButtonClass = css.useInsButton();
   const theme = useTheme();
 
+  const handleSubmit = () => {
+    if (inputRef.current) inputRef.current.blur();
+    setValue('');
+    setEditing(false);
+    onSubmit(value);
+  };
+
   if (editing) {
     const style = inputStyle(theme, !theme.isLight, value);
     style.display = visible ? undefined : 'none';
@@ -39,10 +46,7 @@ export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, beforeValue, o
           onBlur={() => {
             setEditing(false);
           }}
-          onSubmit={() => {
-            if (inputRef.current) inputRef.current.blur();
-            onSubmit(value);
-          }}
+          onSubmit={handleSubmit}
           onCancel={() => {
             if (value) setValue('');
             else setEditing(false);

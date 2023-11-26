@@ -73,6 +73,7 @@ export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, beforeValue,
           border: `1px solid ${theme.g(0.85)}`,
         }}
       >
+        {beforeValue}
         <FlexibleInput
           inp={(el) => ((inputValueRef as any).current = el)}
           value={value}
@@ -100,7 +101,6 @@ export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, beforeValue,
         <span className={css.colon}>
           <span>{':'}</span>
         </span>
-        {beforeValue}
         {valueInput}
       </span>
     );
