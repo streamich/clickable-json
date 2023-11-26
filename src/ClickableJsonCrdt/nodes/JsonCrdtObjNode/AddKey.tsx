@@ -62,11 +62,13 @@ export const AddKey: React.FC<AddKeyProps> = ({node}) => {
               switch (e.key) {
                 case 'ArrowDown':
                 case 'ArrowRight': {
+                  e.preventDefault();
                   setType(n => (n + 1) % valueTypes.length);
                   break;
                 }
                 case 'ArrowUp':
                 case 'ArrowLeft': {
+                  e.preventDefault();
                   setType(n => (n - 1 + valueTypes.length) % valueTypes.length);
                   break;
                 }
