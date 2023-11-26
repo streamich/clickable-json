@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useT} from 'use-t';
 import * as css from '../css';
 import {ValueInput} from './ValueInput';
+import {AddAction} from '../buttons/Action/AddAction';
 
 export interface ArrayInsertProps {
   visible?: boolean;
@@ -12,7 +13,6 @@ export interface ArrayInsertProps {
 export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, withType, onSubmit}) => {
   const [t] = useT();
   const [editing, setEditing] = React.useState(false);
-  const insButtonClass = css.useInsButton();
 
   const handleSubmit = (value: string, type: string) => {
     setEditing(false);
@@ -32,11 +32,12 @@ export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, withType, onSu
   }
 
   return (
-    <span className={css.insArrBlock} style={{display: visible ? undefined : 'none'}} onClick={() => setEditing(true)}>
+    <span className={css.insArrBlock} style={{display: visible ? undefined : 'none'}}>
       <span className={css.insArrDot} />
       <span className={css.insArrLine} />
-      <button className={css.insArrButton + css.insButton + insButtonClass}>+</button>
-      <span className={css.tooltip + css.insArrTooltip}>{t('Insert')}</span>
+      <span className={css.insArrButton}>
+        <AddAction tooltip={t('Insert')} onClick={() => setEditing(true)} />
+      </span>
     </span>
   );
 };

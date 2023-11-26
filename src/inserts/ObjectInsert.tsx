@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {useT} from 'use-t';
 import * as css from '../css';
-import {inputStyle, typeahead} from '../ClickableJson/utils';
 import {useTheme} from 'nano-theme';
 import {FlexibleInput} from '../FlexibleInput';
 import {ValueInput} from './ValueInput';
+import {AddAction} from '../buttons/Action/AddAction';
 
 export interface ObjectInsertProps {
   visible?: boolean;
@@ -19,7 +19,6 @@ export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, withType, on
   const [value, setValue] = React.useState('');
   const inputPropertyRef = React.useRef<HTMLInputElement>(null);
   const inputValueRef = React.useRef<HTMLInputElement>(null);
-  const insButtonClass = css.useInsButton();
   const theme = useTheme();
 
   const handleSubmit = (value: string, type: string) => {
@@ -90,8 +89,9 @@ export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, withType, on
     <span className={css.insArrBlock} style={{display: visible ? undefined : 'none'}} onClick={() => setEditing(true)}>
       <span className={css.insArrDot} />
       <span className={css.insArrLine} />
-      <button className={css.insButton + insButtonClass + css.insArrButton}>+</button>
-      <span className={css.tooltip + css.insArrTooltip}>{t('Add key')}</span>
+      <span className={css.insArrButton}>
+        <AddAction tooltip={t('Add key')} onClick={() => setEditing(true)} />
+      </span>
     </span>
   );
 };

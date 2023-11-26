@@ -3,6 +3,7 @@ import {rule, theme} from 'nano-theme';
 import {useT} from 'use-t';
 import Svg from 'iconista';
 import * as css from '../css';
+import {CancelAction} from '../buttons/Action/CancelAction';
 
 const hoverableClass = rule({
   d: 'inline-block',
@@ -75,19 +76,15 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
   } = props;
   const [t] = useT();
   const [deleteHovered, setDeleteHovered] = React.useState(false);
-  const useInsButtonClass = css.useInsButton();
 
   const deleteButton = onDelete ? (
-    <button
-      className={css.insButton + useInsButtonClass + css.deleteButton}
+    <CancelAction
+      tooltip={t('Delete')}
       onClick={onDelete}
       onMouseEnter={() => setDeleteHovered(true)}
       onMouseOver={() => setDeleteHovered(true)}
       onMouseLeave={() => setDeleteHovered(false)}
-    >
-      <Svg set="atlaskit" icon="cross" width={10} height={10} />
-      <span className={css.tooltip + css.deleteButtonTooltip}>{t('Delete')}</span>
-    </button>
+    />
   ) : undefined;
 
   const className =
