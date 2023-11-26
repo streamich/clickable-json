@@ -4,8 +4,9 @@ import {useJsonCrdt} from '../context';
 import {NodeRef, nodeRef} from '../NodeRef';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
-import type {ArrNode} from 'json-joy/es2020/json-crdt';
 import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
+import {useRerender} from '../hooks';
+import type {ArrNode} from 'json-joy/es2020/json-crdt';
 
 export interface JsonCrdtArrNodeProps {
   node: NodeRef<ArrNode>;
@@ -13,14 +14,17 @@ export interface JsonCrdtArrNodeProps {
 
 export const JsonCrdtArrNode: React.FC<JsonCrdtArrNodeProps> = ({node}) => {
   const {render} = useJsonCrdt();
+  useRerender(node);
 
   const entries: React.ReactNode[] = [];
   let i = 0;
 
   node.node.children((child) => {
+    const childNodeRef = nodeRef(child, node, String(i));
+    childNodeRef.step = String(i);
     entries.push(
       <span key={child.id.sid + '.' + child.id.time} className={css.line}>
-        {render(nodeRef(child, node, String(i)))}
+        {render(childNodeRef)}
       </span>,
     );
     i++;

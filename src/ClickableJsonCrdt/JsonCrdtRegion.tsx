@@ -6,7 +6,7 @@ import {useJsonCrdt} from './context';
 import {TypeAndId} from './TypeAndId';
 import {NodeRef} from './NodeRef';
 import {id} from './utils';
-import type {ConNode, JsonNode, ObjNode} from 'json-joy/es2020/json-crdt';
+import type {ArrNode, ConNode, JsonNode, ObjNode} from 'json-joy/es2020/json-crdt';
 
 const isObjTombstone = (node: NodeRef<JsonNode>): boolean => {
   const parent = node.parent;
@@ -51,7 +51,10 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
 
   const isFocused = focused === nodeId;
   const isPointed = pointed === nodeId;
+  const parentNodeType = node.parent?.node.name();
   const isTombstone = isObjTombstone(node);
+  const parentIsObj = parentNodeType === 'obj';
+  const parentIsArr = parentNodeType === 'arr';
 
   const aside = isFocused ? (
     <span style={{display: 'inline-block', margin: '-4px 0 0'}}>
@@ -70,14 +73,21 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
       onMouseMove={onMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onDelete={
-        isFocused && node.parent?.node.name() === 'obj' && !isTombstone
+      onDelete={(!isFocused || isTombstone)
+        ? undefined
+        : parentIsObj
           ? () => {
+            // eslint-disable-next-line
+            const api = model.api.wrap(node.parent?.node! as ObjNode);
+            api.del([node.step]);
+          }
+          : parentIsArr
+            ? () => {
               // eslint-disable-next-line
-              const api = model.api.wrap(node.parent?.node! as ObjNode);
-              api.del([node.step]);
+              const api = model.api.wrap(node.parent?.node! as ArrNode);
+              api.del(+node.step, 1);
             }
-          : undefined
+            : undefined
       }
     >
       {children}
