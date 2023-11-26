@@ -5,6 +5,7 @@ import {NodeRef, nodeRef} from '../NodeRef';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
+import {useRerenderModel} from '../hooks';
 import type {VecNode} from 'json-joy/es2020/json-crdt';
 
 export interface JsonCrdtVecNodeProps {
@@ -13,6 +14,7 @@ export interface JsonCrdtVecNodeProps {
 
 export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
   const {render} = useJsonCrdt();
+  useRerenderModel();
 
   const entries: React.ReactNode[] = [];
   let i = 0;

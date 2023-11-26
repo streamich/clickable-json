@@ -6,7 +6,7 @@ import {useJsonCrdt} from './context';
 import {TypeAndId} from './TypeAndId';
 import {NodeRef} from './NodeRef';
 import {id} from './utils';
-import type {ArrNode, ConNode, JsonNode, ObjNode, VecNode} from 'json-joy/es2020/json-crdt';
+import type {ArrNode, ConNode, JsonNode, ObjNode, ValNode, VecNode} from 'json-joy/es2020/json-crdt';
 
 const isObjTombstone = (node: NodeRef<JsonNode>): boolean => {
   const parent = node.parent;
@@ -79,23 +79,25 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
           ? undefined
           : parentIsObj
             ? () => {
-                // eslint-disable-next-line
-                const api = model.api.wrap(node.parent?.node! as ObjNode);
+                const api = model.api.wrap(node.parent!.node! as ObjNode);
                 api.del([node.step]);
               }
             : parentIsArr
               ? () => {
-                  // eslint-disable-next-line
-                  const api = model.api.wrap(node.parent?.node! as ArrNode);
+                  const api = model.api.wrap(node.parent!.node! as ArrNode);
                   api.del(+node.step, 1);
                 }
                 : parentIsVec
                 ? () => {
-                    // eslint-disable-next-line
-                    const api = model.api.wrap(node.parent?.node! as VecNode);
+                    const api = model.api.wrap(node.parent!.node! as VecNode);
                     api.set([[+node.step, undefined]]);
                   }
-                : undefined
+                  : (parentNodeType === 'val' && (node.node.name() !== 'con' || (node.node as ConNode).val !== undefined))
+                  ? () => {
+                      const api = model.api.wrap(node.parent!.node! as ValNode);
+                      api.set(undefined as any);
+                    }
+                  : undefined
       }
     >
       {children}
