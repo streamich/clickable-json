@@ -4,9 +4,10 @@ import {TypeSwitch} from '../TypeSwitch';
 export interface CrdtTypeSwitchProps {
   types?: string[];
   type: React.RefObject<string>;
+  onSubmit?: () => void;
 }
 
-export const CrdtTypeSwitch: React.FC<CrdtTypeSwitchProps> = ({types =  ['any', 'con', 'vec', 'val'] as const, type}) => {
+export const CrdtTypeSwitch: React.FC<CrdtTypeSwitchProps> = ({types =  ['any', 'con', 'vec', 'val'] as const, type, onSubmit}) => {
   const [typeIndex, setTypeIndex] = React.useState(types.findIndex((t) => t === type.current));
   React.useLayoutEffect(() => {
     (type as any).current = types[typeIndex];
@@ -45,6 +46,14 @@ export const CrdtTypeSwitch: React.FC<CrdtTypeSwitchProps> = ({types =  ['any', 
             case 'ArrowLeft': {
               e.preventDefault();
               onPrev();
+              break;
+            }
+            case 'Enter': {
+              e.preventDefault();
+              if (onSubmit) {
+                e.preventDefault();
+                onSubmit();
+              }
               break;
             }
           }

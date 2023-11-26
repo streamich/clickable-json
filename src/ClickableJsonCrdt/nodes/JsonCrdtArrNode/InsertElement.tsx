@@ -3,9 +3,8 @@ import {NodeRef} from '../../NodeRef';
 import {ArrayInsert} from '../../../inserts/ArrayInsert';
 import {useIsFocused} from '../../../context/focus';
 import {createValue, id} from '../../utils';
-import {CrdtTypeSwitch} from '../../../buttons/CrdtTypeSwitch';
-import type {ArrNode} from 'json-joy/es2020/json-crdt';
 import {useJsonCrdt} from '../../context';
+import type {ArrNode} from 'json-joy/es2020/json-crdt';
 
 export interface InsertElementProps {
   node: NodeRef<ArrNode>;
@@ -15,21 +14,20 @@ export interface InsertElementProps {
 export const InsertElement: React.FC<InsertElementProps> = ({node, index}) => {
   const {model} = useJsonCrdt();
   const isFocused = useIsFocused(id(node));
-  const type = React.useRef<'any' | 'con' | 'vec' | 'val'>('any');
 
   const handleSubmit = React.useCallback(
-    (json: string) => {
-      const valueId = createValue(model, json, type.current);
+    (json: string, type: string) => {
+      const valueId = createValue(model, json, type as any);
       const nodeApi = model.api.wrap(node.node);
       nodeApi.ins(index, [valueId]);
     },
-    [node.node, type],
+    [node.node],
   );
 
   return (
     <ArrayInsert
       visible={isFocused}
-      beforeValue={<CrdtTypeSwitch type={type} />}
+      types={['any', 'con', 'vec', 'val']}
       onSubmit={handleSubmit}
     />
   );

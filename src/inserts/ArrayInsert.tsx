@@ -1,29 +1,31 @@
 import * as React from 'react';
 import {useT} from 'use-t';
+import {useTheme} from 'nano-theme';
 import * as css from '../css';
 import {inputStyle, typeahead} from '../ClickableJson/utils';
-import {useTheme} from 'nano-theme';
 import {FlexibleInput} from '../FlexibleInput';
+import {CrdtTypeSwitch} from '../buttons/CrdtTypeSwitch';
 
 export interface ArrayInsertProps {
   visible?: boolean;
-  beforeValue?: React.ReactNode;
-  onSubmit: (value: string) => void;
+  types?: string[];
+  onSubmit: (value: string, type: string) => void;
 }
 
-export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, beforeValue, onSubmit}) => {
+export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, types, onSubmit}) => {
   const [t] = useT();
   const [editing, setEditing] = React.useState(false);
   const [value, setValue] = React.useState('');
   const inputRef = React.useRef<HTMLInputElement>(null);
   const insButtonClass = css.useInsButton();
   const theme = useTheme();
+  const type = React.useRef<string>(types && types.length ? types[0] : '');
 
   const handleSubmit = () => {
     if (inputRef.current) inputRef.current.blur();
     setValue('');
     setEditing(false);
-    onSubmit(value);
+    onSubmit(value, type.current);
   };
 
   if (editing) {
@@ -32,6 +34,14 @@ export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, beforeValue, o
     style.margin = '-1px 0 -1px -2px';
     style.padding = '3px 4px';
     style.border = `1px solid ${theme.g(0.85)}`;
+
+    let beforeValue: React.ReactNode = null;
+
+    if (types && types.length) {
+      beforeValue = (
+        <CrdtTypeSwitch type={type} onSubmit={handleSubmit} />
+      );
+    }
 
     return (
       <span className={css.input} style={style}>
