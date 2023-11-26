@@ -7,7 +7,7 @@ export const id = (node: NodeRef<JsonNode>) => {
   return id.sid + '.' + id.time;
 };
 
-export const createValue = (model: Model, json: string, type: 'any' | 'con' | 'vec' | 'val', preferConst?: boolean): ITimestampStruct => {
+export const createValue = (model: Model, json: string, type: 'any' | 'con' | 'vec' | 'val', constOrJson?: boolean): ITimestampStruct => {
   let value: unknown = json;
   try {
     value = JSON.parse(json);
@@ -15,7 +15,7 @@ export const createValue = (model: Model, json: string, type: 'any' | 'con' | 'v
   const api = model.api;
   const builder = api.builder;
   const valueId = type === 'any'
-    ? (preferConst ? builder.maybeConst(value) : builder.json(value))
+    ? (constOrJson ? builder.constOrJson(value) : builder.json(value))
     : type === 'con'
       ? api.builder.const(value)
       : type === 'vec'
