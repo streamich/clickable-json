@@ -40,7 +40,9 @@ export const JsonProperty: React.FC<JsonPropertyProps> = ({pointer, onChange}) =
     if (e) e.preventDefault();
     if (e) e.stopPropagation();
     if (onChange)
-      onChange([{op: 'move', from: pointer, path: steps.slice(0, steps.length - 1).join('/') + '/' + escapeComponent(proposed)}]);
+      onChange([
+        {op: 'move', from: pointer, path: steps.slice(0, steps.length - 1).join('/') + '/' + escapeComponent(proposed)},
+      ]);
   };
 
   return (

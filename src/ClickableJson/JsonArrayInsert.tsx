@@ -22,7 +22,5 @@ export const JsonArrayInsert: React.FC<JsonArrayInsertProps> = ({pointer, visibl
     onChange([{op: 'add', path: pointer, value: newValue}]);
   };
 
-  return (
-    <ArrayInsert visible={visible} onSubmit={onSubmit}  />
-  );
+  return <ArrayInsert visible={visible} onSubmit={onSubmit} />;
 };

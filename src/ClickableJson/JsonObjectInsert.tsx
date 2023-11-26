@@ -23,7 +23,5 @@ export const JsonObjectInsert: React.FC<JsonObjectInsertProps> = ({pointer, visi
     onChange([{op: 'add', path: pointer + '/' + escapeComponent(property), value: newValue}]);
   };
 
-  return (
-    <ObjectInsert visible={visible} onSubmit={onSubmit} />
-  );
+  return <ObjectInsert visible={visible} onSubmit={onSubmit} />;
 };

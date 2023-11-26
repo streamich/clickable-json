@@ -26,9 +26,9 @@ export const TypeSwitch: React.FC<TypeSwitchProps> = React.memo(({value, onKeyDo
   return (
     <button
       className={blockClass({
-        bd: `1px solid ${theme.blue(.25)}`,
+        bd: `1px solid ${theme.blue(0.25)}`,
         '&:hover': {
-          bd: `1px solid ${theme.blue(.7)}`,
+          bd: `1px solid ${theme.blue(0.7)}`,
         },
       })}
       onClick={onClick}

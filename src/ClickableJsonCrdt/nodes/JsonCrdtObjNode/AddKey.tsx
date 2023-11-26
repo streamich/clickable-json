@@ -28,15 +28,16 @@ export const AddKey: React.FC<AddKeyProps> = ({node}) => {
       const nodeApi = api.wrap(node.node);
       const valueType = valueTypes[type];
       nodeApi.set({
-        [key]: valueType === 'auto'
-          ? value
-          : valueType === 'con'
-            ? api.builder.const(value)
-            : valueType === 'vec'
-              ? api.builder.vec()
-              : valueType === 'val'
-                ? api.builder.val()
-                : api.builder.const(undefined),
+        [key]:
+          valueType === 'auto'
+            ? value
+            : valueType === 'con'
+              ? api.builder.const(value)
+              : valueType === 'vec'
+                ? api.builder.vec()
+                : valueType === 'val'
+                  ? api.builder.val()
+                  : api.builder.const(undefined),
       });
       if (valueType === 'vec') {
         if (json) {
@@ -53,30 +54,30 @@ export const AddKey: React.FC<AddKeyProps> = ({node}) => {
   return (
     <ObjectInsert
       visible={isFocused}
-      beforeValue={(
+      beforeValue={
         <span style={{display: 'inline-block', padding: '0 4px 0 0', margin: '0 0 0 -4px'}}>
           <TypeSwitch
             value={valueTypes[type]}
-            onClick={() => setType(n => (n + 1) % valueTypes.length)}
+            onClick={() => setType((n) => (n + 1) % valueTypes.length)}
             onKeyDown={(e) => {
               switch (e.key) {
                 case 'ArrowDown':
                 case 'ArrowRight': {
                   e.preventDefault();
-                  setType(n => (n + 1) % valueTypes.length);
+                  setType((n) => (n + 1) % valueTypes.length);
                   break;
                 }
                 case 'ArrowUp':
                 case 'ArrowLeft': {
                   e.preventDefault();
-                  setType(n => (n - 1 + valueTypes.length) % valueTypes.length);
+                  setType((n) => (n - 1 + valueTypes.length) % valueTypes.length);
                   break;
                 }
               }
             }}
           />
         </span>
-      )}
+      }
       onSubmit={handleSubmit}
     />
   );
