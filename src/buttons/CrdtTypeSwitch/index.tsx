@@ -5,9 +5,10 @@ export interface CrdtTypeSwitchProps {
   types?: string[];
   type: React.RefObject<string>;
   onSubmit?: () => void;
+  onClick?: React.MouseEventHandler;
 }
 
-export const CrdtTypeSwitch: React.FC<CrdtTypeSwitchProps> = ({types =  ['any', 'con', 'vec', 'val'] as const, type, onSubmit}) => {
+export const CrdtTypeSwitch: React.FC<CrdtTypeSwitchProps> = ({types =  ['any', 'con', 'vec', 'val'] as const, type, onSubmit, onClick}) => {
   const [typeIndex, setTypeIndex] = React.useState(types.findIndex((t) => t === type.current));
   React.useLayoutEffect(() => {
     (type as any).current = types[typeIndex];
@@ -33,7 +34,10 @@ export const CrdtTypeSwitch: React.FC<CrdtTypeSwitchProps> = ({types =  ['any', 
     <span style={{display: 'inline-block', padding: '0 4px 0 0'}}>
       <TypeSwitch
         value={types[typeIndex]}
-        onClick={() => onNext()}
+        onClick={(e) => {
+          onNext();
+          if (onClick) onClick(e);
+        }}
         onKeyDown={(e) => {
           switch (e.key) {
             case 'ArrowDown':
