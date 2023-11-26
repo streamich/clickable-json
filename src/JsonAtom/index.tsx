@@ -51,9 +51,18 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
 
 
   const background = valueBg(value);
+  const style: React.CSSProperties = {
+    color, background,
+  };
+
+  if (background) {
+    style.borderRadius = 4;
+    style.margin = -1;
+    style.padding = 1;
+  }
 
   return (
-    <span style={{color, background}} onClick={onClick}>
+    <span style={style} onClick={onClick}>
       {formatted}
     </span>
   );
