@@ -6,7 +6,7 @@ import {useJsonCrdt} from './context';
 import {TypeAndId} from './TypeAndId';
 import {NodeRef} from './NodeRef';
 import {id} from './utils';
-import type {ArrNode, ConNode, JsonNode, ObjNode} from 'json-joy/es2020/json-crdt';
+import type {ArrNode, ConNode, JsonNode, ObjNode, VecNode} from 'json-joy/es2020/json-crdt';
 
 const isObjTombstone = (node: NodeRef<JsonNode>): boolean => {
   const parent = node.parent;
@@ -55,6 +55,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
   const isTombstone = isObjTombstone(node);
   const parentIsObj = parentNodeType === 'obj';
   const parentIsArr = parentNodeType === 'arr';
+  const parentIsVec = parentNodeType === 'vec';
 
   const aside = isFocused ? (
     <span style={{display: 'inline-block', margin: '-4px 0 0'}}>
@@ -88,7 +89,13 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
                   const api = model.api.wrap(node.parent?.node! as ArrNode);
                   api.del(+node.step, 1);
                 }
-              : undefined
+                : parentIsVec
+                ? () => {
+                    // eslint-disable-next-line
+                    const api = model.api.wrap(node.parent?.node! as VecNode);
+                    api.set([[+node.step, undefined]]);
+                  }
+                : undefined
       }
     >
       {children}
