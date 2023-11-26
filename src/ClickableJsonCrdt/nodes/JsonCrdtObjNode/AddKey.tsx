@@ -18,7 +18,7 @@ export const AddKey: React.FC<AddKeyProps> = ({node}) => {
 
   const handleSubmit = React.useCallback(
     (key: string, json: string) => {
-      const valueId = createValue(model, json, type.current);
+      const valueId = createValue(model, json, type.current, true);
       const nodeApi = model.api.wrap(node.node);
       nodeApi.set({[key]: valueId});
     },
