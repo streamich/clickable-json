@@ -23,7 +23,8 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
     color = theme.g(0.45);
     formatted = (
       <span>
-        {[...value].map((n) => (n < 16 ? '0' + n.toString(16) : n.toString(16))).join(' ')}
+        {[...value].slice(0, 128).map((n) => (n < 16 ? '0' + n.toString(16) : n.toString(16))).join(' ')}
+        {value.length > 128 ? ` … (${value.length - 128} more)` : ''}
       </span>
     );
   } else if (value && typeof value === 'object') {
