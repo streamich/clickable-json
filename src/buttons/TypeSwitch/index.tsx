@@ -10,7 +10,8 @@ const blockClass = drule({
   pd: '2px 2px',
   mr: '0',
   bxz: 'border-box',
-  bg: 'transparent',
+  // bg: 'transparent',
+  bd: 0,
   bdrad: '1em',
 });
 
@@ -26,9 +27,9 @@ export const TypeSwitch: React.FC<TypeSwitchProps> = React.memo(({value, onKeyDo
   return (
     <button
       className={blockClass({
-        bd: `1px solid ${theme.blue(0.25)}`,
+        bg: theme.g(0.96),
         '&:hover': {
-          bd: `1px solid ${theme.blue(0.7)}`,
+          bg: theme.g(0.88),
         },
       })}
       onClick={onClick}
