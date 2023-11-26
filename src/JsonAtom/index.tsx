@@ -23,7 +23,6 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
     color = theme.g(0.45);
     formatted = (
       <span>
-        <span style={{color: theme.red(1), fontSize: '0.8em', fontWeight: 'bold'}}>0x</span>
         {[...value].map((n) => (n < 16 ? '0' + n.toString(16) : n.toString(16))).join(' ')}
       </span>
     );
