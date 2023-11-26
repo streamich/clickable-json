@@ -42,10 +42,6 @@ export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, beforeValue, o
           value={value}
           typeahead={typeahead(value)}
           onChange={(e) => setValue(e.target.value)}
-          onFocus={() => {}}
-          onBlur={() => {
-            setEditing(false);
-          }}
           onSubmit={handleSubmit}
           onCancel={() => {
             if (value) setValue('');
