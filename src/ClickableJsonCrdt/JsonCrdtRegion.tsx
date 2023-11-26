@@ -11,8 +11,6 @@ import type {ArrNode, ConNode, JsonNode, ObjNode, ValNode, VecNode} from 'json-j
 const isObjTombstone = (node: NodeRef<JsonNode>): boolean => {
   const parent = node.parent;
   if (!parent) return false;
-  const parentName = parent.node.name();
-  // if (parentName !== 'obj') return false;
   if (node.node.name() !== 'con') return false;
   return (node.node as ConNode).val === undefined;
 };
