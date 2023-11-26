@@ -11,7 +11,8 @@ import type {ArrNode, ConNode, JsonNode, ObjNode, ValNode, VecNode} from 'json-j
 const isObjTombstone = (node: NodeRef<JsonNode>): boolean => {
   const parent = node.parent;
   if (!parent) return false;
-  if (parent.node.name() !== 'obj') return false;
+  const parentName = parent.node.name();
+  // if (parentName !== 'obj') return false;
   if (node.node.name() !== 'con') return false;
   return (node.node as ConNode).val === undefined;
 };
@@ -92,7 +93,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
                     const api = model.api.wrap(node.parent!.node! as VecNode);
                     api.set([[+node.step, undefined]]);
                   }
-                  : (parentNodeType === 'val' && (node.node.name() !== 'con' || (node.node as ConNode).val !== undefined))
+                  : (parentNodeType === 'val' && !isTombstone)
                   ? () => {
                       const api = model.api.wrap(node.parent!.node! as ValNode);
                       api.set(undefined as any);
