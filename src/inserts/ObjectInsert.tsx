@@ -50,9 +50,6 @@ export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, beforeValue:
           inp={(el) => ((inputPropertyRef as any).current = el)}
           value={property}
           onChange={(e) => setProperty(e.target.value)}
-          onBlur={() => {
-            if (inputValueRef.current) inputValueRef.current.focus();
-          }}
           onSubmit={() => {
             if (inputValueRef.current) inputValueRef.current.focus();
           }}

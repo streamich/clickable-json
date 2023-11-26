@@ -7,7 +7,7 @@ import {useJsonCrdt} from '../../context';
 import {TypeSwitch} from '../../TypeSwitch';
 import type {ObjNode} from 'json-joy/es2020/json-crdt';
 
-const valueTypes = ['auto', 'con', 'vec'] as const;
+const valueTypes = ['auto', 'con', 'vec', 'val'] as const;
 
 export interface AddKeyProps {
   node: NodeRef<ObjNode>;
@@ -34,12 +34,17 @@ export const AddKey: React.FC<AddKeyProps> = ({node}) => {
             ? api.builder.const(value)
             : valueType === 'vec'
               ? api.builder.vec()
-              : api.builder.const(undefined),
+              : valueType === 'val'
+                ? api.builder.val()
+                : api.builder.const(undefined),
       });
-      if (valueType === 'vec' && json) {
-        nodeApi.tup(key).set([
-          [0, api.builder.maybeConst(value)]
-        ]);
+      if (valueType === 'vec') {
+        if (json) {
+          const valueVec = Array.isArray(value) ? value : [value];
+          nodeApi.tup(key).set(valueVec.map((x, i) => [i, api.builder.maybeConst(x)]));
+        }
+      } else if (valueType === 'val') {
+        nodeApi.val(key).set(json ? api.builder.maybeConst(value) : api.builder.const(undefined));
       }
     },
     [node.node, type],
@@ -50,7 +55,24 @@ export const AddKey: React.FC<AddKeyProps> = ({node}) => {
       visible={isFocused}
       beforeValue={(
         <span style={{display: 'inline-block', padding: '0 4px 0 0', margin: '0 0 0 -4px'}}>
-          <TypeSwitch value={valueTypes[type]} onClick={() => setType(n => (n + 1) % valueTypes.length)} />
+          <TypeSwitch
+            value={valueTypes[type]}
+            onClick={() => setType(n => (n + 1) % valueTypes.length)}
+            onKeyDown={(e) => {
+              switch (e.key) {
+                case 'ArrowDown':
+                case 'ArrowRight': {
+                  setType(n => (n + 1) % valueTypes.length);
+                  break;
+                }
+                case 'ArrowUp':
+                case 'ArrowLeft': {
+                  setType(n => (n - 1 + valueTypes.length) % valueTypes.length);
+                  break;
+                }
+              }
+            }}
+          />
         </span>
       )}
       onSubmit={handleSubmit}

@@ -17,9 +17,10 @@ const blockClass = drule({
 export interface TypeSwitchProps {
   value: React.ReactNode;
   onClick?: React.MouseEventHandler;
+  onKeyDown?: React.KeyboardEventHandler;
 }
 
-export const TypeSwitch: React.FC<TypeSwitchProps> = React.memo(({value, onClick}) => {
+export const TypeSwitch: React.FC<TypeSwitchProps> = React.memo(({value, onKeyDown, onClick}) => {
   const theme = useTheme();
 
   return (
@@ -31,6 +32,7 @@ export const TypeSwitch: React.FC<TypeSwitchProps> = React.memo(({value, onClick
         },
       })}
       onClick={onClick}
+      onKeyDown={onKeyDown}
     >
       {value}
     </button>
