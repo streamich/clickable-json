@@ -23,10 +23,14 @@ export const JsonCrdtArrNode: React.FC<JsonCrdtArrNodeProps> = ({node}) => {
   node.node.children((child) => {
     const childNodeRef = nodeRef(child, node, String(i));
     childNodeRef.step = String(i);
+    const key = child.id.sid + '.' + child.id.time + '.' + i;
     entries.push(
-      <span key={child.id.sid + '.' + child.id.time} className={css.line}>
-        {render(childNodeRef)}
-      </span>,
+      <React.Fragment key={key}>
+        <InsertElement key={key} node={node} index={i} />
+        <span className={css.line}>
+          {render(childNodeRef)}
+        </span>
+      </React.Fragment>
     );
     i++;
   });
@@ -40,7 +44,7 @@ export const JsonCrdtArrNode: React.FC<JsonCrdtArrNodeProps> = ({node}) => {
         brackets={['[', ']']}
       >
         {entries}
-        <InsertElement node={node} index={node.node.length()} />
+        <InsertElement key={node.node.length()} node={node} index={node.node.length()} />
       </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
   );
