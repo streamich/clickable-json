@@ -1,11 +1,11 @@
 import * as React from 'react';
-import * as css from '../../css';
-import {useJsonCrdt} from '../context';
-import {NodeRef, nodeRef} from '../NodeRef';
-import {JsonCrdtRegion} from '../JsonCrdtRegion';
-import {JsonCrdtProperty} from '../JsonCrdtProperty';
-import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
-import {useRerender} from '../hooks';
+import * as css from '../../../css';
+import {useJsonCrdt} from '../../context';
+import {NodeRef, nodeRef} from '../../NodeRef';
+import {JsonCrdtRegion} from '../../JsonCrdtRegion';
+import {JsonCrdtProperty} from '../../JsonCrdtProperty';
+import {JsonCrdtObjectLayout} from '../../JsonCrdtObjectLayout';
+import {useRerender} from '../../hooks';
 import type {ArrNode} from 'json-joy/es2020/json-crdt';
 
 export interface JsonCrdtArrNodeProps {
