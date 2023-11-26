@@ -7,10 +7,11 @@ import {FlexibleInput} from '../FlexibleInput';
 
 export interface ArrayInsertProps {
   visible?: boolean;
+  beforeValue?: React.ReactNode;
   onSubmit: (value: string) => void;
 }
 
-export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, onSubmit}) => {
+export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, beforeValue, onSubmit}) => {
   const [t] = useT();
   const [editing, setEditing] = React.useState(false);
   const [value, setValue] = React.useState('');
@@ -27,6 +28,7 @@ export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, onSubmit}) => 
 
     return (
       <span className={css.input} style={style}>
+        {beforeValue}
         <FlexibleInput
           focus
           inp={(el) => ((inputRef as any).current = el)}

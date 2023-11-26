@@ -11,7 +11,7 @@ export interface ObjectInsertProps {
   onSubmit: (key: string, value: string) => void;
 }
 
-export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, beforeValue: valueOptions, onSubmit}) => {
+export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, beforeValue, onSubmit}) => {
   const [t] = useT();
   const [editing, setEditing] = React.useState(false);
   const [property, setProperty] = React.useState('');
@@ -100,7 +100,7 @@ export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, beforeValue:
         <span className={css.colon}>
           <span>{':'}</span>
         </span>
-        {valueOptions}
+        {beforeValue}
         {valueInput}
       </span>
     );
