@@ -4,14 +4,15 @@ import * as css from '../css';
 import {inputStyle, typeahead} from '../ClickableJson/utils';
 import {useTheme} from 'nano-theme';
 import {FlexibleInput} from '../FlexibleInput';
+import {ValueInput} from './ValueInput';
 
 export interface ObjectInsertProps {
   visible?: boolean;
-  beforeValue?: React.ReactNode;
-  onSubmit: (key: string, value: string) => void;
+  withType?: boolean;
+  onSubmit: (key: string, value: string, type: string) => void;
 }
 
-export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, beforeValue, onSubmit}) => {
+export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, withType, onSubmit}) => {
   const [t] = useT();
   const [editing, setEditing] = React.useState(false);
   const [property, setProperty] = React.useState('');
@@ -21,9 +22,9 @@ export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, beforeValue,
   const insButtonClass = css.useInsButton();
   const theme = useTheme();
 
-  const handleSubmit = () => {
+  const handleSubmit = (value: string, type: string) => {
     if (inputValueRef.current) inputValueRef.current.blur();
-    onSubmit(property, value);
+    onSubmit(property, value, type);
     setProperty('');
     setValue('');
     setEditing(false);
@@ -63,36 +64,15 @@ export const ObjectInsert: React.FC<ObjectInsertProps> = ({visible, beforeValue,
     );
 
     const valueInput = (
-      <span
-        className={css.input}
-        style={{
-          ...inputStyle(theme, !theme.isLight, value),
-          display: visible ? undefined : 'none',
-          margin: '-1px 0 -1px -2px',
-          padding: '3px 4px',
-          border: `1px solid ${theme.g(0.85)}`,
+      <ValueInput
+        inp={(el) => ((inputValueRef as any).current = el)}
+        visible={visible}
+        withType={withType}
+        onSubmit={handleSubmit}
+        onCancel={() => {
+          if (inputPropertyRef.current) inputPropertyRef.current.focus();
         }}
-      >
-        {beforeValue}
-        <FlexibleInput
-          inp={(el) => ((inputValueRef as any).current = el)}
-          value={value}
-          typeahead={typeahead(value)}
-          onChange={(e) => setValue(e.target.value)}
-          onSubmit={handleSubmit}
-          onCancel={() => {
-            if (value) setValue('');
-            else if (inputPropertyRef.current) inputPropertyRef.current.focus();
-          }}
-          onTab={(e) => {
-            const ahead = typeahead(value);
-            if (ahead) {
-              e.preventDefault();
-              setValue(value + ahead);
-            }
-          }}
-        />
-      </span>
+      />
     );
 
     return (

@@ -5,11 +5,11 @@ import {ValueInput} from './ValueInput';
 
 export interface ArrayInsertProps {
   visible?: boolean;
-  types?: string[];
+  withType?: boolean;
   onSubmit: (value: string, type: string) => void;
 }
 
-export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, types, onSubmit}) => {
+export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, withType, onSubmit}) => {
   const [t] = useT();
   const [editing, setEditing] = React.useState(false);
   const insButtonClass = css.useInsButton();
@@ -22,7 +22,8 @@ export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, types, onSubmi
   if (editing) {
     return (
       <ValueInput
-        types={types}
+        focus
+        withType={withType}
         visible={visible}
         onSubmit={handleSubmit}
         onCancel={() => setEditing(false)}

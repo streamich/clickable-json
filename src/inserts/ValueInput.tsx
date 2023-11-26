@@ -6,13 +6,16 @@ import {FlexibleInput} from '../FlexibleInput';
 import {CrdtTypeSwitch} from '../buttons/CrdtTypeSwitch';
 
 export interface ValueInputProps {
+  inp?: (el: HTMLInputElement | null) => void;
+  focus?: boolean;
   visible?: boolean;
   types?: string[];
+  withType?: boolean;
   onSubmit: (value: string, type: string) => void;
   onCancel?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
-export const ValueInput: React.FC<ValueInputProps> = ({visible, types, onSubmit, onCancel}) => {
+export const ValueInput: React.FC<ValueInputProps> = ({inp, focus, visible, types = ['any', 'con', 'val', 'vec'], withType, onSubmit, onCancel}) => {
   const [value, setValue] = React.useState('');
   const inputRef = React.useRef<HTMLInputElement>(null);
   const theme = useTheme();
@@ -32,9 +35,9 @@ export const ValueInput: React.FC<ValueInputProps> = ({visible, types, onSubmit,
 
   let beforeValue: React.ReactNode = null;
 
-  if (types && types.length) {
+  if (types && types.length && withType) {
     beforeValue = (
-      <CrdtTypeSwitch type={type} onSubmit={handleSubmit} onClick={e => { if (inputRef.current) inputRef.current.focus(); }} />
+      <CrdtTypeSwitch type={type} onSubmit={handleSubmit} onClick={() => { if (inputRef.current) inputRef.current.focus(); }} />
     );
   }
 
@@ -42,8 +45,11 @@ export const ValueInput: React.FC<ValueInputProps> = ({visible, types, onSubmit,
     <span className={css.input} style={style}>
       {beforeValue}
       <FlexibleInput
-        focus
-        inp={(el) => ((inputRef as any).current = el)}
+        focus={focus}
+        inp={(el) => {
+          (inputRef as any).current = el;
+          if (inp) inp(el);
+        }}
         value={value}
         typeahead={typeahead(value)}
         onChange={(e) => setValue(e.target.value)}
