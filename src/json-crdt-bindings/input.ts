@@ -1,4 +1,5 @@
 import type {Model, StrApi, ApiPath} from "json-joy/es2020/json-crdt";
+import {ITimestampStruct} from "json-joy/es2020/json-crdt-patch/clock";
 import diff from 'fast-diff';
 import {invokeFirstOnly} from "../utils/invokeFirstOnly";
 
@@ -12,6 +13,17 @@ type SimpleChange = [position: number, remove: number, insert: string];
 
 const applyChange = (str: string, [position, remove, insert]: SimpleChange): string =>
   str.slice(0, position) + insert + str.slice(position + remove);
+
+const indexToId = (str: StrApi, index: number): ITimestampStruct | void => {
+  return str.node.find(index)
+};
+
+const idToIndex = (str: StrApi, id: ITimestampStruct): number => {
+  const chunk = str.node.findById(id);
+  if (!chunk) return -1;
+  const pos = str.node.pos(chunk);
+  return pos + (id.time - chunk.id.time)
+};
 
 export class JsonCrdtBinding {
   public static bind = (model: Model, path: ApiPath, input: HTMLInputElement, polling?: boolean): (() => void) => {
@@ -40,7 +52,15 @@ export class JsonCrdtBinding {
 
   protected readonly onModelChange = () => {
     this.firstOnly(() => {
-      this.syncFromModel();
+      const input = this.input;
+      const {selectionStart, selectionEnd, selectionDirection} = input;
+      console.log(selectionStart, selectionEnd);
+      const startId: ITimestampStruct | void = typeof selectionStart === 'number' ? indexToId(this.str, selectionStart) : undefined;
+      const endId: ITimestampStruct | void = typeof selectionEnd === 'number' ? indexToId(this.str, selectionEnd) : undefined;
+      this.syncFromModel(); // TODO: need "beforeChange" event...
+      const startPos = startId ? idToIndex(this.str, startId) : null;
+      const endPos = endId ? idToIndex(this.str, endId) : null;
+      console.log(startPos, endPos);
       console.log('model changed ....');
       // this.syncFromModel
     });
