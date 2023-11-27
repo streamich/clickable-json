@@ -12,7 +12,7 @@ const enum DIFF_CHANGE_TYPE {
 }
 
 export class StrBinding {
-  public static bind = (str: StrApi, input: HTMLInputElement, polling?: boolean): (() => void) => {
+  public static bind = (str: StrApi, input: HTMLInputElement | HTMLTextAreaElement, polling?: boolean): (() => void) => {
     const binding = new StrBinding(str, input);
     binding.syncFromModel();
     binding.bind(polling);
@@ -24,7 +24,7 @@ export class StrBinding {
 
   constructor(
     protected readonly str: StrApi,
-    protected readonly input: HTMLInputElement,
+    protected readonly input: HTMLInputElement | HTMLTextAreaElement,
   ) {}
 
   // ---------------------------------------------------------------- Selection
@@ -116,6 +116,7 @@ export class StrBinding {
   }
 
   protected changeFromEvent(event: InputEvent): SimpleChange | undefined {
+    // console.log(event);
     const {input} = this;
     const {data, inputType, isComposing} = event;
     if (isComposing) return;

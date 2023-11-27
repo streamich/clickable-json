@@ -3,8 +3,8 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {Model} from 'json-joy/es2020/json-crdt';
 import {StrBinding} from './input';
 
-const Demo: React.FC = () => {
-  const inputRef = React.useRef<HTMLInputElement>(null);
+const Demo: React.FC<{textarea: boolean}> = ({textarea}) => {
+  const inputRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const model = React.useMemo(() => Model.withLogicalClock(), [1]);
   React.useSyncExternalStore(model.api.subscribe, () => model.tick);
   React.useEffect(() => {
@@ -19,7 +19,11 @@ const Demo: React.FC = () => {
 
   return (
     <div>
-      <input ref={inputRef} type="text" />
+      {textarea ? (
+        <textarea ref={inputRef as any} />
+      ) : (
+        <input ref={inputRef as any} type="text" />
+      )}
       <div>
         <button
           onClick={() => {
@@ -80,6 +84,12 @@ const meta: Meta<typeof Text> = {
 
 export default meta;
 
-export const Primary: StoryObj<typeof meta> = {
+export const Input: StoryObj<typeof meta> = {
   args: {},
+};
+
+export const Textarea: StoryObj<typeof meta> = {
+  args: {
+    textarea: true,
+  } as any,
 };
