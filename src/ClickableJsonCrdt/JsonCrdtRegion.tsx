@@ -6,6 +6,7 @@ import {useJsonCrdt} from './context';
 import {TypeAndId} from './TypeAndId';
 import {NodeRef} from './NodeRef';
 import {id} from './utils';
+import {JsonCrdtObjectKeyEdit} from './JsonCrdtObjectKeyEdit';
 import type {ArrNode, ConNode, JsonNode, ObjNode, ValNode, VecNode} from 'json-joy/es2020/json-crdt';
 
 const isObjTombstone = (node: NodeRef<JsonNode>): boolean => {
@@ -26,6 +27,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
   const {compact} = useStyles();
   const {focused, focus, pointed, point} = useFocus();
   const nodeId = id(node);
+  const [edit, setEdit] = React.useState(false);
 
   const onMouseMove = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -61,6 +63,10 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
       <TypeAndId node={node} active={isFocused} negative={isTombstone} />
     </span>
   ) : undefined;
+
+  if (edit) {
+    return <JsonCrdtObjectKeyEdit node={node} onCancel={() => setEdit(false)} />;
+  }
 
   return (
     <FocusRegion
@@ -100,9 +106,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
       }
       onEdit={
         isFocused && parentIsObj
-          ? () => {
-            console.log('edit');
-          }
+          ? () => setEdit(true)
           : undefined
       }
     >

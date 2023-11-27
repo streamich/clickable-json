@@ -19,6 +19,7 @@ const blockClass = drule({
   bd: `1px dotted ${css.blue}`,
   col: css.blue,
   fw: 'normal',
+  z: 3,
 });
 
 const tooltipClass = drule({
