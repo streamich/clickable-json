@@ -13,11 +13,11 @@ const applyChange = (str: string, [position, remove, insert]: SimpleChange): str
   str.slice(0, position) + insert + str.slice(position + remove);
 
 export class JsonCrdtBinding {
-  public static bind = (model: Model, path: ApiPath, input: HTMLInputElement): (() => void) => {
+  public static bind = (model: Model, path: ApiPath, input: HTMLInputElement, polling?: boolean): (() => void) => {
     const str = model.api.str(path);
     const binding = new JsonCrdtBinding(model, str, input);
     binding.syncFromModel();
-    binding.bind();
+    binding.bind(polling);
     return binding.unbind;
   };
 
@@ -138,15 +138,39 @@ export class JsonCrdtBinding {
     this.selectionEnd = input.selectionEnd;
   };
 
-  public readonly bind = () => {
+  public pollingInterval: number = 1000;
+
+  private pollingRef: number | null | unknown = null;
+
+  private readonly pollChanges = () => {
+    this.pollingRef = setTimeout(() => {
+      console.log('polling');
+      try {
+        const {input, str} = this;
+        const view = str.view();
+        const value = input.value;
+        if (view !== value) this.syncFromInput();
+      } catch {}
+      if (this.pollingRef) this.pollChanges();
+    }, this.pollingInterval);
+  };
+
+  public stopPolling() {
+    if (this.pollingRef) clearTimeout(this.pollingRef as any);
+    this.pollingRef = null;
+  }
+
+  public readonly bind = (polling?: boolean) => {
     const input = this.input;
     input.addEventListener('input', this.onInput);
     document.addEventListener('selectionchange', this.onSelectionChange);
+    if (polling) this.pollChanges();
   };
   
   public readonly unbind = () => {
     const input = this.input;
     input.removeEventListener('input', this.onInput);
     document.removeEventListener('selectionchange', this.onSelectionChange);
+    this.stopPolling();
   };
 }
