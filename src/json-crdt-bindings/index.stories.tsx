@@ -11,7 +11,7 @@ const Demo: React.FC = () => {
     if (!inputRef.current) return;
     const input = inputRef.current;
     model.api.root({text: 'Hell'});
-    const unbind = JsonCrdtBinding.bind(model, ['text'], input);
+    const unbind = JsonCrdtBinding.bind(model, ['text'], input, true);
     return () => {
       unbind();
     };
@@ -21,6 +21,43 @@ const Demo: React.FC = () => {
   return (
     <div>
       <input ref={inputRef} type="text" />
+      <div>
+        <button onClick={() => {
+          const input = inputRef.current;
+          if (!input) return;
+          input.value += '!';
+        }}>
+          Append "!" to input
+        </button>
+      </div>
+      <div>
+        <button onClick={() => {
+          const str = model.api.str(['text']);
+          str.ins(str.view().length, '?');
+        }}>
+          Append "?" to model
+        </button>
+      </div>
+      <div>
+        <button onClick={() => {
+          setTimeout(() => {
+            const str = model.api.str(['text']);
+            str.ins(str.view().length, '?');
+          }, 2000);
+        }}>
+          Append "?" to model after 2s
+        </button>
+      </div>
+      <div>
+        <button onClick={() => {
+          setTimeout(() => {
+            const str = model.api.str(['text']);
+            str.ins(0, '1. ');
+          }, 2000);
+        }}>
+          Prepend "1. " to model after 2s
+        </button>
+      </div>
       <pre style={{fontSize: '10px'}}>
         <code>
           {model + ''}

@@ -1,5 +1,6 @@
 import type {Model, StrApi, ApiPath} from "json-joy/es2020/json-crdt";
 import diff from 'fast-diff';
+import {invokeFirstOnly} from "../utils/invokeFirstOnly";
 
 const enum DIFF_CHANGE_TYPE {
   DELETE = -1,
@@ -26,12 +27,26 @@ export class JsonCrdtBinding {
   /** Selection end before `input` event execution. */
   protected selectionEnd: number | null = null;
 
+  protected readonly firstOnly = invokeFirstOnly();
+
   constructor(protected readonly model: Model, protected readonly str: StrApi, protected readonly input: HTMLInputElement) {}
+
+  // ------------------------------------------------------ Model-to-Input sync
 
   public syncFromModel() {
     const {input, str} = this;
     input.value = str.view();
   }
+
+  protected readonly onModelChange = () => {
+    this.firstOnly(() => {
+      this.syncFromModel();
+      console.log('model changed ....');
+      // this.syncFromModel
+    });
+  };
+
+  // ------------------------------------------------------ Input-to-Model sync
 
   public syncFromInput() {
     const {str, input} = this;
@@ -114,22 +129,24 @@ export class JsonCrdtBinding {
   }
 
   private readonly onInput = (event: Event) => {
-    const input = this.input;
-    const change = this.changeFromEvent(event as InputEvent);
-    if (change) {
-      const view = this.str.view();
-      const value = input.value;
-      const expected = applyChange(view, change);
-      if (expected === value) {
-        const str = this.str;
-        const [position, remove, insert] = change;
-        if (remove) str.del(position, remove);
-        if (insert) str.ins(position, insert);
+    this.firstOnly(() => {
+      const input = this.input;
+      const change = this.changeFromEvent(event as InputEvent);
+      if (change) {
+        const view = this.str.view();
+        const value = input.value;
+        const expected = applyChange(view, change);
+        if (expected === value) {
+          const str = this.str;
+          const [position, remove, insert] = change;
+          if (remove) str.del(position, remove);
+          if (insert) str.ins(position, insert);
+        }
       }
-    }
-    this.syncFromInput();
-    this.selectionStart = input.selectionStart;
-    this.selectionEnd = input.selectionEnd;
+      this.syncFromInput();
+      this.selectionStart = input.selectionStart;
+      this.selectionEnd = input.selectionEnd;
+    });
   };
 
   private readonly onSelectionChange = (event: Event) => {
@@ -138,20 +155,22 @@ export class JsonCrdtBinding {
     this.selectionEnd = input.selectionEnd;
   };
 
-  public pollingInterval: number = 1000;
+  // ------------------------------------------------------------------ Polling
 
+  public pollingInterval: number = 1000;
   private pollingRef: number | null | unknown = null;
 
   private readonly pollChanges = () => {
     this.pollingRef = setTimeout(() => {
-      console.log('polling');
-      try {
-        const {input, str} = this;
-        const view = str.view();
-        const value = input.value;
-        if (view !== value) this.syncFromInput();
-      } catch {}
-      if (this.pollingRef) this.pollChanges();
+      this.firstOnly(() => {
+        try {
+          const {input, str} = this;
+          const view = str.view();
+          const value = input.value;
+          if (view !== value) this.syncFromInput();
+        } catch {}
+        if (this.pollingRef) this.pollChanges();
+      });
     }, this.pollingInterval);
   };
 
@@ -160,11 +179,16 @@ export class JsonCrdtBinding {
     this.pollingRef = null;
   }
 
+  // ------------------------------------------------------------------ Binding
+
+  private unsubscribeModel: (() => void) | null = null;
+
   public readonly bind = (polling?: boolean) => {
     const input = this.input;
     input.addEventListener('input', this.onInput);
     document.addEventListener('selectionchange', this.onSelectionChange);
     if (polling) this.pollChanges();
+    this.unsubscribeModel = this.str.events.changes.listen(this.onModelChange);
   };
   
   public readonly unbind = () => {
@@ -172,5 +196,6 @@ export class JsonCrdtBinding {
     input.removeEventListener('input', this.onInput);
     document.removeEventListener('selectionchange', this.onSelectionChange);
     this.stopPolling();
+    if (this.unsubscribeModel) this.unsubscribeModel();
   };
 }
