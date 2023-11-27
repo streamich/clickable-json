@@ -3,7 +3,7 @@ import {invokeFirstOnly} from "../utils/invokeFirstOnly";
 import {Selection} from "./Selection";
 import {applyChange, idToIndex, indexToId} from "./util";
 import {SimpleChange} from "./types";
-import type {Model, StrApi, ApiPath} from "json-joy/es2020/json-crdt";
+import type {Model, StrApi} from "json-joy/es2020/json-crdt";
 
 const enum DIFF_CHANGE_TYPE {
   DELETE = -1,
@@ -11,17 +11,15 @@ const enum DIFF_CHANGE_TYPE {
   INSERT = 1,
 }
 
-export class JsonCrdtBinding {
-  public static bind = (model: Model, path: ApiPath, input: HTMLInputElement, polling?: boolean): (() => void) => {
-    const str = model.api.str(path);
-    const binding = new JsonCrdtBinding(model, str, input);
+export class StrBinding {
+  public static bind = (str: StrApi, input: HTMLInputElement, polling?: boolean): (() => void) => {
+    const binding = new StrBinding(str.api.model, str, input);
     binding.syncFromModel();
     binding.bind(polling);
     return binding.unbind;
   };
 
   protected readonly selection = new Selection();
-
   protected readonly firstOnly = invokeFirstOnly();
 
   constructor(protected readonly model: Model, protected readonly str: StrApi, protected readonly input: HTMLInputElement) {}
@@ -37,13 +35,14 @@ export class JsonCrdtBinding {
     const {selectionStart, selectionEnd, selectionDirection} = input;
     const {start, end} = selection;
     const now = Date.now();
+    const tick = model.tick;
     // Return early to avoid excessive RGA queries.
-    if (start === selectionStart && end === selectionEnd && (model.tick === selection.tick || now - selection.ts < 3000)) return;
+    if (start === selectionStart && end === selectionEnd && (tick === selection.tick || now - selection.ts < 3000)) return;
     selection.start = selectionStart;
     selection.end = selectionEnd;
     selection.dir = selectionDirection;
     selection.ts = now;
-    selection.tick = model.tick;
+    selection.tick = tick;
     selection.startId = typeof selectionStart === 'number' ? (indexToId(this.str, selectionStart ?? 0) ?? null) : null;
     selection.endId = typeof selectionEnd === 'number' ? (indexToId(this.str, selectionEnd ?? 0) ?? null) : null;
   }
@@ -70,6 +69,13 @@ export class JsonCrdtBinding {
   };
 
   // ------------------------------------------------------ Input-to-Model sync
+  // The main synchronization is from the input to the model. This is done by
+  // listening to the input event, most of the time, using the
+  // `changeFromEvent()`. However, some changes might be too complex, in which
+  // case the implementation bails out of granular input synchronization and
+  // instead synchronizes the whole input value with the model. The whole state
+  // synchronization is done by `syncFromInput()`, which uses the char-by-char
+  // diffing algorithm to compute the changes.
 
   public syncFromInput() {
     const {str, input} = this;
@@ -176,6 +182,11 @@ export class JsonCrdtBinding {
   };
 
   // ------------------------------------------------------------------ Polling
+  // Some changes to the input are not captured by the `input`, nor `change`
+  // events. For example, when input is modified programmatically
+  // `input.value = '...'`. To capture such changes, on can opt-in to polling
+  // by calling `bind(true)`. The polling interval can be configured by
+  // setting the `pollingInterval` property.
 
   public pollingInterval: number = 1000;
   private pollingRef: number | null | unknown = null;

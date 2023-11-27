@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type {Meta, StoryObj} from '@storybook/react';
 import {Model} from 'json-joy/es2020/json-crdt';
-import {JsonCrdtBinding} from './input';
+import {StrBinding} from './input';
 
 const Demo: React.FC = () => {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -11,7 +11,7 @@ const Demo: React.FC = () => {
     if (!inputRef.current) return;
     const input = inputRef.current;
     model.api.root({text: 'Hell'});
-    const unbind = JsonCrdtBinding.bind(model, ['text'], input, true);
+    const unbind = StrBinding.bind(model.api.str(['text']), input, true);
     return () => {
       unbind();
     };
