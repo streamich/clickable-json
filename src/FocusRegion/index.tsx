@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {rule, theme} from 'nano-theme';
 import {useT} from 'use-t';
-import Svg from 'iconista';
 import * as css from '../css';
 import {CancelAction} from '../buttons/Action/CancelAction';
+import {EditAction} from '../buttons/Action/EditAction';
 
 const hoverableClass = rule({
   d: 'inline-block',
@@ -46,6 +46,14 @@ const asideClass = rule({
   l: 'calc(100% + 0.5em)',
 });
 
+const editActionClass = rule({
+  d: 'inline-block',
+  pos: 'absolute',
+  r: '-6px',
+  b: '-9px',
+  z: 2,
+});
+
 export interface FocusRegionProps {
   focused?: boolean;
   pointed?: boolean;
@@ -58,6 +66,7 @@ export interface FocusRegionProps {
   onMouseEnter?: React.MouseEventHandler;
   onMouseLeave?: React.MouseEventHandler;
   onDelete?: React.MouseEventHandler;
+  onEdit?: React.MouseEventHandler;
 }
 
 export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
@@ -73,6 +82,7 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
     onMouseEnter,
     onMouseLeave,
     onDelete,
+    onEdit,
   } = props;
   const [t] = useT();
   const [deleteHovered, setDeleteHovered] = React.useState(false);
@@ -107,6 +117,11 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
     >
       {children}
       {deleteButton}
+      {(!!focused && onEdit) && (
+        <span className={editActionClass}>
+          <EditAction tooltip={t('Edit')} onClick={onEdit} />
+        </span>
+      )}
       {!!aside && <span className={asideClass}>{aside}</span>}
     </span>
   );

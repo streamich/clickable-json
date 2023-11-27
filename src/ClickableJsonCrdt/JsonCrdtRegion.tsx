@@ -98,6 +98,13 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
                     }
                   : undefined
       }
+      onEdit={
+        isFocused && parentIsObj
+          ? () => {
+            console.log('edit');
+          }
+          : undefined
+      }
     >
       {children}
     </FocusRegion>
