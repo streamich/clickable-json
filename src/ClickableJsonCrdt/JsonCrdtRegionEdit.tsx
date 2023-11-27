@@ -8,7 +8,7 @@ import {useStyles} from '../context/style';
 import {createValue} from './utils';
 import {useJsonCrdt} from './context';
 import type {NodeRef} from './NodeRef';
-import type {JsonNode, ObjApi, ValApi} from 'json-joy/es2020/json-crdt';
+import type {JsonNode, ObjApi, ValApi, VecApi} from 'json-joy/es2020/json-crdt';
 
 export interface JsonCrdtRegionEditProps extends ObjectLayoutProps {
   node: NodeRef<JsonNode>;
@@ -28,6 +28,10 @@ export const JsonCrdtRegionEdit: React.FC<JsonCrdtRegionEditProps> = ({node, onC
       const valueId = createValue(model, json, type as any, true);
       const nodeApi = model.api.wrap(node.parent.node) as ValApi;
       nodeApi.set(valueId);
+    } else if (node.parent && node.parent.node.name() === 'vec') {
+      const valueId = createValue(model, json, type as any, true);
+      const nodeApi = model.api.wrap(node.parent.node) as VecApi;
+      nodeApi.set([[+node.step, valueId]]);
     }
     if (onCancel) onCancel();
   };
