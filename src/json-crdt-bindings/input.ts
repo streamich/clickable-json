@@ -3,7 +3,7 @@ import {invokeFirstOnly} from '../utils/invokeFirstOnly';
 import {Selection} from './Selection';
 import {applyChange, idToIndex, indexToId} from './util';
 import {SimpleChange} from './types';
-import type {Model, StrApi} from 'json-joy/es2020/json-crdt';
+import type {StrApi} from 'json-joy/es2020/json-crdt';
 
 const enum DIFF_CHANGE_TYPE {
   DELETE = -1,
@@ -13,7 +13,7 @@ const enum DIFF_CHANGE_TYPE {
 
 export class StrBinding {
   public static bind = (str: StrApi, input: HTMLInputElement, polling?: boolean): (() => void) => {
-    const binding = new StrBinding(str.api.model, str, input);
+    const binding = new StrBinding(str, input);
     binding.syncFromModel();
     binding.bind(polling);
     return binding.unbind;
@@ -23,7 +23,6 @@ export class StrBinding {
   protected readonly firstOnly = invokeFirstOnly();
 
   constructor(
-    protected readonly model: Model,
     protected readonly str: StrApi,
     protected readonly input: HTMLInputElement,
   ) {}
@@ -35,11 +34,11 @@ export class StrBinding {
   // of, both, the local and remote selection state.
 
   protected saveSelection() {
-    const {model, input, selection} = this;
+    const {str, input, selection} = this;
     const {selectionStart, selectionEnd, selectionDirection} = input;
     const {start, end} = selection;
     const now = Date.now();
-    const tick = model.tick;
+    const tick = str.api.model.tick;
     // Return early to avoid excessive RGA queries.
     if (start === selectionStart && end === selectionEnd && (tick === selection.tick || now - selection.ts < 3000))
       return;
