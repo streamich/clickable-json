@@ -7,6 +7,11 @@ const enum DIFF_CHANGE_TYPE {
   INSERT = 1,
 }
 
+type SimpleChange = [position: number, remove: number, insert: string];
+
+const applyChange = (str: string, [position, remove, insert]: SimpleChange): string =>
+  str.slice(0, position) + insert + str.slice(position + remove);
+
 export class JsonCrdtBinding {
   public static bind = (model: Model, path: ApiPath, input: HTMLInputElement): (() => void) => {
     const str = model.api.str(path);
@@ -31,7 +36,9 @@ export class JsonCrdtBinding {
     const view = str.view();
     const value = input.value;
     if (value === view) return;
-    const changes = diff(view, value);
+    const caretPos: number | undefined = (typeof input.selectionStart === 'number') && (input.selectionStart === input.selectionEnd)
+      ? input.selectionStart : undefined;
+    const changes = diff(view, value, caretPos);
     const changeLen = changes.length;
     let pos: number = 0;
     for (let i = 0; i < changeLen; i++) {
@@ -53,14 +60,26 @@ export class JsonCrdtBinding {
         }
       }
     }
-    // console.log(str.view(), value);
-    // console.log(this.model.tick);
   }
 
-  public syncFromEvent(event: InputEvent) {
-    const {str, input} = this;
-    this.selectionStart = input.selectionStart;
-    this.selectionEnd = input.selectionEnd;
+  protected changeFromEvent(event: InputEvent): SimpleChange | undefined {
+    const {input} = this;
+    const {data, inputType, isComposing} = event;
+    if (isComposing) return;
+    switch (inputType) {
+      case 'deleteContentBackward': {
+        break;
+      }
+      case 'insertText': {
+        if (!data || data.length !== 1) return;
+        const {selectionStart, selectionEnd} = input;
+        if (selectionStart === null || selectionEnd === null) return;
+        if (selectionStart !== selectionEnd) return;
+        if (selectionStart <= 0) return;
+        return [selectionStart - 1, 0, data];
+      }
+    }
+    return;
   }
 
   public bindFromInput() {
@@ -68,9 +87,24 @@ export class JsonCrdtBinding {
   }
 
   private readonly onInput = (event: Event) => {
-    // this.syncFromEvent(event as InputEvent);
-    this.syncFromInput();
-
+    const input = this.input;
+    const change = this.changeFromEvent(event as InputEvent);
+    let needsStateSync = true;
+    if (change) {
+      const view = this.str.view();
+      const value = input.value;
+      const expected = applyChange(view, change);
+      if (expected === value) {
+        needsStateSync = false;
+        const str = this.str;
+        const [position, remove, insert] = change;
+        if (remove) str.del(position, remove);
+        if (insert) str.ins(position, insert);
+      }
+    }
+    if (needsStateSync) this.syncFromInput();
+    this.selectionStart = input.selectionStart;
+    this.selectionEnd = input.selectionEnd;
   };
 
   public unbind = () => {
