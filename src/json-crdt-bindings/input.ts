@@ -86,9 +86,10 @@ export class StrBinding {
     const view = str.view();
     const value = input.value;
     if (value === view) return;
-    const caretPos: number | undefined =
-      typeof input.selectionStart === 'number' && input.selectionStart === input.selectionEnd
-        ? input.selectionStart
+    // console.log('FULL_SYNC');
+    const selection = this.selection;
+    const caretPos: number | undefined = selection.start === selection.end
+        ? (selection.start ?? undefined)
         : undefined;
     const changes = diff(view, value, caretPos);
     const changeLen = changes.length;
@@ -120,7 +121,18 @@ export class StrBinding {
     if (isComposing) return;
     switch (inputType) {
       case 'deleteContentBackward': {
-        break;
+        const {selection} = this;
+        const {start, end} = selection;
+        if (typeof start !== 'number' || typeof end !== 'number') return;
+        if (start === end) return [start - 1, 1, ''];
+        return [start, end - start, ''];
+      }
+      case 'deleteContentForward': {
+        const {selection} = this;
+        const {start, end} = selection;
+        if (typeof start !== 'number' || typeof end !== 'number') return;
+        if (start === end) return [start, 1, ''];
+        return [start, end - start, ''];
       }
       case 'deleteByCut': {
         const {start, end} = this.selection;
@@ -157,7 +169,11 @@ export class StrBinding {
         if (selectionStart === null || selectionEnd === null) return;
         if (selectionStart !== selectionEnd) return;
         if (selectionStart <= 0) return;
-        return [selectionStart - 1, 0, data];
+        const selection = this.selection;
+        if (selectionStart - data.length !== selection.start) return;
+        if (typeof selection.end !== 'number' || typeof selection.end !== 'number') return;
+        const remove = selection.end - selection.start;
+        return [selection.start, remove, data];
       }
     }
     return;

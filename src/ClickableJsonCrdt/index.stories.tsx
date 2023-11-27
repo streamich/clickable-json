@@ -22,10 +22,14 @@ const Demo: React.FC<{view?: unknown} & Omit<ClickableJsonCrdtProps, 'model'>> =
     if (view !== undefined) model.api.root(view);
     return model;
   }, []);
+  React.useSyncExternalStore(model.api.subscribe, () => model.tick);
 
   return (
     <div style={{padding: '32px 64px', boxSizing: 'border-box'}}>
       <ClickableJsonCrdt {...rest} model={model} />
+      <pre style={{fontSize: '10px'}}>
+        <code>{model.root + ''}</code>
+      </pre>
     </div>
   );
 };

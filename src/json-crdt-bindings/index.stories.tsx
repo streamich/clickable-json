@@ -66,7 +66,7 @@ const Demo: React.FC = () => {
         </button>
       </div>
       <pre style={{fontSize: '10px'}}>
-        <code>{model + ''}</code>
+        <code>{model.root + ''}</code>
       </pre>
     </div>
   );
