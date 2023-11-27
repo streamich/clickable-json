@@ -85,6 +85,22 @@ export class JsonCrdtBinding {
         if (view.length - value.length !== max - min) return;
         return [min, max - min, ''];
       }
+      case 'insertFromPaste': {
+        const {selectionStart, selectionEnd} = this;
+        if (typeof selectionStart !== 'number' || typeof selectionEnd !== 'number') return;
+        const min = Math.min(selectionStart, selectionEnd);
+        const max = Math.max(selectionStart, selectionEnd);
+        const str = this.str;
+        const view = str.view();
+        const input = this.input;
+        const value = input.value;
+        const newMax = Math.max(input.selectionStart ?? 0, input.selectionEnd ?? 0);
+        if (newMax <= min) return;
+        const remove = max - min;
+        const insert = value.slice(min, newMax);
+        if (value.length !== view.length - remove + insert.length) return;
+        return [min, remove, insert];
+      }
       case 'insertText': {
         if (!data || data.length !== 1) return;
         const {selectionStart, selectionEnd} = input;
@@ -100,13 +116,11 @@ export class JsonCrdtBinding {
   private readonly onInput = (event: Event) => {
     const input = this.input;
     const change = this.changeFromEvent(event as InputEvent);
-    let needsStateSync = true;
     if (change) {
       const view = this.str.view();
       const value = input.value;
       const expected = applyChange(view, change);
       if (expected === value) {
-        needsStateSync = false;
         const str = this.str;
         const [position, remove, insert] = change;
         if (remove) str.del(position, remove);
