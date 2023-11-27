@@ -3,6 +3,7 @@ import {useT} from 'use-t';
 import * as css from '../css';
 import {ValueInput} from './ValueInput';
 import {AddAction} from '../buttons/Action/AddAction';
+import {CancelAction} from '../buttons/Action/CancelAction';
 
 export interface ArrayInsertProps {
   visible?: boolean;
@@ -21,13 +22,16 @@ export const ArrayInsert: React.FC<ArrayInsertProps> = ({visible, withType, onSu
 
   if (editing) {
     return (
-      <ValueInput
-        focus
-        withType={withType}
-        visible={visible}
-        onSubmit={handleSubmit}
-        onCancel={() => setEditing(false)}
-      />
+      <span style={{position: 'relative'}}>
+        <ValueInput
+          focus
+          withType={withType}
+          visible={visible}
+          onSubmit={handleSubmit}
+          onCancel={() => setEditing(false)}
+        />
+        <CancelAction onClick={() => setEditing(false)} />
+      </span>
     );
   }
 
