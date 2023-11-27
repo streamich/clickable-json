@@ -18,9 +18,7 @@ export const PushElement: React.FC<PushElementProps> = ({node}) => {
     (json: string, type: string) => {
       const valueId = createValue(model, json, type as any, true);
       const nodeApi = model.api.wrap(node.node);
-      nodeApi.set([
-        [(nodeApi.view() as unknown[]).length, valueId],
-      ]);
+      nodeApi.set([[(nodeApi.view() as unknown[]).length, valueId]]);
     },
     [node.node],
   );
