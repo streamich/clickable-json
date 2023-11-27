@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as css from '../../css';
-import {NodeRef} from '../NodeRef';
+import {NodeRef, nodeRef} from '../NodeRef';
 import {useJsonCrdt} from '../context';
 import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
 import {JsonAtom} from '../../JsonAtom';
+import {useRerenderModel} from '../hooks';
 import type {ValNode} from 'json-joy/es2020/json-crdt';
 
 export interface JsonCrdtValNodeProps {
@@ -14,9 +15,10 @@ export interface JsonCrdtValNodeProps {
 
 export const JsonCrdtValNode: React.FC<JsonCrdtValNodeProps> = ({node}) => {
   const {render} = useJsonCrdt();
+  useRerenderModel();
 
   const childNode = node.node.node();
-  const child = <span className={css.line}>{render(new NodeRef(childNode, node, ''))}</span>;
+  const child = <span className={css.line}>{render(nodeRef(childNode, node, ''))}</span>;
 
   let collapsedView: React.ReactNode = '…';
   if (childNode.name() === 'con') {

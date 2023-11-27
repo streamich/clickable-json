@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useTheme} from 'nano-theme';
 import * as css from '../css';
-import {inputStyle, typeahead, valueColor} from './utils';
+import {inputStyle, typeahead, valueBg, valueColor} from './utils';
 import {FlexibleInput} from '../FlexibleInput';
 
 export interface ValueInputProps {
@@ -104,7 +104,7 @@ export const ValueInput: React.FC<ValueInputProps> = (props) => {
           ? inputStyle(theme, !theme.isLight, proposed)
           : {
               color: valueColor(!theme.isLight, value),
-              background: value === false || (typeof value === 'number' && value < 0) ? theme.red(0.06) : undefined,
+              background: valueBg(value),
             }
       }
     >

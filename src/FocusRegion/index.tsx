@@ -1,8 +1,43 @@
 import * as React from 'react';
-import {rule} from 'nano-theme';
+import {rule, theme} from 'nano-theme';
 import {useT} from 'use-t';
-import Svg from 'iconista';
 import * as css from '../css';
+import {CancelAction} from '../buttons/Action/CancelAction';
+import {EditAction} from '../buttons/Action/EditAction';
+
+const hoverableClass = rule({
+  d: 'inline-block',
+  pos: 'relative',
+  va: 'top',
+  bxz: 'border-box',
+  pd: '3px',
+  bdrad: '4px',
+  trs: 'background-color .3s ease-out',
+});
+
+const hoverableCompactClass = rule({
+  pd: '1px 3px',
+});
+
+const hoveredClass = rule({
+  bgc: theme.blue(0.1),
+});
+
+const hoveredNegativeClass = rule({
+  bgc: theme.red(0.1),
+});
+
+const hoveredDangerClass = rule({
+  bgc: theme.red(0.08),
+});
+
+const activeClass = rule({
+  out: `1px dotted ${css.blue}`,
+});
+
+const activeNegativeClass = rule({
+  out: `1px dotted ${css.negative}`,
+});
 
 const asideClass = rule({
   d: 'inline-block',
@@ -11,45 +46,63 @@ const asideClass = rule({
   l: 'calc(100% + 0.5em)',
 });
 
+const editActionClass = rule({
+  d: 'inline-block',
+  pos: 'absolute',
+  r: '-6px',
+  b: '-9px',
+  z: 2,
+});
+
 export interface FocusRegionProps {
   focused?: boolean;
   pointed?: boolean;
   compact?: boolean;
   aside?: React.ReactNode;
+  negative?: boolean;
   children: React.ReactNode;
   onClick?: React.MouseEventHandler;
   onMouseMove?: React.MouseEventHandler;
   onMouseEnter?: React.MouseEventHandler;
   onMouseLeave?: React.MouseEventHandler;
   onDelete?: React.MouseEventHandler;
+  onEdit?: React.MouseEventHandler;
 }
 
 export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
-  const {focused, pointed, compact, aside, children, onClick, onMouseMove, onMouseEnter, onMouseLeave, onDelete} =
-    props;
+  const {
+    focused,
+    pointed,
+    compact,
+    aside,
+    negative,
+    children,
+    onClick,
+    onMouseMove,
+    onMouseEnter,
+    onMouseLeave,
+    onDelete,
+    onEdit,
+  } = props;
   const [t] = useT();
   const [deleteHovered, setDeleteHovered] = React.useState(false);
-  const useInsButtonClass = css.useInsButton();
 
   const deleteButton = onDelete ? (
-    <button
-      className={css.insButton + useInsButtonClass + css.deleteButton}
+    <CancelAction
+      tooltip={t('Delete')}
       onClick={onDelete}
       onMouseEnter={() => setDeleteHovered(true)}
       onMouseOver={() => setDeleteHovered(true)}
       onMouseLeave={() => setDeleteHovered(false)}
-    >
-      <Svg set="atlaskit" icon="cross" width={10} height={10} />
-      <span className={css.tooltip + css.deleteButtonTooltip}>{t('Delete')}</span>
-    </button>
+    />
   ) : undefined;
 
   const className =
-    css.hoverable +
-    (compact ? css.hoverableCompact : '') +
-    (pointed ? css.hovered : '') +
-    (deleteHovered ? css.hoveredDanger : '') +
-    (focused ? css.active : '');
+    hoverableClass +
+    (compact ? hoverableCompactClass : '') +
+    (pointed ? (negative ? hoveredNegativeClass : hoveredClass) : '') +
+    (deleteHovered ? hoveredDangerClass : '') +
+    (focused ? (negative ? activeNegativeClass : activeClass) : '');
 
   return (
     <span
@@ -64,6 +117,11 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
     >
       {children}
       {deleteButton}
+      {!!focused && onEdit && (
+        <span className={editActionClass}>
+          <EditAction tooltip={t('Edit')} onClick={onEdit} />
+        </span>
+      )}
       {!!aside && <span className={asideClass}>{aside}</span>}
     </span>
   );

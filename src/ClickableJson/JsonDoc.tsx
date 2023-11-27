@@ -9,6 +9,7 @@ import {JsonArrayInsert} from './JsonArrayInsert';
 import {ObjectLayout} from '../ObjectLayout';
 import {useFocus} from '../context/focus';
 import {useStyles} from '../context/style';
+import {escapeComponent} from 'json-joy/es2020/json-pointer';
 import type {OnChange} from './types';
 
 interface JsonObjectProps {
@@ -35,7 +36,7 @@ const JsonObject: React.FC<JsonObjectProps> = ({property, doc, pointer, parentCo
   };
 
   const entries = keys.map((key, index) => {
-    const itemPointer = `${pointer}/${key}`;
+    const itemPointer = `${pointer}/${escapeComponent(key)}`;
     return (
       <span key={key} className={css.line}>
         <JsonHoverable pointer={itemPointer}>

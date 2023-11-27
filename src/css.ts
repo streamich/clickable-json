@@ -1,4 +1,4 @@
-import {makeRule, rule, theme, darkTheme} from 'nano-theme';
+import {rule, theme, darkTheme} from 'nano-theme';
 
 export const blue = theme.color.sem.blue[0];
 export const negative = theme.color.sem.negative[0];
@@ -15,8 +15,8 @@ export const object = rule({
 });
 
 export const ValueColor = {
-  nil: [theme.g(0.6), darkTheme.g(0.6)],
-  undef: [theme.g(0.8), darkTheme.g(0.8)],
+  nil: [theme.g(0, 0.4), darkTheme.g(0, 0.4)],
+  undef: [theme.g(0, 0.2), darkTheme.g(0, 0.2)],
   str: ['#e00e44', '#f01e54'],
   bool: ['#411888', '#9168c8'],
   num: ['#0a8F3F', '#0FaF4F'],
@@ -97,33 +97,6 @@ export const lineInner = rule({
   d: 'inline-block',
 });
 
-export const hoverable = rule({
-  d: 'inline-block',
-  pos: 'relative',
-  va: 'top',
-  bxz: 'border-box',
-  pd: '3px',
-  bdrad: '4px',
-  trs: 'background-color .3s ease-out',
-});
-
-export const hoverableCompact = rule({
-  pd: '1px 3px',
-});
-
-export const hovered = rule({
-  bgc: theme.blue(0.1),
-});
-
-export const hoveredDanger = rule({
-  bgc: theme.red(0.08),
-});
-
-export const active = rule({
-  out: `1px dotted ${blue}`,
-  pos: 'relative',
-});
-
 export const bracket = rule({
   pos: 'relative',
   cur: 'default',
@@ -192,99 +165,7 @@ export const insArrLine = rule({
 
 export const insArrButton = rule({
   pos: 'absolute',
-  t: '-7px',
+  d: 'block',
+  t: '-8px',
   l: '-75px',
-});
-
-export const insButton = rule({
-  w: '17px',
-  h: '17px',
-  bdrad: '2px',
-  pad: 0,
-  mr: 0,
-  out: 0,
-  ff: 'monospace',
-  lh: '16px',
-  cur: 'pointer',
-  bd: `1px dotted ${blue}`,
-  col: blue,
-  fw: 'normal',
-  '&:hover': {
-    bg: blue,
-  },
-});
-
-export const useInsButton = makeRule((theme) => ({
-  bg: theme.bg,
-  '&:hover': {
-    col: theme.bg,
-  },
-  '&:active': {
-    col: theme.g(0.9),
-    bg: theme.g(0.1),
-    bd: `1px solid ${theme.g(0.1)}`,
-  },
-}));
-
-export const tooltip = rule({
-  ...theme.font.ui1,
-  pos: 'absolute',
-  t: '-2.8em',
-  l: '0px',
-  d: 'inline-block',
-  bg: 'rgba(0,0,0,.8)',
-  col: '#fff',
-  fz: 12 / 13.4 + 'em',
-  pad: '.4em .8em',
-  bdrad: '.4em',
-  z: 3,
-  pe: 'none',
-  us: 'none',
-});
-
-export const insArrTooltip = rule({
-  pos: 'absolute',
-  t: '-2.8em',
-  l: '-75px',
-  vis: 'hidden',
-  [`.${insArrBlock.trim()}:hover &`]: {
-    vis: 'visible',
-  },
-});
-
-export const deleteButton = rule({
-  d: 'flex',
-  jc: 'center',
-  ai: 'center',
-  w: '20px',
-  h: '20px',
-  pos: 'absolute',
-  t: '-11px',
-  l: '-11px',
-  z: 2,
-  bdrad: '50%',
-  svg: {
-    fill: blue,
-  },
-  '&:hover': {
-    bg: negative,
-    bd: `1px solid ${negative}`,
-    svg: {
-      fill: '#fff',
-    },
-  },
-  '&:active': {
-    bg: theme.g(0.1),
-    bd: `1px solid ${theme.g(0.1)}`,
-  },
-});
-
-export const deleteButtonTooltip = rule({
-  pos: 'absolute',
-  t: '-30px',
-  l: '0px',
-  vis: 'hidden',
-  [`.${deleteButton.trim()}:hover &`]: {
-    vis: 'visible',
-  },
 });

@@ -3133,19 +3133,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-onboarding@npm:^1.0.8":
-  version: 1.0.8
-  resolution: "@storybook/addon-onboarding@npm:1.0.8"
-  dependencies:
-    "@storybook/telemetry": "npm:^7.1.0-alpha.32"
-    react-confetti: "npm:^6.1.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 12444cd8831e289df6e46d76fb61932678e4424e591a3ea0be1517547e2111bd35e54161674b851d00d507b05b7e28c6ca83e2b1b09bca483004c51b8f4b5acd
-  languageName: node
-  linkType: hard
-
 "@storybook/addon-outline@npm:7.5.3":
   version: 7.5.3
   resolution: "@storybook/addon-outline@npm:7.5.3"
@@ -3867,7 +3854,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/telemetry@npm:7.5.3, @storybook/telemetry@npm:^7.1.0-alpha.32":
+"@storybook/telemetry@npm:7.5.3":
   version: 7.5.3
   resolution: "@storybook/telemetry@npm:7.5.3"
   dependencies:
@@ -5985,7 +5972,6 @@ __metadata:
     "@storybook/addon-essentials": "npm:^7.5.3"
     "@storybook/addon-interactions": "npm:^7.5.3"
     "@storybook/addon-links": "npm:^7.5.3"
-    "@storybook/addon-onboarding": "npm:^1.0.8"
     "@storybook/addons": "npm:^7.5.3"
     "@storybook/blocks": "npm:^7.5.3"
     "@storybook/react": "npm:^7.5.3"
@@ -5999,7 +5985,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-storybook: "npm:^0.6.15"
     jest: "npm:^29.7.0"
-    json-joy: "npm:^11.3.0"
+    json-joy: "npm:^11.5.0"
     nano-theme: "npm:^1.2.0"
     p4-ui: "npm:^1.15.0"
     prettier: "npm:^3.1.0"
@@ -9665,12 +9651,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-joy@npm:^11.3.0":
-  version: 11.3.0
-  resolution: "json-joy@npm:11.3.0"
+"json-joy@npm:^11.5.0":
+  version: 11.5.0
+  resolution: "json-joy@npm:11.5.0"
   dependencies:
     arg: "npm:^5.0.2"
     hyperdyperid: "npm:^1.2.0"
+    thingies: "npm:^1.14.1"
   peerDependencies:
     quill-delta: ^5
     rxjs: 7
@@ -9684,7 +9671,7 @@ __metadata:
     json-pointer: bin/json-pointer.js
     json-pointer-test: bin/json-pointer-test.js
     json-unpack: bin/json-unpack.js
-  checksum: 4ba8ebd3f3a690e11cdc915f60c23946cbee18b7dc4474c21f7dfcb2d0e80007300cd8fafdb50304ff609557d761cd00c0acd00424087b37e1abd686620afebc
+  checksum: 41cde61999ea7f6182febe6855a69fd03525e6d507003a77a6e8e72773e7a88cb7517e3e9b7ec9f98dd4b2c55ff88333a01f60e84175c93e438a4f19609dde26
   languageName: node
   linkType: hard
 
@@ -11467,17 +11454,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-confetti@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "react-confetti@npm:6.1.0"
-  dependencies:
-    tween-functions: "npm:^1.2.0"
-  peerDependencies:
-    react: ^16.3.0 || ^17.0.1 || ^18.0.0
-  checksum: 5b4eb23eef564695f6db1d25b294ed31d5fa21ff4092c6a38e641f85cd10e3e0b50014366e3ac0f7cf772e73faaecd14614e5b11a5531336fa769dda8068ab59
-  languageName: node
-  linkType: hard
-
 "react-docgen-typescript@npm:^2.2.2":
   version: 2.2.2
   resolution: "react-docgen-typescript@npm:2.2.2"
@@ -13022,6 +12998,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"thingies@npm:^1.14.1":
+  version: 1.14.1
+  resolution: "thingies@npm:1.14.1"
+  peerDependencies:
+    tslib: ^2
+  checksum: fd7dbd0f728d10ef27ca1f02765bb9e4fcca8d0aa2fdc56990f8b9bd864e1b1b10966fd6cdf5843e75ef4c4486e9cdc96c2aa08284c8f4b88f2fb51b242327a7
+  languageName: node
+  linkType: hard
+
 "throttle-debounce@npm:^2.0.1":
   version: 2.3.0
   resolution: "throttle-debounce@npm:2.3.0"
@@ -13182,13 +13167,6 @@ __metadata:
   peerDependencies:
     typescript: ">=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta"
   checksum: 02f19e458ec78ead8fffbf711f834ad8ecd2cc6ade4ec0320790713dccc0a412b99e7fd907c4cda2a1dc602c75db6f12e0108e87a5afad4b2f9e90a24cabd5a2
-  languageName: node
-  linkType: hard
-
-"tween-functions@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "tween-functions@npm:1.2.0"
-  checksum: 7e59295b8b0ee4132ed2fe335f56a9db5c87056dad6b6fd3011be72239fd20398003ddb4403bc98ad9f5c94468890830f64016edbbde35581faf95b32cda8305
   languageName: node
   linkType: hard
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {context as crdt} from './context';
 import {StyleContextValue, context as styles} from '../context/style';
-import {NodeRef} from './NodeRef';
+import {NodeRef, nodeRef} from './NodeRef';
 import {Root} from '../Root';
 import {FocusProvider} from '../context/focus';
 import {
@@ -48,7 +48,7 @@ export interface ClickableJsonCrdtProps extends StyleContextValue {
 
 export const ClickableJsonCrdt: React.FC<ClickableJsonCrdtProps> = (props) => {
   const {model, compact, readonly, showRoot} = props;
-  const node = React.useMemo(() => new NodeRef(showRoot ? model.root : model.root.node(), null, ''), [model]);
+  const node = React.useMemo(() => nodeRef(showRoot ? model.root : model.root.node(), null, ''), [model]);
 
   return (
     <styles.Provider value={{compact, readonly}}>

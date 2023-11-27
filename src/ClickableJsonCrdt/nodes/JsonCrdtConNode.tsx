@@ -5,9 +5,9 @@ import {JsonAtom} from '../../JsonAtom';
 import {useStyles} from '../../context/style';
 import {ClickableJson} from '../../ClickableJson';
 import {id} from '../utils';
+import {useFocus} from '../../context/focus';
 import type {ConNode} from 'json-joy/es2020/json-crdt';
 import type {NodeRef} from '../NodeRef';
-import {useFocus} from '../../context/focus';
 
 export interface JsonCrdtConNodeProps {
   node: NodeRef<ConNode>;

@@ -14,15 +14,19 @@ const blockClass = rule({
 export interface TypeAndIdProps {
   node: NodeRef<any>;
   active?: boolean;
+  negative?: boolean;
 }
 
-export const TypeAndId: React.FC<TypeAndIdProps> = React.memo(({node, active}) => {
+export const TypeAndId: React.FC<TypeAndIdProps> = React.memo(({node, active, negative}) => {
   const theme = useTheme();
 
   const {sid, time} = node.node.id;
 
   return (
-    <span className={blockClass} style={{color: active ? theme.color.sem.blue[0] : theme.g(0, 0.5)}}>
+    <span
+      className={blockClass}
+      style={{color: active ? (negative ? theme.color.sem.negative[0] : theme.color.sem.blue[0]) : theme.g(0, 0.5)}}
+    >
       {(node.node as JsonNode).name()}
       <span style={{color: active ? theme.g(0, 0.45) : theme.g(0, 0.2), display: 'block'}}>
         {active ? (sid > 999 ? '...' : '') + String(sid).slice(String(sid).length - 4) : null}

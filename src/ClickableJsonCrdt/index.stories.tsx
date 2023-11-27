@@ -16,44 +16,6 @@ const meta: Meta<typeof Text> = {
 
 export default meta;
 
-const model = Model.withLogicalClock();
-// model.api.root(s.con([123, null]));
-// model.api.root(s.val(s.con([123, null])));
-// model.api.root({foo: s.con([123, null]), bar: true, baz: {x: 1}});
-model.api.root({
-  foo: s.con([123, [null]]),
-  bar: true,
-  baz: {x: 1, val: s.val(s.con(true))},
-  emptyObject: {},
-  qux: s.vec(s.con(1), s.con(-2), s.con('three'), s.con({four: 4})),
-  arr: [s.con(0), 'hello world', -5, s.val(s.val(s.con(null))), s.val(s.con({foo: 'bar'}))],
-  bin: s.bin(new Uint8Array([1, 2, 3, 4, 5])),
-});
-
-console.log(model + '');
-
-export const Primary: StoryObj<typeof meta> = {
-  render: () => (
-    <div style={{padding: '32px 64px'}}>
-      <ClickableJsonCrdt model={model} />
-    </div>
-  ),
-  parameters: {
-    layout: 'fullscreen',
-  },
-};
-
-export const ShowRoot: StoryObj<typeof meta> = {
-  render: () => (
-    <div style={{padding: '32px 64px'}}>
-      <ClickableJsonCrdt showRoot model={model} />
-    </div>
-  ),
-  parameters: {
-    layout: 'fullscreen',
-  },
-};
-
 const Demo: React.FC<{view?: unknown} & Omit<ClickableJsonCrdtProps, 'model'>> = ({view, ...rest}) => {
   const model = React.useMemo(() => {
     const model = Model.withLogicalClock();
@@ -62,10 +24,34 @@ const Demo: React.FC<{view?: unknown} & Omit<ClickableJsonCrdtProps, 'model'>> =
   }, []);
 
   return (
-    <div style={{padding: '32px 64px'}}>
+    <div style={{padding: '32px 64px', boxSizing: 'border-box'}}>
       <ClickableJsonCrdt {...rest} model={model} />
     </div>
   );
+};
+
+const schema1 = {
+  foo: s.con([123, [null]]),
+  bar: true,
+  baz: {x: 1, val: s.val(s.con(true))},
+  emptyObject: {},
+  qux: s.vec(s.con(1), s.con(-2), s.con('three'), s.con({four: 4})),
+  arr: [s.con(0), 'hello world', -5, s.val(s.val(s.con(null))), s.val(s.con({foo: 'bar'}))],
+  bin: s.bin(new Uint8Array([1, 2, 3, 4, 5])),
+};
+
+export const Primary: StoryObj<typeof meta> = {
+  render: () => <Demo view={schema1} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const ShowRoot: StoryObj<typeof meta> = {
+  render: () => <Demo view={schema1} showRoot />,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 export const EmptyDoc: StoryObj<typeof meta> = {
@@ -84,6 +70,50 @@ export const ConstantRoot: StoryObj<typeof meta> = {
 
 export const ConstantRootJson: StoryObj<typeof meta> = {
   render: () => <Demo view={s.con({foo: [123, 'bar']})} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const LongValues: StoryObj<typeof meta> = {
+  render: () => (
+    <Demo
+      view={{
+        binaryData: s.bin(
+          new Uint8Array([
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140,
+            141, 142, 143, 144, 145, 146, 255, 254, 253, 252, 251, 250, 249, 248, 247, 246, 245, 244, 243, 242, 241,
+            240, 239, 238, 128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113, 112, 111,
+            128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 128, 127, 126,
+            125, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139,
+            140, 141, 142, 143, 144, 145, 146, 255, 254, 253, 252, 251, 250, 249, 248, 247, 246, 245, 244, 243, 242,
+            241, 240, 239, 238, 128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113, 112,
+            111, 128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 128, 127,
+            126, 125, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138,
+            139, 140, 141, 142, 143, 144, 145, 146, 255, 254, 253, 252, 251, 250, 249, 248, 247, 246, 245, 244, 243,
+            242, 241, 240, 239, 238, 128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113,
+            112, 111, 128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 128,
+            127, 126, 125, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137,
+            138, 139, 140, 141, 142, 143, 144, 145, 146, 255, 254, 253, 252, 251, 250, 249, 248, 247, 246, 245, 244,
+            243, 242, 241, 240, 239, 238, 128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114,
+            113, 112, 111, 128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113, 112, 111,
+            128, 127, 126, 125,
+          ]),
+        ),
+        longString:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. ' +
+          'Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. ' +
+          'Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ' +
+          'ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. ' +
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. ' +
+          'Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat ' +
+          'sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. ' +
+          'Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar ' +
+          'at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ' +
+          'ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.',
+      }}
+    />
+  ),
   parameters: {
     layout: 'fullscreen',
   },

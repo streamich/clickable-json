@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {theme, useTheme} from 'nano-theme';
-import {valueColor} from '../ClickableJson/utils';
+import {valueBg, valueColor} from '../ClickableJson/utils';
 
 const blue = theme.color.sem.blue[0];
 
@@ -23,8 +23,11 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
     color = theme.g(0.45);
     formatted = (
       <span>
-        <span style={{color: theme.red(1), fontSize: '0.8em', fontWeight: 'bold'}}>0x</span>
-        {[...value].map((n) => (n < 16 ? '0' + n.toString(16) : n.toString(16))).join(' ')}
+        {[...value]
+          .slice(0, 128)
+          .map((n) => (n < 16 ? '0' + n.toString(16) : n.toString(16)))
+          .join(' ')}
+        {value.length > 128 ? <span style={{color: theme.g(0.3)}}>{` … (${value.length - 128} more)`}</span> : ''}
       </span>
     );
   } else if (value && typeof value === 'object') {
@@ -32,14 +35,37 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
     formatted = '{' + Object.keys(value).length + '}';
   } else {
     color = valueColor(!theme.isLight, value) ?? color;
-    formatted = React.useMemo(
-      () => (typeof value === 'string' ? JSON.stringify(value) : String(value)),
-      [value, theme],
-    );
+    if (typeof value === 'string') {
+      const needsTrim = value.length > 256;
+      const str = JSON.stringify(needsTrim ? value.slice(0, 256) : value);
+      if (needsTrim) {
+        formatted = (
+          <span>
+            {str.slice(0, -1)}
+            <span style={{color: theme.g(0.3)}}>{` … (${value.length - 256} more)`}</span>
+            {'"'}
+          </span>
+        );
+      } else formatted = str;
+    } else {
+      formatted = String(value);
+    }
+  }
+
+  const background = valueBg(value);
+  const style: React.CSSProperties = {
+    color,
+    background,
+  };
+
+  if (background) {
+    style.borderRadius = 4;
+    style.margin = -1;
+    style.padding = 1;
   }
 
   return (
-    <span style={{color}} onClick={onClick}>
+    <span style={style} onClick={onClick}>
       {formatted}
     </span>
   );
