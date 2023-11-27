@@ -8,25 +8,28 @@ import {useStyles} from '../context/style';
 import {createValue} from './utils';
 import {useJsonCrdt} from './context';
 import type {NodeRef} from './NodeRef';
-import type {JsonNode, ObjApi} from 'json-joy/es2020/json-crdt';
+import type {JsonNode, ObjApi, ValApi} from 'json-joy/es2020/json-crdt';
 
-export interface JsonCrdtObjectKeyEditProps extends ObjectLayoutProps {
+export interface JsonCrdtRegionEditProps extends ObjectLayoutProps {
   node: NodeRef<JsonNode>;
   onCancel?: () => void;
 }
 
-export const JsonCrdtObjectKeyEdit: React.FC<JsonCrdtObjectKeyEditProps> = ({node, onCancel}) => {
+export const JsonCrdtRegionEdit: React.FC<JsonCrdtRegionEditProps> = ({node, onCancel}) => {
   const {compact} = useStyles();
   const {model} = useJsonCrdt();
 
   const handleSubmit = (json: string, type: string) => {
-    const isObjKeyEdit = node.parent && node.parent.node.name() === 'obj';
-    if (isObjKeyEdit) {
+    if (node.parent && node.parent.node.name() === 'obj') {
       const valueId = createValue(model, json, type as any, true);
       const nodeApi = model.api.wrap(node.parent.node) as ObjApi;
       nodeApi.set({[node.step]: valueId});
-      if (onCancel) onCancel();
+    } else if (node.parent && node.parent.node.name() === 'val') {
+      const valueId = createValue(model, json, type as any, true);
+      const nodeApi = model.api.wrap(node.parent.node) as ValApi;
+      nodeApi.set(valueId);
     }
+    if (onCancel) onCancel();
   };
 
   return (

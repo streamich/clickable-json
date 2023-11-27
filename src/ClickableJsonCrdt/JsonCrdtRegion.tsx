@@ -6,7 +6,7 @@ import {useJsonCrdt} from './context';
 import {TypeAndId} from './TypeAndId';
 import {NodeRef} from './NodeRef';
 import {id} from './utils';
-import {JsonCrdtObjectKeyEdit} from './JsonCrdtObjectKeyEdit';
+import {JsonCrdtRegionEdit} from './JsonCrdtRegionEdit';
 import type {ArrNode, ConNode, JsonNode, ObjNode, ValNode, VecNode} from 'json-joy/es2020/json-crdt';
 
 const isObjTombstone = (node: NodeRef<JsonNode>): boolean => {
@@ -65,7 +65,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
   ) : undefined;
 
   if (edit) {
-    return <JsonCrdtObjectKeyEdit node={node} onCancel={() => setEdit(false)} />;
+    return <JsonCrdtRegionEdit node={node} onCancel={() => setEdit(false)} />;
   }
 
   return (
@@ -104,7 +104,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
                     }
                   : undefined
       }
-      onEdit={isFocused && parentIsObj ? () => setEdit(true) : undefined}
+      onEdit={isFocused && (parentIsObj || (parentNodeType === 'val')) ? () => setEdit(true) : undefined}
     >
       {children}
     </FocusRegion>
