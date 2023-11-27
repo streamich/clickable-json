@@ -17,11 +17,13 @@ export class JsonCrdtBinding {
     const str = model.api.str(path);
     const binding = new JsonCrdtBinding(model, str, input);
     binding.syncFromModel();
-    binding.bindFromInput();
+    binding.bind();
     return binding.unbind;
   };
 
+  /** Selection start before `input` event execution. */
   protected selectionStart: number | null = null;
+  /** Selection end before `input` event execution. */
   protected selectionEnd: number | null = null;
 
   constructor(protected readonly model: Model, protected readonly str: StrApi, protected readonly input: HTMLInputElement) {}
@@ -70,6 +72,19 @@ export class JsonCrdtBinding {
       case 'deleteContentBackward': {
         break;
       }
+      case 'deleteByCut': {
+        const {selectionStart, selectionEnd} = this;
+        if (typeof selectionStart !== 'number' || typeof selectionEnd !== 'number') return;
+        if (selectionStart === selectionEnd) return;
+        const min = Math.min(selectionStart, selectionEnd);
+        const max = Math.max(selectionStart, selectionEnd);
+        const str = this.str;
+        const view = str.view();
+        const input = this.input;
+        const value = input.value;
+        if (view.length - value.length !== max - min) return;
+        return [min, max - min, ''];
+      }
       case 'insertText': {
         if (!data || data.length !== 1) return;
         const {selectionStart, selectionEnd} = input;
@@ -80,10 +95,6 @@ export class JsonCrdtBinding {
       }
     }
     return;
-  }
-
-  public bindFromInput() {
-    this.input.addEventListener('input', this.onInput);
   }
 
   private readonly onInput = (event: Event) => {
@@ -102,12 +113,26 @@ export class JsonCrdtBinding {
         if (insert) str.ins(position, insert);
       }
     }
-    if (needsStateSync) this.syncFromInput();
+    this.syncFromInput();
     this.selectionStart = input.selectionStart;
     this.selectionEnd = input.selectionEnd;
   };
 
-  public unbind = () => {
-    this.input.removeEventListener('input', this.onInput);
+  private readonly onSelectionChange = (event: Event) => {
+    const input = this.input;
+    this.selectionStart = input.selectionStart;
+    this.selectionEnd = input.selectionEnd;
+  };
+
+  public readonly bind = () => {
+    const input = this.input;
+    input.addEventListener('input', this.onInput);
+    document.addEventListener('selectionchange', this.onSelectionChange);
+  };
+  
+  public readonly unbind = () => {
+    const input = this.input;
+    input.removeEventListener('input', this.onInput);
+    document.removeEventListener('selectionchange', this.onSelectionChange);
   };
 }
