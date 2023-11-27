@@ -19,11 +19,7 @@ const Demo: React.FC<{textarea: boolean}> = ({textarea}) => {
 
   return (
     <div>
-      {textarea ? (
-        <textarea ref={inputRef as any} />
-      ) : (
-        <input ref={inputRef as any} type="text" />
-      )}
+      {textarea ? <textarea ref={inputRef as any} /> : <input ref={inputRef as any} type="text" />}
       <div>
         <button
           onClick={() => {

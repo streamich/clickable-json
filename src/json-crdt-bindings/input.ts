@@ -12,7 +12,11 @@ const enum DIFF_CHANGE_TYPE {
 }
 
 export class StrBinding {
-  public static bind = (str: StrApi, input: HTMLInputElement | HTMLTextAreaElement, polling?: boolean): (() => void) => {
+  public static bind = (
+    str: StrApi,
+    input: HTMLInputElement | HTMLTextAreaElement,
+    polling?: boolean,
+  ): (() => void) => {
     const binding = new StrBinding(str, input);
     binding.syncFromModel();
     binding.bind(polling);
@@ -88,9 +92,7 @@ export class StrBinding {
     if (value === view) return;
     // console.log('FULL_SYNC');
     const selection = this.selection;
-    const caretPos: number | undefined = selection.start === selection.end
-        ? (selection.start ?? undefined)
-        : undefined;
+    const caretPos: number | undefined = selection.start === selection.end ? selection.start ?? undefined : undefined;
     const changes = diff(view, value, caretPos);
     const changeLen = changes.length;
     let pos: number = 0;
