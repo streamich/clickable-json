@@ -33,5 +33,6 @@ module.exports = {
     'no-extra-boolean-cast': 'off',
     'no-empty': 'off',
     quotes: 'off',
+    'react/no-unescaped-entities': 'off',
   },
 };

@@ -17,51 +17,56 @@ const Demo: React.FC = () => {
     };
   }, [model]);
 
-
   return (
     <div>
       <input ref={inputRef} type="text" />
       <div>
-        <button onClick={() => {
-          const input = inputRef.current;
-          if (!input) return;
-          input.value += '!';
-        }}>
+        <button
+          onClick={() => {
+            const input = inputRef.current;
+            if (!input) return;
+            input.value += '!';
+          }}
+        >
           Append "!" to input
         </button>
       </div>
       <div>
-        <button onClick={() => {
-          const str = model.api.str(['text']);
-          str.ins(str.view().length, '?');
-        }}>
+        <button
+          onClick={() => {
+            const str = model.api.str(['text']);
+            str.ins(str.view().length, '?');
+          }}
+        >
           Append "?" to model
         </button>
       </div>
       <div>
-        <button onClick={() => {
-          setTimeout(() => {
-            const str = model.api.str(['text']);
-            str.ins(str.view().length, '?');
-          }, 2000);
-        }}>
+        <button
+          onClick={() => {
+            setTimeout(() => {
+              const str = model.api.str(['text']);
+              str.ins(str.view().length, '?');
+            }, 2000);
+          }}
+        >
           Append "?" to model after 2s
         </button>
       </div>
       <div>
-        <button onClick={() => {
-          setTimeout(() => {
-            const str = model.api.str(['text']);
-            str.ins(0, '1. ');
-          }, 2000);
-        }}>
+        <button
+          onClick={() => {
+            setTimeout(() => {
+              const str = model.api.str(['text']);
+              str.ins(0, '1. ');
+            }, 2000);
+          }}
+        >
           Prepend "1. " to model after 2s
         </button>
       </div>
       <pre style={{fontSize: '10px'}}>
-        <code>
-          {model + ''}
-        </code>
+        <code>{model + ''}</code>
       </pre>
     </div>
   );
@@ -76,6 +81,5 @@ const meta: Meta<typeof Text> = {
 export default meta;
 
 export const Primary: StoryObj<typeof meta> = {
-  args: {
-  },
+  args: {},
 };

@@ -1,9 +1,9 @@
 import diff from 'fast-diff';
-import {invokeFirstOnly} from "../utils/invokeFirstOnly";
-import {Selection} from "./Selection";
-import {applyChange, idToIndex, indexToId} from "./util";
-import {SimpleChange} from "./types";
-import type {Model, StrApi} from "json-joy/es2020/json-crdt";
+import {invokeFirstOnly} from '../utils/invokeFirstOnly';
+import {Selection} from './Selection';
+import {applyChange, idToIndex, indexToId} from './util';
+import {SimpleChange} from './types';
+import type {Model, StrApi} from 'json-joy/es2020/json-crdt';
 
 const enum DIFF_CHANGE_TYPE {
   DELETE = -1,
@@ -22,7 +22,11 @@ export class StrBinding {
   protected readonly selection = new Selection();
   protected readonly firstOnly = invokeFirstOnly();
 
-  constructor(protected readonly model: Model, protected readonly str: StrApi, protected readonly input: HTMLInputElement) {}
+  constructor(
+    protected readonly model: Model,
+    protected readonly str: StrApi,
+    protected readonly input: HTMLInputElement,
+  ) {}
 
   // ---------------------------------------------------------------- Selection
   // We constantly keep track of the selection state, which is stored in the
@@ -37,14 +41,15 @@ export class StrBinding {
     const now = Date.now();
     const tick = model.tick;
     // Return early to avoid excessive RGA queries.
-    if (start === selectionStart && end === selectionEnd && (tick === selection.tick || now - selection.ts < 3000)) return;
+    if (start === selectionStart && end === selectionEnd && (tick === selection.tick || now - selection.ts < 3000))
+      return;
     selection.start = selectionStart;
     selection.end = selectionEnd;
     selection.dir = selectionDirection;
     selection.ts = now;
     selection.tick = tick;
-    selection.startId = typeof selectionStart === 'number' ? (indexToId(this.str, selectionStart ?? 0) ?? null) : null;
-    selection.endId = typeof selectionEnd === 'number' ? (indexToId(this.str, selectionEnd ?? 0) ?? null) : null;
+    selection.startId = typeof selectionStart === 'number' ? indexToId(this.str, selectionStart ?? 0) ?? null : null;
+    selection.endId = typeof selectionEnd === 'number' ? indexToId(this.str, selectionEnd ?? 0) ?? null : null;
   }
 
   // ------------------------------------------------------ Model-to-Input sync
@@ -82,8 +87,10 @@ export class StrBinding {
     const view = str.view();
     const value = input.value;
     if (value === view) return;
-    const caretPos: number | undefined = (typeof input.selectionStart === 'number') && (input.selectionStart === input.selectionEnd)
-      ? input.selectionStart : undefined;
+    const caretPos: number | undefined =
+      typeof input.selectionStart === 'number' && input.selectionStart === input.selectionEnd
+        ? input.selectionStart
+        : undefined;
     const changes = diff(view, value, caretPos);
     const changeLen = changes.length;
     let pos: number = 0;
