@@ -1,12 +1,13 @@
 import * as React from 'react';
-import * as css from '../../css';
-import {useJsonCrdt} from '../context';
-import {NodeRef, nodeRef} from '../NodeRef';
-import {JsonCrdtRegion} from '../JsonCrdtRegion';
-import {JsonCrdtProperty} from '../JsonCrdtProperty';
-import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
-import {useRerenderModel} from '../hooks';
+import * as css from '../../../css';
+import {useJsonCrdt} from '../../context';
+import {NodeRef, nodeRef} from '../../NodeRef';
+import {JsonCrdtRegion} from '../../JsonCrdtRegion';
+import {JsonCrdtProperty} from '../../JsonCrdtProperty';
+import {JsonCrdtObjectLayout} from '../../JsonCrdtObjectLayout';
+import {useRerenderModel} from '../../hooks';
 import type {VecNode} from 'json-joy/es2020/json-crdt';
+import {PushElement} from './PushElement';
 
 export interface JsonCrdtVecNodeProps {
   node: NodeRef<VecNode>;
@@ -38,6 +39,7 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
         header={<span style={{opacity: 0.5, display: 'inline-block', margin: '0.25em 0 0 -0.3em'}}>→</span>}
       >
         {entries}
+        <PushElement node={node} />
       </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
   );
