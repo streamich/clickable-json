@@ -92,23 +92,19 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
                   const api = model.api.wrap(node.parent!.node! as ArrNode);
                   api.del(+node.step, 1);
                 }
-                : parentIsVec
+              : parentIsVec
                 ? () => {
                     const api = model.api.wrap(node.parent!.node! as VecNode);
                     api.set([[+node.step, undefined]]);
                   }
-                  : (parentNodeType === 'val' && !isTombstone)
+                : parentNodeType === 'val' && !isTombstone
                   ? () => {
                       const api = model.api.wrap(node.parent!.node! as ValNode);
                       api.set(undefined as any);
                     }
                   : undefined
       }
-      onEdit={
-        isFocused && parentIsObj
-          ? () => setEdit(true)
-          : undefined
-      }
+      onEdit={isFocused && parentIsObj ? () => setEdit(true) : undefined}
     >
       {children}
     </FocusRegion>

@@ -117,7 +117,7 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
     >
       {children}
       {deleteButton}
-      {(!!focused && onEdit) && (
+      {!!focused && onEdit && (
         <span className={editActionClass}>
           <EditAction tooltip={t('Edit')} onClick={onEdit} />
         </span>

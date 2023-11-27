@@ -24,11 +24,5 @@ export const InsertElement: React.FC<InsertElementProps> = ({node, index}) => {
     [node.node],
   );
 
-  return (
-    <ArrayInsert
-      withType
-      visible={isFocused}
-      onSubmit={handleSubmit}
-    />
-  );
+  return <ArrayInsert withType visible={isFocused} onSubmit={handleSubmit} />;
 };

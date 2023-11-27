@@ -15,7 +15,15 @@ export interface ValueInputProps {
   onCancel?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
-export const ValueInput: React.FC<ValueInputProps> = ({inp, focus, visible, types = ['any', 'con', 'val', 'vec'], withType, onSubmit, onCancel}) => {
+export const ValueInput: React.FC<ValueInputProps> = ({
+  inp,
+  focus,
+  visible,
+  types = ['any', 'con', 'val', 'vec'],
+  withType,
+  onSubmit,
+  onCancel,
+}) => {
   const [value, setValue] = React.useState('');
   const inputRef = React.useRef<HTMLInputElement>(null);
   const theme = useTheme();
@@ -37,7 +45,13 @@ export const ValueInput: React.FC<ValueInputProps> = ({inp, focus, visible, type
 
   if (types && types.length && withType) {
     beforeValue = (
-      <CrdtTypeSwitch type={type} onSubmit={handleSubmit} onClick={() => { if (inputRef.current) inputRef.current.focus(); }} />
+      <CrdtTypeSwitch
+        type={type}
+        onSubmit={handleSubmit}
+        onClick={() => {
+          if (inputRef.current) inputRef.current.focus();
+        }}
+      />
     );
   }
 

@@ -17,18 +17,10 @@ export const JsonCrdtObjectKeyEdit: React.FC<JsonCrdtObjectKeyEditProps> = ({nod
   const {compact} = useStyles();
 
   return (
-    <FocusRegion
-      compact={compact}
-    >
+    <FocusRegion compact={compact}>
       <JsonCrdtProperty node={node} />
       <span style={{display: 'inline-block', margin: '-3px 0', position: 'relative'}}>
-        <ValueInput
-          focus
-          withType
-          visible={true}
-          onSubmit={() => {}}
-          onCancel={onCancel}
-        />
+        <ValueInput focus withType visible={true} onSubmit={() => {}} onCancel={onCancel} />
         {!!onCancel && <CancelAction onClick={() => onCancel()} />}
       </span>
     </FocusRegion>

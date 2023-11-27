@@ -23,8 +23,11 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
     color = theme.g(0.45);
     formatted = (
       <span>
-        {[...value].slice(0, 128).map((n) => (n < 16 ? '0' + n.toString(16) : n.toString(16))).join(' ')}
-        {value.length > 128 ? <span style={{color: theme.g(.3)}}>{` … (${value.length - 128} more)`}</span> : ''}
+        {[...value]
+          .slice(0, 128)
+          .map((n) => (n < 16 ? '0' + n.toString(16) : n.toString(16)))
+          .join(' ')}
+        {value.length > 128 ? <span style={{color: theme.g(0.3)}}>{` … (${value.length - 128} more)`}</span> : ''}
       </span>
     );
   } else if (value && typeof value === 'object') {
@@ -39,7 +42,7 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
         formatted = (
           <span>
             {str.slice(0, -1)}
-            <span style={{color: theme.g(.3)}}>{` … (${value.length - 256} more)`}</span>
+            <span style={{color: theme.g(0.3)}}>{` … (${value.length - 256} more)`}</span>
             {'"'}
           </span>
         );
@@ -49,10 +52,10 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
     }
   }
 
-
   const background = valueBg(value);
   const style: React.CSSProperties = {
-    color, background,
+    color,
+    background,
   };
 
   if (background) {

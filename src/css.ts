@@ -1,4 +1,4 @@
-import {makeRule, rule, theme, darkTheme} from 'nano-theme';
+import {rule, theme, darkTheme} from 'nano-theme';
 
 export const blue = theme.color.sem.blue[0];
 export const negative = theme.color.sem.negative[0];

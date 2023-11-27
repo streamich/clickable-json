@@ -23,11 +23,5 @@ export const AddKey: React.FC<AddKeyProps> = ({node}) => {
     [node.node],
   );
 
-  return (
-    <ObjectInsert
-      withType
-      visible={isFocused}
-      onSubmit={handleSubmit}
-    />
-  );
+  return <ObjectInsert withType visible={isFocused} onSubmit={handleSubmit} />;
 };

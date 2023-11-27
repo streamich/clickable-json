@@ -27,10 +27,8 @@ export const JsonCrdtArrNode: React.FC<JsonCrdtArrNodeProps> = ({node}) => {
     entries.push(
       <React.Fragment key={key}>
         <InsertElement key={key} node={node} index={i} />
-        <span className={css.line}>
-          {render(childNodeRef)}
-        </span>
-      </React.Fragment>
+        <span className={css.line}>{render(childNodeRef)}</span>
+      </React.Fragment>,
     );
     i++;
   });

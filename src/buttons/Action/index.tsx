@@ -39,7 +39,7 @@ const tooltipClass = drule({
   ws: 'nowrap',
   [`.${blockClass.toString().trim()}:hover &`]: {
     d: 'inline-block',
-  }
+  },
 });
 
 export interface ActionProps {
@@ -52,34 +52,40 @@ export interface ActionProps {
   onMouseOver?: React.MouseEventHandler;
 }
 
-export const Action: React.FC<ActionProps> = ({className = '', tooltip, children, onClick, onMouseEnter, onMouseLeave, onMouseOver}) => {
+export const Action: React.FC<ActionProps> = ({
+  className = '',
+  tooltip,
+  children,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+  onMouseOver,
+}) => {
   const theme = useTheme();
 
   return (
     <button
-      className={blockClass({
-        bg: theme.bg,
-        '&:hover': {
-          col: theme.bg,
-          bg: css.blue,
-        },
-        '&:active': {
-          col: theme.g(0.9),
-          bg: theme.g(0.1),
-          bd: `1px solid ${theme.g(0.1)}`,
-        },
-      }) + className}
+      className={
+        blockClass({
+          bg: theme.bg,
+          '&:hover': {
+            col: theme.bg,
+            bg: css.blue,
+          },
+          '&:active': {
+            col: theme.g(0.9),
+            bg: theme.g(0.1),
+            bd: `1px solid ${theme.g(0.1)}`,
+          },
+        }) + className
+      }
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onMouseOver={onMouseOver}
     >
       {children}
-      {!!tooltip && (
-        <span className={tooltipClass({})}>
-          {tooltip}
-        </span>
-      )}
+      {!!tooltip && <span className={tooltipClass({})}>{tooltip}</span>}
     </button>
   );
 };
