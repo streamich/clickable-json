@@ -4,10 +4,12 @@ import * as css from '../css';
 import {inputStyle, typeahead} from '../ClickableJson/utils';
 import {FlexibleInput} from '../FlexibleInput';
 import {CrdtTypeSwitch} from '../buttons/CrdtTypeSwitch';
+import {selectOnFocus} from '../utils/selectOnFocus';
 
 export interface ValueInputProps {
   inp?: (el: HTMLInputElement | null) => void;
   focus?: boolean;
+  initialValue?: string;
   visible?: boolean;
   types?: string[];
   withType?: boolean;
@@ -18,13 +20,14 @@ export interface ValueInputProps {
 export const ValueInput: React.FC<ValueInputProps> = ({
   inp,
   focus,
+  initialValue = '',
   visible,
   types = ['any', 'con', 'val', 'vec'],
   withType,
   onSubmit,
   onCancel,
 }) => {
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = React.useState(initialValue);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const theme = useTheme();
   const type = React.useRef<string>(types && types.length ? types[0] : '');
@@ -68,6 +71,7 @@ export const ValueInput: React.FC<ValueInputProps> = ({
         typeahead={typeahead(value)}
         onChange={(e) => setValue(e.target.value)}
         onSubmit={handleSubmit}
+        onFocus={(e) => selectOnFocus(e.target)}
         onCancel={(e) => {
           setValue('');
           if (onCancel) onCancel(e);
