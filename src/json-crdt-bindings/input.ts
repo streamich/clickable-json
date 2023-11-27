@@ -2,6 +2,7 @@ import type {Model, StrApi, ApiPath} from "json-joy/es2020/json-crdt";
 import {ITimestampStruct} from "json-joy/es2020/json-crdt-patch/clock";
 import diff from 'fast-diff';
 import {invokeFirstOnly} from "../utils/invokeFirstOnly";
+import {Selection} from "./Selection";
 
 const enum DIFF_CHANGE_TYPE {
   DELETE = -1,
@@ -22,7 +23,7 @@ const idToIndex = (str: StrApi, id: ITimestampStruct): number => {
   const chunk = str.node.findById(id);
   if (!chunk) return -1;
   const pos = str.node.pos(chunk);
-  return pos + (id.time - chunk.id.time)
+  return pos + (chunk.del ? 0 : (id.time - chunk.id.time));
 };
 
 export class JsonCrdtBinding {
@@ -34,16 +35,39 @@ export class JsonCrdtBinding {
     return binding.unbind;
   };
 
-  /** Selection start before `input` event execution. */
-  protected selectionStart: number | null = null;
-  /** Selection end before `input` event execution. */
-  protected selectionEnd: number | null = null;
+  protected readonly selection = new Selection();
 
   protected readonly firstOnly = invokeFirstOnly();
 
   constructor(protected readonly model: Model, protected readonly str: StrApi, protected readonly input: HTMLInputElement) {}
 
+  // ---------------------------------------------------------------- Selection
+  // We constantly keep track of the selection state, which is stored in the
+  // Selection class. The selection state is updated on every input event and
+  // selectionchange event, and in other cases. The selection state, keeps track
+  // of, both, the local and remote selection state.
+
+  protected saveSelection() {
+    const {model, input, selection} = this;
+    const {selectionStart, selectionEnd, selectionDirection} = input;
+    const {start, end} = selection;
+    const now = Date.now();
+    // Return early to avoid excessive RGA queries.
+    if (start === selectionStart && end === selectionEnd && (model.tick === selection.tick || now - selection.ts < 3000)) return;
+    selection.start = selectionStart;
+    selection.end = selectionEnd;
+    selection.dir = selectionDirection;
+    selection.ts = now;
+    selection.tick = model.tick;
+    selection.startId = typeof selectionStart === 'number' ? (indexToId(this.str, selectionStart ?? 0) ?? null) : null;
+    selection.endId = typeof selectionEnd === 'number' ? (indexToId(this.str, selectionEnd ?? 0) ?? null) : null;
+  }
+
   // ------------------------------------------------------ Model-to-Input sync
+  // We can always sync the model to the input. However, it is done only in
+  // two cases: (1) on initial binding, and (2) when the model receives remote
+  // changes. The latter is done by listening to the changes event on the str
+  // instance.
 
   public syncFromModel() {
     const {input, str} = this;
@@ -52,17 +76,11 @@ export class JsonCrdtBinding {
 
   protected readonly onModelChange = () => {
     this.firstOnly(() => {
-      const input = this.input;
-      const {selectionStart, selectionEnd, selectionDirection} = input;
-      console.log(selectionStart, selectionEnd);
-      const startId: ITimestampStruct | void = typeof selectionStart === 'number' ? indexToId(this.str, selectionStart) : undefined;
-      const endId: ITimestampStruct | void = typeof selectionEnd === 'number' ? indexToId(this.str, selectionEnd) : undefined;
-      this.syncFromModel(); // TODO: need "beforeChange" event...
-      const startPos = startId ? idToIndex(this.str, startId) : null;
-      const endPos = endId ? idToIndex(this.str, endId) : null;
-      console.log(startPos, endPos);
-      console.log('model changed ....');
-      // this.syncFromModel
+      this.syncFromModel();
+      const {input, selection} = this;
+      const start = selection.startId ? idToIndex(this.str, selection.startId) : null;
+      const end = selection.endId ? idToIndex(this.str, selection.endId) : null;
+      input.setSelectionRange(start, end, selection.dir ?? undefined);
     });
   };
 
@@ -108,11 +126,11 @@ export class JsonCrdtBinding {
         break;
       }
       case 'deleteByCut': {
-        const {selectionStart, selectionEnd} = this;
-        if (typeof selectionStart !== 'number' || typeof selectionEnd !== 'number') return;
-        if (selectionStart === selectionEnd) return;
-        const min = Math.min(selectionStart, selectionEnd);
-        const max = Math.max(selectionStart, selectionEnd);
+        const {start, end} = this.selection;
+        if (typeof start !== 'number' || typeof end !== 'number') return;
+        if (start === end) return;
+        const min = Math.min(start, end);
+        const max = Math.max(start, end);
         const str = this.str;
         const view = str.view();
         const input = this.input;
@@ -121,10 +139,10 @@ export class JsonCrdtBinding {
         return [min, max - min, ''];
       }
       case 'insertFromPaste': {
-        const {selectionStart, selectionEnd} = this;
-        if (typeof selectionStart !== 'number' || typeof selectionEnd !== 'number') return;
-        const min = Math.min(selectionStart, selectionEnd);
-        const max = Math.max(selectionStart, selectionEnd);
+        const {start, end} = this.selection;
+        if (typeof start !== 'number' || typeof end !== 'number') return;
+        const min = Math.min(start, end);
+        const max = Math.max(start, end);
         const str = this.str;
         const view = str.view();
         const input = this.input;
@@ -164,15 +182,12 @@ export class JsonCrdtBinding {
         }
       }
       this.syncFromInput();
-      this.selectionStart = input.selectionStart;
-      this.selectionEnd = input.selectionEnd;
+      this.saveSelection();
     });
   };
 
-  private readonly onSelectionChange = (event: Event) => {
-    const input = this.input;
-    this.selectionStart = input.selectionStart;
-    this.selectionEnd = input.selectionEnd;
+  private readonly onSelectionChange = () => {
+    this.saveSelection();
   };
 
   // ------------------------------------------------------------------ Polling
@@ -210,7 +225,7 @@ export class JsonCrdtBinding {
     if (polling) this.pollChanges();
     this.unsubscribeModel = this.str.events.changes.listen(this.onModelChange);
   };
-  
+
   public readonly unbind = () => {
     const input = this.input;
     input.removeEventListener('input', this.onInput);
