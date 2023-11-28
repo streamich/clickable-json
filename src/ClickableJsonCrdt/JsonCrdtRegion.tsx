@@ -18,11 +18,12 @@ const isObjTombstone = (node: NodeRef<JsonNode>): boolean => {
 
 export interface JsonCrdtRegionProps {
   node: NodeRef<any>;
+  editing?: boolean;
   aside?: React.ReactNode;
   children: React.ReactNode;
 }
 
-export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) => {
+export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, editing, children}) => {
   const {model} = useJsonCrdt();
   const {compact} = useStyles();
   const {focused, focus, pointed, point} = useFocus();
@@ -80,34 +81,38 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onDelete={
-        !isFocused || isTombstone
+        editing
           ? undefined
-          : parentIsObj
-            ? () => {
-                const api = model.api.wrap(node.parent!.node! as ObjNode);
-                api.del([node.step]);
-              }
-            : parentIsArr
+          : !isFocused || isTombstone
+            ? undefined
+            : parentIsObj
               ? () => {
-                  const api = model.api.wrap(node.parent!.node! as ArrNode);
-                  api.del(+node.step, 1);
+                  const api = model.api.wrap(node.parent!.node! as ObjNode);
+                  api.del([node.step]);
                 }
-              : parentIsVec
+              : parentIsArr
                 ? () => {
-                    const api = model.api.wrap(node.parent!.node! as VecNode);
-                    api.set([[+node.step, undefined]]);
+                    const api = model.api.wrap(node.parent!.node! as ArrNode);
+                    api.del(+node.step, 1);
                   }
-                : parentNodeType === 'val' && !isTombstone
+                : parentIsVec
                   ? () => {
-                      const api = model.api.wrap(node.parent!.node! as ValNode);
-                      api.set(undefined as any);
+                      const api = model.api.wrap(node.parent!.node! as VecNode);
+                      api.set([[+node.step, undefined]]);
                     }
-                  : undefined
+                  : parentNodeType === 'val' && !isTombstone
+                    ? () => {
+                        const api = model.api.wrap(node.parent!.node! as ValNode);
+                        api.set(undefined as any);
+                      }
+                    : undefined
       }
       onEdit={
-        isFocused && (parentNodeType === 'obj' || parentNodeType === 'val' || parentNodeType === 'vec')
-          ? () => setEdit(true)
-          : undefined
+        editing
+          ? undefined
+          : isFocused && (parentNodeType === 'obj' || parentNodeType === 'val' || parentNodeType === 'vec')
+            ? () => setEdit(true)
+            : undefined
       }
     >
       {children}

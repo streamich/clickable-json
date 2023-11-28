@@ -38,6 +38,9 @@ export interface FlexibleInputProps {
   /** Value to display. */
   value: string;
 
+  /** Placeholder to display. */
+  typebefore?: string;
+
   /** Typeahead string to add to the value. It is visible at half opacity. */
   typeahead?: string;
 
@@ -78,6 +81,7 @@ export interface FlexibleInputProps {
 export const FlexibleInput: React.FC<FlexibleInputProps> = ({
   inp,
   value,
+  typebefore = '',
   typeahead = '',
   extraWidth,
   minWidth = 8,
@@ -120,32 +124,35 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
   }, [value, typeahead, extraWidth]);
 
   return (
-    <div className={blockClass}>
-      <input
-        ref={(input) => {
-          (inputRef as any).current = input;
-          if (inp) inp(input);
-        }}
-        className={inputClass}
-        value={value}
-        onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onKeyDown={(e: React.KeyboardEvent) => {
-          if (e.key === 'Enter') {
-            if (onSubmit) onSubmit(e as any);
-          } else if (e.key === 'Escape') {
-            if (onCancel) onCancel(e as any);
-          } else if (e.key === 'Tab') {
-            if (onTab) onTab(e as any);
-          }
-          if (onKeyDown) onKeyDown(e as any);
-        }}
-      />
-      <div ref={sizerRef} className={sizerClass}>
-        <span style={{visibility: 'hidden'}}>{value}</span>
-        <span style={{color: theme.g(0.7)}}>{typeahead}</span>
+    <>
+      {!!typebefore && <span style={{color: theme.g(0.7)}}>{typebefore}</span>}
+      <div className={blockClass}>
+        <input
+          ref={(input) => {
+            (inputRef as any).current = input;
+            if (inp) inp(input);
+          }}
+          className={inputClass}
+          value={value}
+          onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onKeyDown={(e: React.KeyboardEvent) => {
+            if (e.key === 'Enter') {
+              if (onSubmit) onSubmit(e as any);
+            } else if (e.key === 'Escape') {
+              if (onCancel) onCancel(e as any);
+            } else if (e.key === 'Tab') {
+              if (onTab) onTab(e as any);
+            }
+            if (onKeyDown) onKeyDown(e as any);
+          }}
+        />
+        <div ref={sizerRef} className={sizerClass}>
+          <span style={{visibility: 'hidden'}}>{value}</span>
+          {!!typeahead && <span style={{color: theme.g(0.7)}}>{typeahead}</span>}
+        </div>
       </div>
-    </div>
+    </>
   );
 };

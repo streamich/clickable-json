@@ -22,10 +22,14 @@ const Demo: React.FC<{view?: unknown} & Omit<ClickableJsonCrdtProps, 'model'>> =
     if (view !== undefined) model.api.root(view);
     return model;
   }, []);
+  React.useSyncExternalStore(model.api.subscribe, () => model.tick);
 
   return (
     <div style={{padding: '32px 64px', boxSizing: 'border-box'}}>
       <ClickableJsonCrdt {...rest} model={model} />
+      <pre style={{fontSize: '10px'}}>
+        <code>{model.root + ''}</code>
+      </pre>
     </div>
   );
 };
@@ -33,7 +37,7 @@ const Demo: React.FC<{view?: unknown} & Omit<ClickableJsonCrdtProps, 'model'>> =
 const schema1 = {
   foo: s.con([123, [null]]),
   bar: true,
-  baz: {x: 1, val: s.val(s.con(true))},
+  baz: {x: 1, val: s.val(s.con(true)), str: s.str('hello world')},
   emptyObject: {},
   qux: s.vec(s.con(1), s.con(-2), s.con('three'), s.con({four: 4})),
   arr: [s.con(0), 'hello world', -5, s.val(s.val(s.con(null))), s.val(s.con({foo: 'bar'}))],

@@ -44,3 +44,5 @@ export const createValue = (
   }
   return valueId;
 };
+
+export const isContainer = (value: unknown): boolean => !!value && typeof value === 'object';
