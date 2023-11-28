@@ -1,24 +1,44 @@
 import * as React from 'react';
-import {rule, theme} from 'nano-theme';
+import {theme} from 'nano-theme';
 import {NodeRef} from '../../NodeRef';
-import {JsonCrdtRegion} from '../../JsonCrdtRegion';
 import * as css from '../../../css';
 import {FlexibleInput} from '../../../FlexibleInput';
 import {selectOnFocus} from '../../../utils/selectOnFocus';
 import {inputStyle} from '../../../ClickableJson/utils';
-import type {StrNode} from 'json-joy/es2020/json-crdt';
 import {CancelAction} from '../../../buttons/Action/CancelAction';
+import {useJsonCrdt} from '../../context';
+import {StrBinding} from '../../../json-crdt-bindings/input';
+import type {Model, StrNode} from 'json-joy/es2020/json-crdt';
 
 export interface StrEditProps {
   node: NodeRef<StrNode>;
   onCancel?: () => void;
+  onDone: () => void;
 }
 
-export const StrEdit: React.FC<StrEditProps> = ({node, onCancel}) => {
+export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
   const inputRef = React.useRef<HTMLInputElement>();
+  const cloneRef = React.useRef<Model>();
   const [value, setValue] = React.useState(node.node.view());
+  const {model} = useJsonCrdt();
+  React.useEffect(() => {
+    if (!inputRef.current) return;
+    const clone = cloneRef.current = model.clone();
+    clone.api.flush();
+    const str = clone.index.get(node.node.id)! as StrNode;
+    const api = clone.api.wrap(str);
+    const unbind = StrBinding.bind(api, inputRef.current);
+    return () => {
+      unbind();
+    };
+  }, [model]);
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    const clone = cloneRef.current;
+    if (!clone) return;
+    model.applyPatch(clone.api.flush());
+    onDone();
+  };
 
   const style = inputStyle(theme, !theme.isLight, value);
   style.margin = '-3px -3px -3px -5px';
