@@ -23,7 +23,7 @@ export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
   const {model} = useJsonCrdt();
   React.useEffect(() => {
     if (!inputRef.current) return;
-    const clone = cloneRef.current = model.clone();
+    const clone = (cloneRef.current = model.clone());
     clone.api.flush();
     const str = clone.index.get(node.node.id)! as StrNode;
     const api = clone.api.wrap(str);

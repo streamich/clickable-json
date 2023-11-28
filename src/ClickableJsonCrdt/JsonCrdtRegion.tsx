@@ -80,35 +80,39 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, editing, ch
       onMouseMove={onMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onDelete={editing ? undefined :
-        !isFocused || isTombstone
+      onDelete={
+        editing
           ? undefined
-          : parentIsObj
-            ? () => {
-                const api = model.api.wrap(node.parent!.node! as ObjNode);
-                api.del([node.step]);
-              }
-            : parentIsArr
+          : !isFocused || isTombstone
+            ? undefined
+            : parentIsObj
               ? () => {
-                  const api = model.api.wrap(node.parent!.node! as ArrNode);
-                  api.del(+node.step, 1);
+                  const api = model.api.wrap(node.parent!.node! as ObjNode);
+                  api.del([node.step]);
                 }
-              : parentIsVec
+              : parentIsArr
                 ? () => {
-                    const api = model.api.wrap(node.parent!.node! as VecNode);
-                    api.set([[+node.step, undefined]]);
+                    const api = model.api.wrap(node.parent!.node! as ArrNode);
+                    api.del(+node.step, 1);
                   }
-                : parentNodeType === 'val' && !isTombstone
+                : parentIsVec
                   ? () => {
-                      const api = model.api.wrap(node.parent!.node! as ValNode);
-                      api.set(undefined as any);
+                      const api = model.api.wrap(node.parent!.node! as VecNode);
+                      api.set([[+node.step, undefined]]);
                     }
-                  : undefined
+                  : parentNodeType === 'val' && !isTombstone
+                    ? () => {
+                        const api = model.api.wrap(node.parent!.node! as ValNode);
+                        api.set(undefined as any);
+                      }
+                    : undefined
       }
-      onEdit={editing ? undefined :
-        isFocused && (parentNodeType === 'obj' || parentNodeType === 'val' || parentNodeType === 'vec')
-          ? () => setEdit(true)
-          : undefined
+      onEdit={
+        editing
+          ? undefined
+          : isFocused && (parentNodeType === 'obj' || parentNodeType === 'val' || parentNodeType === 'vec')
+            ? () => setEdit(true)
+            : undefined
       }
     >
       {children}
