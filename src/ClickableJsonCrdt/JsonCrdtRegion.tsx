@@ -18,11 +18,12 @@ const isObjTombstone = (node: NodeRef<JsonNode>): boolean => {
 
 export interface JsonCrdtRegionProps {
   node: NodeRef<any>;
+  editing?: boolean;
   aside?: React.ReactNode;
   children: React.ReactNode;
 }
 
-export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) => {
+export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, editing, children}) => {
   const {model} = useJsonCrdt();
   const {compact} = useStyles();
   const {focused, focus, pointed, point} = useFocus();
@@ -79,7 +80,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
       onMouseMove={onMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onDelete={
+      onDelete={editing ? undefined :
         !isFocused || isTombstone
           ? undefined
           : parentIsObj
@@ -104,7 +105,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, children}) 
                     }
                   : undefined
       }
-      onEdit={
+      onEdit={editing ? undefined :
         isFocused && (parentNodeType === 'obj' || parentNodeType === 'val' || parentNodeType === 'vec')
           ? () => setEdit(true)
           : undefined
