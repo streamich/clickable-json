@@ -209,7 +209,7 @@ export class StrBinding {
   // ------------------------------------------------------------------ Polling
   // Some changes to the input are not captured by the `input`, nor `change`
   // events. For example, when input is modified programmatically
-  // `input.value = '...'`. To capture such changes, on can opt-in to polling
+  // `input.value = '...'`. To capture such changes, one can opt-in to polling
   // by calling `bind(true)`. The polling interval can be configured by
   // setting the `pollingInterval` property.
 
@@ -244,7 +244,7 @@ export class StrBinding {
     input.addEventListener('input', this.onInput);
     document.addEventListener('selectionchange', this.onSelectionChange);
     if (polling) this.pollChanges();
-    this.unsubscribeModel = this.str.events.changes.listen(this.onModelChange);
+    this.unsubscribeModel = this.str.events.onViewChanges.listen(this.onModelChange);
   };
 
   public readonly unbind = () => {

@@ -36,7 +36,10 @@ export interface FlexibleInputProps {
   inp?: (el: HTMLInputElement | null) => void;
 
   /** Value to display. */
-  value: string;
+  value?: string;
+
+  /** Whether the value is controlled. */
+  uncontrolled?: boolean;
 
   /** Placeholder to display. */
   typebefore?: string;
@@ -81,6 +84,7 @@ export interface FlexibleInputProps {
 export const FlexibleInput: React.FC<FlexibleInputProps> = ({
   inp,
   value,
+  uncontrolled,
   typebefore = '',
   typeahead = '',
   extraWidth,
@@ -133,7 +137,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
             if (inp) inp(input);
           }}
           className={inputClass}
-          value={value}
+          value={uncontrolled ? undefined : value}
           onChange={onChange}
           onFocus={onFocus}
           onBlur={onBlur}
