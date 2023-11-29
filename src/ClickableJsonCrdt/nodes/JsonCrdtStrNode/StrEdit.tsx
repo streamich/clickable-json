@@ -41,7 +41,7 @@ export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
     onDone();
   };
 
-  const style = inputStyle(theme, !theme.isLight, value);
+  const style = inputStyle(theme, !theme.isLight, '""');
   style.margin = '-3px -3px -3px -5px';
   style.padding = '2px 4px';
   style.border = `1px solid ${theme.g(0.85)}`;
