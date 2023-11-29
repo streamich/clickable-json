@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {drule, useTheme, theme} from 'nano-theme';
+import {drule, useTheme} from 'nano-theme';
 import * as css from '../../css';
 
 const blockClass = drule({
@@ -23,20 +23,6 @@ const blockClass = drule({
 });
 
 const tooltipClass = drule({
-  ...theme.font.ui1,
-  pos: 'absolute',
-  d: 'none',
-  t: '-2.5em',
-  l: '0px',
-  bg: 'rgba(0,0,0,.8)',
-  col: '#fff',
-  fz: 12 / 13.4 + 'em',
-  pad: '.4em .8em',
-  bdrad: '.4em',
-  z: 3,
-  pe: 'none',
-  us: 'none',
-  ws: 'nowrap',
   [`.${blockClass.toString().trim()}:hover &`]: {
     d: 'inline-block',
   },
@@ -85,7 +71,7 @@ export const Action: React.FC<ActionProps> = ({
       onMouseOver={onMouseOver}
     >
       {children}
-      {!!tooltip && <span className={tooltipClass({})}>{tooltip}</span>}
+      {!!tooltip && <span className={css.tooltip + tooltipClass({})}>{tooltip}</span>}
     </button>
   );
 };

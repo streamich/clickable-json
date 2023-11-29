@@ -169,3 +169,20 @@ export const insArrButton = rule({
   t: '-8px',
   l: '-75px',
 });
+
+export const tooltip = rule({
+  ...theme.font.ui1,
+  pos: 'absolute',
+  d: 'none',
+  t: '-2.5em',
+  l: '0px',
+  bg: 'rgba(0,0,0,.8)',
+  col: '#fff',
+  fz: 12 / 13.4 + 'em',
+  pad: '.4em .8em',
+  bdrad: '.4em',
+  z: 3,
+  pe: 'none',
+  us: 'none',
+  ws: 'nowrap',
+});

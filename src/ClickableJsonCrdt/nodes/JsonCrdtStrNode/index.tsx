@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {rule, theme} from 'nano-theme';
+import {useT} from 'use-t';
 import {NodeRef} from '../../NodeRef';
 import {JsonCrdtRegion} from '../../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../../JsonCrdtProperty';
@@ -7,11 +8,13 @@ import {JsonAtom} from '../../../JsonAtom';
 import {useStyles} from '../../../context/style';
 import {useFocus} from '../../../context/focus';
 import {id} from '../../utils';
+import * as css from '../../../css';
 import {StrEdit} from './StrEdit';
 import type {StrNode} from 'json-joy/es2020/json-crdt';
 
 const atomClass = rule({
   d: 'inline-block',
+  pos: 'relative',
   cur: 'default',
   bdrad: '2px',
 });
@@ -21,6 +24,9 @@ const atomFocusedClass = rule({
   '&:hover': {
     out: `1px dotted ${theme.color.sem.blue[0]}`,
   },
+  [`&:hover .${css.tooltip.trim()}`]: {
+    d: 'inline-block',
+  },
 });
 
 export interface JsonCrdtStrNodeProps {
@@ -28,6 +34,7 @@ export interface JsonCrdtStrNodeProps {
 }
 
 export const JsonCrdtStrNode: React.FC<JsonCrdtStrNodeProps> = ({node}) => {
+  const [t] = useT();
   const {formal} = useStyles();
   const {focused} = useFocus();
   const [editing, setEditing] = React.useState(false);
@@ -45,6 +52,7 @@ export const JsonCrdtStrNode: React.FC<JsonCrdtStrNodeProps> = ({node}) => {
           onClick={isFocused ? () => setEditing(true) : undefined}
         >
           <JsonAtom value={node.node.view()} />
+          <span className={css.tooltip}>{t('Edit')}</span>
         </span>
       )}
       {!!formal && ','}
