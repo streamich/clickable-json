@@ -24,4 +24,7 @@ export const selectOnFocus = (input: HTMLInputElement | HTMLTextAreaElement) => 
       }
     }, 155);
   }
+  if (value[0] === '"' && value[length - 1] === '"') {
+    input.setSelectionRange(length - 1, length - 1);
+  }
 };
