@@ -12,6 +12,7 @@ export interface ValueInputProps {
   initialValue?: string;
   visible?: boolean;
   types?: string[];
+  initialType?: string;
   withType?: boolean;
   onSubmit: (value: string, type: string) => void;
   onCancel?: React.KeyboardEventHandler<HTMLInputElement>;
@@ -23,6 +24,7 @@ export const ValueInput: React.FC<ValueInputProps> = ({
   initialValue = '',
   visible,
   types = ['any', 'con', 'val', 'vec'],
+  initialType,
   withType,
   onSubmit,
   onCancel,
@@ -30,7 +32,7 @@ export const ValueInput: React.FC<ValueInputProps> = ({
   const [value, setValue] = React.useState(initialValue);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const theme = useTheme();
-  const type = React.useRef<string>(types && types.length ? types[0] : '');
+  const type = React.useRef<string>(initialType ?? (types && types.length ? types[0] : ''));
 
   const handleSubmit = () => {
     if (inputRef.current) inputRef.current.blur();

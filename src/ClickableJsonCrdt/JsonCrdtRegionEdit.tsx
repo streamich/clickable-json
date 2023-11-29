@@ -43,7 +43,7 @@ export const JsonCrdtRegionEdit: React.FC<JsonCrdtRegionEditProps> = ({node, onC
     <FocusRegion compact={compact}>
       <JsonCrdtProperty node={node} />
       <span style={{display: 'inline-block', margin: '-3px 0', position: 'relative'}}>
-        <ValueInput focus withType visible={true} initialValue={value} onSubmit={handleSubmit} onCancel={onCancel} />
+        <ValueInput focus withType visible={true} initialType={node.node.name() === 'con' ? 'con' : 'any'} initialValue={value} onSubmit={handleSubmit} onCancel={onCancel} />
         {!!onCancel && <CancelAction onClick={() => onCancel()} />}
       </span>
     </FocusRegion>
