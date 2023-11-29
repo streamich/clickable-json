@@ -73,6 +73,7 @@ export class StrBinding {
       const start = selection.startId ? idToIndex(this.str, selection.startId) : null;
       const end = selection.endId ? idToIndex(this.str, selection.endId) : null;
       input.setSelectionRange(start, end, selection.dir ?? undefined);
+      this.saveSelection();
     });
   };
 
@@ -244,7 +245,7 @@ export class StrBinding {
     input.addEventListener('input', this.onInput);
     document.addEventListener('selectionchange', this.onSelectionChange);
     if (polling) this.pollChanges();
-    this.unsubscribeModel = this.str.events.onViewChanges.listen(this.onModelChange);
+    this.unsubscribeModel = this.str.api.onChange.listen(this.onModelChange);
   };
 
   public readonly unbind = () => {
