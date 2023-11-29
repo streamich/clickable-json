@@ -15,7 +15,7 @@ import type {StrNode} from 'json-joy/es2020/json-crdt';
 const atomClass = rule({
   d: 'inline-block',
   pos: 'relative',
-  cur: 'default',
+  cur: 'pointer',
   bdrad: '2px',
 });
 

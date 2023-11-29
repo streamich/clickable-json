@@ -119,7 +119,7 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
       {deleteButton}
       {!!focused && onEdit && (
         <span className={editActionClass}>
-          <EditAction tooltip={t('Edit')} onClick={onEdit} />
+          <EditAction tooltip={t('Set')} onClick={onEdit} />
         </span>
       )}
       {!!aside && <span className={asideClass}>{aside}</span>}
