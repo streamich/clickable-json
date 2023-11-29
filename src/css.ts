@@ -32,6 +32,7 @@ export const property = rule({
   pad: '0',
   fw: 'bold',
   bxz: 'border-box',
+  va: 'top',
 });
 
 const activeInput = {
@@ -69,6 +70,7 @@ export const inputActive = rule(activeInput);
 export const colon = rule({
   pd: '0 8px 0 0px',
   cur: 'default',
+  va: 'top',
   '&>span': {
     pd: '0 2px',
   },
