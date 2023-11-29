@@ -117,10 +117,8 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
       'fontFamily',
       'fontWeight',
       'fontStyle',
-      'lineHeight',
       'letterSpacing',
       'textTransform',
-      'height',
       'boxSizing',
     ]);
   }, []);
@@ -174,6 +172,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
         {input}
         <div ref={sizerRef} className={sizerClass}>
           <span style={{visibility: 'hidden'}}>{value}</span>
+          {'\u200b'}
           {!!typeahead && <span style={{color: theme.g(0.7)}}>{typeahead}</span>}
         </div>
       </div>
