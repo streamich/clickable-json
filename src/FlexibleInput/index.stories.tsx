@@ -21,7 +21,10 @@ export const Primary: StoryObj<typeof meta> = {
   } as any,
 };
 
-const InteractiveDemo: React.FC<Omit<FlexibleInputProps, 'value' | 'onChange'> & {noDemoDebug?: boolean}> = ({noDemoDebug, ...props}) => {
+const InteractiveDemo: React.FC<Omit<FlexibleInputProps, 'value' | 'onChange'> & {noDemoDebug?: boolean}> = ({
+  noDemoDebug,
+  ...props
+}) => {
   const [value, setValue] = React.useState('Hello World');
   return (
     <div>
@@ -33,9 +36,7 @@ const InteractiveDemo: React.FC<Omit<FlexibleInputProps, 'value' | 'onChange'> &
           onChange={(e) => setValue(e.target.value)}
         />
       </div>
-      {!noDemoDebug && (
-        <div>Value: {value}</div>
-      )}
+      {!noDemoDebug && <div>Value: {value}</div>}
     </div>
   );
 };
