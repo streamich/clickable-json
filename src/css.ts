@@ -32,6 +32,7 @@ export const property = rule({
   pad: '0',
   fw: 'bold',
   bxz: 'border-box',
+  va: 'top',
 });
 
 const activeInput = {
@@ -69,6 +70,7 @@ export const inputActive = rule(activeInput);
 export const colon = rule({
   pd: '0 8px 0 0px',
   cur: 'default',
+  va: 'top',
   '&>span': {
     pd: '0 2px',
   },
@@ -168,4 +170,21 @@ export const insArrButton = rule({
   d: 'block',
   t: '-8px',
   l: '-75px',
+});
+
+export const tooltip = rule({
+  ...theme.font.ui1,
+  pos: 'absolute',
+  d: 'none',
+  t: '-2.5em',
+  l: '0px',
+  bg: 'rgba(0,0,0,.8)',
+  col: '#fff',
+  fz: 12 / 13.4 + 'em',
+  pad: '.4em .8em',
+  bdrad: '.4em',
+  z: 3,
+  pe: 'none',
+  us: 'none',
+  ws: 'nowrap',
 });

@@ -9,9 +9,8 @@ export const useNodeApi = <N extends JsonNode>(node: NodeRef<N>) => {
 };
 
 export const useRerender = (node: NodeRef<JsonNode>) => {
-  const api = useNodeApi(node);
-  const {subscribe, getSnapshot} = api.events;
-  return React.useSyncExternalStore(subscribe, getSnapshot);
+  const events = useNodeApi(node).events;
+  return React.useSyncExternalStore(events.subscribe, events.getSnapshot);
 };
 
 export const useRerenderModel = () => {

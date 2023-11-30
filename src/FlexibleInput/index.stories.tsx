@@ -21,7 +21,10 @@ export const Primary: StoryObj<typeof meta> = {
   } as any,
 };
 
-const InteractiveDemo: React.FC<Omit<FlexibleInputProps, 'value' | 'onChange'>> = (props) => {
+const InteractiveDemo: React.FC<Omit<FlexibleInputProps, 'value' | 'onChange'> & {noDemoDebug?: boolean}> = ({
+  noDemoDebug,
+  ...props
+}) => {
   const [value, setValue] = React.useState('Hello World');
   return (
     <div>
@@ -33,7 +36,7 @@ const InteractiveDemo: React.FC<Omit<FlexibleInputProps, 'value' | 'onChange'>> 
           onChange={(e) => setValue(e.target.value)}
         />
       </div>
-      <div>Value: {value}</div>
+      {!noDemoDebug && <div>Value: {value}</div>}
     </div>
   );
 };
@@ -41,6 +44,11 @@ const InteractiveDemo: React.FC<Omit<FlexibleInputProps, 'value' | 'onChange'>> 
 export const Interactive: StoryObj<typeof meta> = {
   args: {},
   render: () => <InteractiveDemo />,
+};
+
+export const Multiline: StoryObj<typeof meta> = {
+  args: {},
+  render: () => <InteractiveDemo multiline noDemoDebug />,
 };
 
 export const MinWidth: StoryObj<typeof meta> = {

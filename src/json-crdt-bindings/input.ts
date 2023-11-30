@@ -73,6 +73,7 @@ export class StrBinding {
       const start = selection.startId ? idToIndex(this.str, selection.startId) : null;
       const end = selection.endId ? idToIndex(this.str, selection.endId) : null;
       input.setSelectionRange(start, end, selection.dir ?? undefined);
+      this.saveSelection();
     });
   };
 
@@ -209,7 +210,7 @@ export class StrBinding {
   // ------------------------------------------------------------------ Polling
   // Some changes to the input are not captured by the `input`, nor `change`
   // events. For example, when input is modified programmatically
-  // `input.value = '...'`. To capture such changes, on can opt-in to polling
+  // `input.value = '...'`. To capture such changes, one can opt-in to polling
   // by calling `bind(true)`. The polling interval can be configured by
   // setting the `pollingInterval` property.
 
@@ -244,7 +245,7 @@ export class StrBinding {
     input.addEventListener('input', this.onInput);
     document.addEventListener('selectionchange', this.onSelectionChange);
     if (polling) this.pollChanges();
-    this.unsubscribeModel = this.str.events.changes.listen(this.onModelChange);
+    this.unsubscribeModel = this.str.api.onChange.listen(this.onModelChange);
   };
 
   public readonly unbind = () => {

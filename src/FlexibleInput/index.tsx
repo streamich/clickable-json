@@ -8,6 +8,8 @@ const blockClass = rule({
 });
 
 const inputClass = rule({
+  d: 'inline-block',
+  va: 'bottom',
   bxz: 'border-box',
   ov: 'hidden',
   pd: 0,
@@ -18,9 +20,13 @@ const inputClass = rule({
   col: 'inherit',
   fw: 'inherit',
   f: 'inherit',
+  lh: 'inherit',
+  ws: 'pre',
+  resize: 'none',
 });
 
 const sizerClass = rule({
+  d: 'inline-block',
   pos: 'absolute',
   ov: 'hidden',
   pe: 'none',
@@ -33,10 +39,16 @@ const sizerClass = rule({
 
 export interface FlexibleInputProps {
   /** Ref to the input element. */
-  inp?: (el: HTMLInputElement | null) => void;
+  inp?: (el: HTMLInputElement | HTMLTextAreaElement | null) => void;
 
   /** Value to display. */
-  value: string;
+  value?: string;
+
+  /** Whether the value is controlled. */
+  uncontrolled?: boolean;
+
+  /** Whether the input is multiline. */
+  multiline?: boolean;
 
   /** Placeholder to display. */
   typebefore?: string;
@@ -57,30 +69,32 @@ export interface FlexibleInputProps {
   focus?: boolean;
 
   /** Callback for when the value changes. */
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
   /** Callback for when the input is focused. */
-  onFocus?: React.FocusEventHandler<HTMLInputElement>;
+  onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
   /** Callback for when the input is blurred. */
-  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
   /** Callback for when a key is pressed. */
-  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
   /** Callback for when the Enter key is pressed. */
-  onSubmit?: React.KeyboardEventHandler<HTMLInputElement>;
+  onSubmit?: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
   /** Callback for when the Escape key is pressed. */
-  onCancel?: React.KeyboardEventHandler<HTMLInputElement>;
+  onCancel?: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 
   /** Callback for when the Tab key is pressed. */
-  onTab?: React.KeyboardEventHandler<HTMLInputElement>;
+  onTab?: React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 }
 
 export const FlexibleInput: React.FC<FlexibleInputProps> = ({
   inp,
   value,
+  uncontrolled,
+  multiline,
   typebefore = '',
   typeahead = '',
   extraWidth,
@@ -95,7 +109,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
   onCancel,
   onTab,
 }) => {
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const sizerRef = React.useRef<HTMLDivElement>(null);
   const theme = useTheme();
   React.useLayoutEffect(() => {
@@ -107,49 +121,62 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
       'fontFamily',
       'fontWeight',
       'fontStyle',
-      'lineHeight',
       'letterSpacing',
       'textTransform',
-      'height',
       'boxSizing',
     ]);
   }, []);
   React.useLayoutEffect(() => {
-    if (!inputRef.current || !sizerRef.current) return;
-    let width = sizerRef.current.scrollWidth;
+    const input = inputRef.current;
+    const sizer = sizerRef.current;
+    if (!input || !sizer) return;
+    let width = sizer.scrollWidth;
     if (extraWidth) width += extraWidth;
     if (minWidth) width = Math.max(width, minWidth);
     if (maxWidth) width = Math.min(width, maxWidth);
-    inputRef.current.style.width = width + 'px';
+    const style = input.style;
+    style.width = width + 'px';
+    if (multiline) {
+      const height = sizer.scrollHeight;
+      style.height = height + 'px';
+    }
   }, [value, typeahead, extraWidth]);
+
+  const attr = {
+    ref: (input: unknown) => {
+      (inputRef as any).current = input;
+      if (inp) inp(input as HTMLInputElement | HTMLTextAreaElement);
+    },
+    className: inputClass,
+    onChange,
+    onFocus,
+    onBlur,
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' && (!multiline || e.ctrlKey)) {
+        if (onSubmit) onSubmit(e as any);
+      } else if (e.key === 'Escape') {
+        if (onCancel) onCancel(e as any);
+      } else if (e.key === 'Tab') {
+        if (onTab) onTab(e as any);
+      }
+      if (onKeyDown) onKeyDown(e as any);
+    },
+  };
+
+  const input = multiline ? (
+    <textarea {...attr} value={uncontrolled ? undefined : value} />
+  ) : (
+    <input {...attr} value={uncontrolled ? undefined : value} />
+  );
 
   return (
     <>
-      {!!typebefore && <span style={{color: theme.g(0.7)}}>{typebefore}</span>}
+      {!!typebefore && <span style={{color: theme.g(0.7), verticalAlign: 'top'}}>{typebefore}</span>}
       <div className={blockClass}>
-        <input
-          ref={(input) => {
-            (inputRef as any).current = input;
-            if (inp) inp(input);
-          }}
-          className={inputClass}
-          value={value}
-          onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          onKeyDown={(e: React.KeyboardEvent) => {
-            if (e.key === 'Enter') {
-              if (onSubmit) onSubmit(e as any);
-            } else if (e.key === 'Escape') {
-              if (onCancel) onCancel(e as any);
-            } else if (e.key === 'Tab') {
-              if (onTab) onTab(e as any);
-            }
-            if (onKeyDown) onKeyDown(e as any);
-          }}
-        />
+        {input}
         <div ref={sizerRef} className={sizerClass}>
           <span style={{visibility: 'hidden'}}>{value}</span>
+          {'\u200b'}
           {!!typeahead && <span style={{color: theme.g(0.7)}}>{typeahead}</span>}
         </div>
       </div>
