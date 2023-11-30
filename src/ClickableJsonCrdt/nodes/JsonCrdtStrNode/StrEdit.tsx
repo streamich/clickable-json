@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {theme} from 'nano-theme';
+import {useT} from 'use-t';
 import {NodeRef} from '../../NodeRef';
 import * as css from '../../../css';
 import {FlexibleInput} from '../../../FlexibleInput';
@@ -17,6 +18,7 @@ export interface StrEditProps {
 }
 
 export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
+  const [t] = useT();
   const inputRef = React.useRef<HTMLInputElement>();
   const {model} = useJsonCrdt();
   const [clone, api] = React.useMemo(() => {
@@ -54,6 +56,7 @@ export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
           (inputRef as any).current = el;
         }}
         value={value}
+        multiline
         uncontrolled
         typebefore={'"'}
         typeahead={'"'}
@@ -63,7 +66,7 @@ export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
           if (onCancel) onCancel();
         }}
       />
-      <CancelAction onClick={onCancel} />
+      <CancelAction onClick={onCancel} tooltip={t('Cancel')} />
     </span>
   );
 };

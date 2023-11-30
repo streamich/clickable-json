@@ -148,7 +148,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
     onFocus,
     onBlur,
     onKeyDown: (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter') {
+      if (e.key === 'Enter' && (!multiline || e.ctrlKey)) {
         if (onSubmit) onSubmit(e as any);
       } else if (e.key === 'Escape') {
         if (onCancel) onCancel(e as any);
@@ -167,7 +167,7 @@ export const FlexibleInput: React.FC<FlexibleInputProps> = ({
 
   return (
     <>
-      {!!typebefore && <span style={{color: theme.g(0.7)}}>{typebefore}</span>}
+      {!!typebefore && <span style={{color: theme.g(0.7), verticalAlign: 'top'}}>{typebefore}</span>}
       <div className={blockClass}>
         {input}
         <div ref={sizerRef} className={sizerClass}>
