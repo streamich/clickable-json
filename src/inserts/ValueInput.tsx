@@ -67,7 +67,7 @@ export const ValueInput: React.FC<ValueInputProps> = ({
         focus={focus}
         inp={(el) => {
           (inputRef as any).current = el;
-          if (inp) inp(el);
+          if (inp) inp(el as any);
         }}
         value={value}
         typeahead={typeahead(value)}
@@ -76,7 +76,7 @@ export const ValueInput: React.FC<ValueInputProps> = ({
         onFocus={(e) => selectOnFocus(e.target)}
         onCancel={(e) => {
           setValue('');
-          if (onCancel) onCancel(e);
+          if (onCancel) onCancel(e as any);
         }}
         onTab={(e) => {
           const ahead = typeahead(value);
