@@ -44,6 +44,31 @@ const schema1 = {
   bin: s.bin(new Uint8Array([1, 2, 3, 4, 5])),
 };
 
+const doc2 = {
+  id: 'pj7ryzaia1',
+  model: 1.65555,
+  cid: 'og6f0o9v1c',
+  type: 'p',
+  created: 1596445997247,
+  modified: 1596445997381,
+  pid: '92lmu7fs9a',
+  depth: 0,
+  mime: 'image/png',
+  ext: 'png',
+  file: 'image.png',
+  w: 624,
+  h: 1390,
+  omark: [{x1: 0.027777777777777776, y1: 0.8438848920863309, x2: 0.25, y2: 0.8827338129496403}],
+  isPost: true,
+  isMature: false,
+  parent: null,
+  poster: {
+    id: 'xxsdfasdf-asdf-asdf-asdf-asdfasdfasdf',
+    name: 'Muhammad',
+    list: [1, -5, true, false, null, 'asdf'],
+  },
+};
+
 export const Primary: StoryObj<typeof meta> = {
   render: () => <Demo view={schema1} />,
   parameters: {
@@ -53,6 +78,13 @@ export const Primary: StoryObj<typeof meta> = {
 
 export const ShowRoot: StoryObj<typeof meta> = {
   render: () => <Demo view={schema1} showRoot />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const InteractiveLarge: StoryObj<typeof meta> = {
+  render: () => <Demo view={doc2} />,
   parameters: {
     layout: 'fullscreen',
   },
