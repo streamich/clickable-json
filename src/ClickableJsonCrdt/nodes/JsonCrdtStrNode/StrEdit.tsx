@@ -69,7 +69,7 @@ export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
       />
       <CancelAction onClick={onCancel} tooltip={t('Cancel')} />
       <span className={css.bottomRightActionPos}>
-          <SubmitAction onClick={handleSubmit} tooltip={t('Done (Ctrl + Enter)')} />
+        <SubmitAction onClick={handleSubmit} tooltip={t('Done (Ctrl + Enter)')} />
       </span>
     </span>
   );
