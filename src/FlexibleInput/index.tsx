@@ -8,6 +8,8 @@ const blockClass = rule({
 });
 
 const inputClass = rule({
+  d: 'inline-block',
+  va: 'bottom',
   bxz: 'border-box',
   ov: 'hidden',
   pd: 0,
@@ -18,11 +20,13 @@ const inputClass = rule({
   col: 'inherit',
   fw: 'inherit',
   f: 'inherit',
+  lh: 'inherit',
   ws: 'pre',
   resize: 'none',
 });
 
 const sizerClass = rule({
+  d: 'inline-block',
   pos: 'absolute',
   ov: 'hidden',
   pe: 'none',
