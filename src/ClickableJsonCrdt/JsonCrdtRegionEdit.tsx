@@ -20,17 +20,18 @@ export const JsonCrdtRegionEdit: React.FC<JsonCrdtRegionEditProps> = ({node, onC
   const {model} = useJsonCrdt();
 
   const handleSubmit = (json: string, type: string) => {
-    if (node.parent && node.parent.node.name() === 'obj') {
+    const parent = node.parent;
+    if (parent && parent.node.name() === 'obj') {
       const valueId = createValue(model, json, type as any, true);
-      const nodeApi = model.api.wrap(node.parent.node) as ObjApi;
+      const nodeApi = model.api.wrap(parent.node) as ObjApi;
       nodeApi.set({[node.step]: valueId});
-    } else if (node.parent && node.parent.node.name() === 'val') {
+    } else if (parent && (parent.node.name() === 'val' || parent.node.name() === 'root')) {
       const valueId = createValue(model, json, type as any, true);
-      const nodeApi = model.api.wrap(node.parent.node) as ValApi;
+      const nodeApi = model.api.wrap(parent.node) as ValApi;
       nodeApi.set(valueId);
-    } else if (node.parent && node.parent.node.name() === 'vec') {
+    } else if (parent && parent.node.name() === 'vec') {
       const valueId = createValue(model, json, type as any, true);
-      const nodeApi = model.api.wrap(node.parent.node) as VecApi;
+      const nodeApi = model.api.wrap(parent.node) as VecApi;
       nodeApi.set([[+node.step, valueId]]);
     }
     if (onCancel) onCancel();

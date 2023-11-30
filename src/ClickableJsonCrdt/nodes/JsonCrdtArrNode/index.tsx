@@ -21,6 +21,7 @@ export const JsonCrdtArrNode: React.FC<JsonCrdtArrNodeProps> = ({node}) => {
   let i = 0;
 
   node.node.children((child) => {
+    if (!child) return;
     const childNodeRef = nodeRef(child, node, String(i));
     childNodeRef.step = String(i);
     const key = child.id.sid + '.' + child.id.time + '.' + i;

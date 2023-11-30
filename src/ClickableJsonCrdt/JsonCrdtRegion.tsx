@@ -110,7 +110,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, editing, ch
       onEdit={
         editing
           ? undefined
-          : isFocused && (parentNodeType === 'obj' || parentNodeType === 'val' || parentNodeType === 'vec')
+          : isFocused && (parentNodeType === 'obj' || parentNodeType === 'val' || parentNodeType === 'root' || parentNodeType === 'vec')
             ? () => setEdit(true)
             : undefined
       }
