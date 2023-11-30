@@ -7,6 +7,7 @@ import {FlexibleInput} from '../../../FlexibleInput';
 import {selectOnFocus} from '../../../utils/selectOnFocus';
 import {inputStyle} from '../../../ClickableJson/utils';
 import {CancelAction} from '../../../buttons/Action/CancelAction';
+import {SubmitAction} from '../../../buttons/Action/SubmitAction';
 import {useJsonCrdt} from '../../context';
 import {StrBinding} from '../../../json-crdt-bindings/input';
 import type {StrNode} from 'json-joy/es2020/json-crdt';
@@ -67,6 +68,9 @@ export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
         }}
       />
       <CancelAction onClick={onCancel} tooltip={t('Cancel')} />
+      <span className={css.bottomRightActionPos}>
+          <SubmitAction onClick={onCancel} tooltip={t('Done (Ctrl + Enter)')} />
+      </span>
     </span>
   );
 };
