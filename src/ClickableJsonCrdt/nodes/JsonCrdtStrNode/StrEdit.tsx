@@ -61,6 +61,7 @@ export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
         uncontrolled
         typebefore={'"'}
         typeahead={'"'}
+        maxWidth={800}
         onSubmit={handleSubmit}
         onFocus={(e) => selectOnFocus(e.target)}
         onCancel={() => {
