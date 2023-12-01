@@ -15,6 +15,7 @@
     "strict": true,
     "jsx": "react",
     "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
     "noEmitOnError": true,
     "noErrorTruncation": true,
     "noFallthroughCasesInSwitch": true,
