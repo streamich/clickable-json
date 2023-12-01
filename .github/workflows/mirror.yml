@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  release:
+  mirror:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,5 +22,5 @@ jobs:
         run: |
           git config user.name "streamich"
           git config user.email "clickable-json+streamich@users.noreply.github.com"
-          git remote set-url origin "https://oauth2:${token}@gitlab.com/streamich/clickable-json.git"
-          git push origin master
+          git remote set-url mirror "https://oauth2:${token}@gitlab.com/streamich/clickable-json.git"
+          git push mirror master
