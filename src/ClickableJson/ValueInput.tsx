@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useTheme} from 'nano-theme';
 import * as css from '../css';
 import {inputStyle, typeahead, valueBg, valueColor} from './utils';
-import {FlexibleInput} from '../FlexibleInput';
+import {FlexibleInput} from 'flexible-input';
 import {selectOnFocus} from '../utils/selectOnFocus';
 
 export interface ValueInputProps {

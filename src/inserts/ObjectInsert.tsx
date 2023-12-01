@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useT} from 'use-t';
 import * as css from '../css';
 import {useTheme} from 'nano-theme';
-import {FlexibleInput} from '../FlexibleInput';
+import {FlexibleInput} from 'flexible-input';
 import {ValueInput} from './ValueInput';
 import {AddAction} from '../buttons/Action/AddAction';
 

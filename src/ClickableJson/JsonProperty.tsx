@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useTheme} from 'nano-theme';
 import {escapeComponent, unescapeComponent} from 'json-joy/es2020/json-pointer';
 import * as css from '../css';
-import {FlexibleInput} from '../FlexibleInput';
+import {FlexibleInput} from 'flexible-input';
 import {useStyles} from '../context/style';
 import type {OnChange} from './types';
 

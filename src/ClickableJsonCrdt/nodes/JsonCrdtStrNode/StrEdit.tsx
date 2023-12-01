@@ -3,7 +3,7 @@ import {theme} from 'nano-theme';
 import {useT} from 'use-t';
 import {NodeRef} from '../../NodeRef';
 import * as css from '../../../css';
-import {FlexibleInput} from '../../../FlexibleInput';
+import {FlexibleInput} from 'flexible-input';
 import {selectOnFocus} from '../../../utils/selectOnFocus';
 import {inputStyle} from '../../../ClickableJson/utils';
 import {CancelAction} from '../../../buttons/Action/CancelAction';

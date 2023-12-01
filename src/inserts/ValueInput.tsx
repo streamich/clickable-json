@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useTheme} from 'nano-theme';
 import * as css from '../css';
 import {inputStyle, typeahead} from '../ClickableJson/utils';
-import {FlexibleInput} from '../FlexibleInput';
+import {FlexibleInput} from 'flexible-input';
 import {CrdtTypeSwitch} from '../buttons/CrdtTypeSwitch';
 import {selectOnFocus} from '../utils/selectOnFocus';
 
