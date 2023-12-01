@@ -5981,7 +5981,7 @@ __metadata:
     "@types/react": "npm:^18.2.38"
     "@typescript-eslint/eslint-plugin": "npm:^6.12.0"
     "@typescript-eslint/parser": "npm:^6.12.0"
-    collaborative-input: "npm:^1.1.2"
+    collaborative-input: "npm:^1.1.3"
     eslint: "npm:^8.54.0"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-storybook: "npm:^0.6.15"
@@ -6059,15 +6059,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"collaborative-input@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "collaborative-input@npm:1.1.2"
+"collaborative-input@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "collaborative-input@npm:1.1.3"
   dependencies:
     fast-diff: "npm:^1.3.0"
   peerDependencies:
     json-joy: "*"
     tslib: 2
-  checksum: 72249dfdc5e428700b7d7674aaa2917b1264c8955fa907347df8d700e1c848f0759bac62ec05b55f39b97f4180e3d0be5ed665e7c3fa1a08a8a8882597451bc1
+  checksum: ed4d2b26c6c0027800ca36c2a37746387453e8fdf1955b75a4eb74606d62bd221d61e3a7accc24d6bb8baf9378c0c855f381a66b30bb5d90ebcb50850497d509
   languageName: node
   linkType: hard
 
