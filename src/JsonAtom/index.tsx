@@ -36,13 +36,14 @@ export const JsonAtom: React.FC<JsonAtomProps> = (props) => {
   } else {
     color = valueColor(!theme.isLight, value) ?? color;
     if (typeof value === 'string') {
-      const needsTrim = value.length > 256;
-      const str = JSON.stringify(needsTrim ? value.slice(0, 256) : value);
+      const MAX_STR_LENGTH = 64;
+      const needsTrim = value.length > MAX_STR_LENGTH;
+      const str = JSON.stringify(needsTrim ? value.slice(0, MAX_STR_LENGTH) : value);
       if (needsTrim) {
         formatted = (
           <span>
             {str.slice(0, -1)}
-            <span style={{color: theme.g(0.3)}}>{` … (${value.length - 256} more)`}</span>
+            <span style={{color: theme.g(0.3)}}>{` … (${value.length - MAX_STR_LENGTH} more)`}</span>
             {'"'}
           </span>
         );
