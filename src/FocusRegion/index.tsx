@@ -46,14 +46,6 @@ const asideClass = rule({
   l: 'calc(100% + 0.5em)',
 });
 
-const editActionClass = rule({
-  d: 'inline-block',
-  pos: 'absolute',
-  r: '-6px',
-  b: '-9px',
-  z: 2,
-});
-
 export interface FocusRegionProps {
   focused?: boolean;
   pointed?: boolean;
@@ -118,7 +110,7 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
       {children}
       {deleteButton}
       {!!focused && onEdit && (
-        <span className={editActionClass}>
+        <span className={css.bottomRightActionPos}>
           <EditAction tooltip={t('Set')} onClick={onEdit} />
         </span>
       )}

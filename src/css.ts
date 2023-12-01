@@ -188,3 +188,11 @@ export const tooltip = rule({
   us: 'none',
   ws: 'nowrap',
 });
+
+export const bottomRightActionPos = rule({
+  d: 'inline-block',
+  pos: 'absolute',
+  r: '-6px',
+  b: '-9px',
+  z: 2,
+});

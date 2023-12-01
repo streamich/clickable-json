@@ -21,6 +21,7 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
   let i = 0;
 
   node.node.children((child) => {
+    if (!child) return;
     entries.push(
       <span key={child.id.sid + '.' + child.id.time} className={css.line}>
         {render(nodeRef(child, node, String(i)))}
