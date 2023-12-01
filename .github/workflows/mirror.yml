@@ -22,5 +22,5 @@ jobs:
         run: |
           git config user.name "streamich"
           git config user.email "clickable-json+streamich@users.noreply.github.com"
-          git remote set-url mirror "https://oauth2:${token}@gitlab.com/streamich/clickable-json.git"
+          git remote add mirror "https://oauth2:${token}@gitlab.com/streamich/clickable-json.git"
           git push mirror master
