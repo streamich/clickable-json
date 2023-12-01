@@ -1,0 +1,26 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Push To Gitlab
+        env: 
+          token: ${{ secrets.GITLAB_TOKEN }}
+        run: |
+          git config user.name "streamich"
+          git config user.email "clickable-json+streamich@users.noreply.github.com"
+          git remote set-url origin "https://oauth2:${token}@gitlab.com/streamich/clickable-json.git"
+          git push origin master
