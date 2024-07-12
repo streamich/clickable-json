@@ -76,6 +76,13 @@ export const Primary: StoryObj<typeof meta> = {
   },
 };
 
+export const Readonly: StoryObj<typeof meta> = {
+  render: () => <Demo view={schema1} readonly />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
 export const ShowRoot: StoryObj<typeof meta> = {
   render: () => <Demo view={schema1} showRoot />,
   parameters: {

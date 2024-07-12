@@ -8,12 +8,14 @@ import {JsonCrdtObjectLayout} from '../../JsonCrdtObjectLayout';
 import {useRerenderModel} from '../../hooks';
 import type {VecNode} from 'json-joy/lib/json-crdt';
 import {PushElement} from './PushElement';
+import {useStyles} from '../../../context/style';
 
 export interface JsonCrdtVecNodeProps {
   node: NodeRef<VecNode>;
 }
 
 export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
+  const {readonly} = useStyles();
   const {render} = useJsonCrdt();
   useRerenderModel();
 
@@ -40,7 +42,7 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
         header={<span style={{opacity: 0.5, display: 'inline-block', margin: '0.25em 0 0 -0.3em'}}>→</span>}
       >
         {entries}
-        <PushElement node={node} />
+        {!readonly && <PushElement node={node} />}
       </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
   );

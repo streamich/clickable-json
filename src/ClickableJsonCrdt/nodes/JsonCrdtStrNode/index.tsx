@@ -35,7 +35,7 @@ export interface JsonCrdtStrNodeProps {
 
 export const JsonCrdtStrNode: React.FC<JsonCrdtStrNodeProps> = ({node}) => {
   const [t] = useT();
-  const {formal} = useStyles();
+  const {formal, readonly} = useStyles();
   const {focused} = useFocus();
   const [editing, setEditing] = React.useState(false);
 
@@ -49,7 +49,7 @@ export const JsonCrdtStrNode: React.FC<JsonCrdtStrNodeProps> = ({node}) => {
       ) : (
         <span
           className={atomClass + (isFocused ? atomFocusedClass : '')}
-          onClick={isFocused ? () => setEditing(true) : undefined}
+          onClick={isFocused && !readonly ? () => setEditing(true) : undefined}
         >
           <JsonAtom value={node.node.view()} />
           <span className={css.tooltip}>{t('Edit')}</span>
