@@ -7,6 +7,7 @@ import {JsonCrdtProperty} from '../../JsonCrdtProperty';
 import {JsonCrdtObjectLayout} from '../../JsonCrdtObjectLayout';
 import {useRerender} from '../../hooks';
 import {InsertElement} from './InsertElement';
+import {useStyles} from '../../../context/style';
 import type {ArrNode} from 'json-joy/lib/json-crdt';
 
 export interface JsonCrdtArrNodeProps {
@@ -14,6 +15,7 @@ export interface JsonCrdtArrNodeProps {
 }
 
 export const JsonCrdtArrNode: React.FC<JsonCrdtArrNodeProps> = ({node}) => {
+  const {readonly} = useStyles();
   const {render} = useJsonCrdt();
   useRerender(node);
 
@@ -27,7 +29,7 @@ export const JsonCrdtArrNode: React.FC<JsonCrdtArrNodeProps> = ({node}) => {
     const key = child.id.sid + '.' + child.id.time + '.' + i;
     entries.push(
       <React.Fragment key={key}>
-        <InsertElement key={key} node={node} index={i} />
+        {!readonly && <InsertElement key={key} node={node} index={i} />}
         <span className={css.line}>{render(childNodeRef)}</span>
       </React.Fragment>,
     );
@@ -43,7 +45,7 @@ export const JsonCrdtArrNode: React.FC<JsonCrdtArrNodeProps> = ({node}) => {
         brackets={['[', ']']}
       >
         {entries}
-        <InsertElement key={node.node.length()} node={node} index={node.node.length()} />
+        {!readonly && <InsertElement key={node.node.length()} node={node} index={node.node.length()} />}
       </JsonCrdtObjectLayout>
     </JsonCrdtRegion>
   );

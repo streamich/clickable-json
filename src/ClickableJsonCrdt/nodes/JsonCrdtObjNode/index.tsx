@@ -9,6 +9,7 @@ import {JsonCrdtObjectLayout} from '../../JsonCrdtObjectLayout';
 import {useRerender} from '../../hooks';
 import {AddKey} from './AddKey';
 import {Tombstones} from './Tombstones';
+import {useStyles} from '../../../context/style';
 
 const isTombstone = (node: JsonNode) => node instanceof ConNode && node.val === undefined;
 
@@ -17,6 +18,7 @@ export interface JsonCrdtObjNodeProps {
 }
 
 export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
+  const {readonly} = useStyles();
   const {render} = useJsonCrdt();
   useRerender(node);
 
@@ -42,7 +44,7 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
         collapsedView={!!entries.length && entries.length}
       >
         {entries}
-        <AddKey node={node} />
+        {!readonly && <AddKey node={node} />}
         {!!tombstones.length && <Tombstones tombstones={tombstones} />}
       </JsonCrdtObjectLayout>
     </JsonCrdtRegion>

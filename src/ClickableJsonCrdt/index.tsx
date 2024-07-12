@@ -3,7 +3,7 @@ import {context as crdt} from './context';
 import {StyleContextValue, context as styles} from '../context/style';
 import {NodeRef, nodeRef} from './NodeRef';
 import {Root} from '../Root';
-import {FocusProvider} from '../context/focus';
+import {FocusProvider, FocusProviderProps} from '../context/focus';
 import {
   ConNode,
   ValNode,
@@ -34,7 +34,7 @@ const render = (node: NodeRef<JsonNode>): React.ReactNode => {
   return '∅';
 };
 
-export interface ClickableJsonCrdtProps extends StyleContextValue {
+export interface ClickableJsonCrdtProps extends StyleContextValue, Pick<FocusProviderProps, 'onFocus'> {
   /**
    * The JSON CRDT model to display.
    */
@@ -47,13 +47,13 @@ export interface ClickableJsonCrdtProps extends StyleContextValue {
 }
 
 export const ClickableJsonCrdt: React.FC<ClickableJsonCrdtProps> = (props) => {
-  const {model, compact, readonly, showRoot} = props;
+  const {model, compact, readonly, showRoot, onFocus} = props;
   const node = React.useMemo(() => nodeRef(showRoot ? model.root : model.root.node(), null, ''), [model]);
 
   return (
     <styles.Provider value={{compact, readonly}}>
       <crdt.Provider value={{model, render}}>
-        <FocusProvider>
+        <FocusProvider onFocus={onFocus}>
           <Root>{render(node)}</Root>
         </FocusProvider>
       </crdt.Provider>

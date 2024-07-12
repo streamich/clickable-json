@@ -70,7 +70,14 @@ const doc2 = {
 };
 
 export const Primary: StoryObj<typeof meta> = {
-  render: () => <Demo view={schema1} />,
+  render: () => <Demo view={schema1} onFocus={(id) => console.log('onFocus', id)} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const Readonly: StoryObj<typeof meta> = {
+  render: () => <Demo view={schema1} readonly />,
   parameters: {
     layout: 'fullscreen',
   },
