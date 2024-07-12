@@ -25,10 +25,13 @@ export const FocusProvider: React.FC<FocusProviderProps> = ({children, onFocus})
   const [focused, _focus] = React.useState<string | null>(null);
   const [pointed, point] = React.useState<string | null>(null);
 
-  const focus = React.useCallback((node: string | null) => {
-    _focus(node);
-    onFocus?.(node);
-  }, [onFocus]);
+  const focus = React.useCallback(
+    (node: string | null) => {
+      _focus(node);
+      onFocus?.(node);
+    },
+    [onFocus],
+  );
 
   React.useEffect(() => {
     const listener = (e: KeyboardEvent) => {
