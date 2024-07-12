@@ -14,7 +14,7 @@ import {
   ArrNode,
   StrNode,
   BinNode,
-} from 'json-joy/es2020/json-crdt';
+} from 'json-joy/lib/json-crdt';
 import {JsonCrdtConNode} from './nodes/JsonCrdtConNode';
 import {JsonCrdtValNode} from './nodes/JsonCrdtValNode';
 import {JsonCrdtObjNode} from './nodes/JsonCrdtObjNode';

@@ -1,6 +1,6 @@
 import {NodeRef} from './NodeRef';
-import type {JsonNode, Model} from 'json-joy/es2020/json-crdt';
-import type {ITimestampStruct} from 'json-joy/es2020/json-crdt-patch/clock';
+import type {JsonNode, Model} from 'json-joy/lib/json-crdt';
+import type {ITimestampStruct} from 'json-joy/lib/json-crdt-patch/clock';
 
 export const id = (node: NodeRef<JsonNode>) => {
   const id = node.node.id;

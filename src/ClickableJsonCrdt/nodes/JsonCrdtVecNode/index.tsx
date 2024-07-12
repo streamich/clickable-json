@@ -6,7 +6,7 @@ import {JsonCrdtRegion} from '../../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../../JsonCrdtProperty';
 import {JsonCrdtObjectLayout} from '../../JsonCrdtObjectLayout';
 import {useRerenderModel} from '../../hooks';
-import type {VecNode} from 'json-joy/es2020/json-crdt';
+import type {VecNode} from 'json-joy/lib/json-crdt';
 import {PushElement} from './PushElement';
 
 export interface JsonCrdtVecNodeProps {

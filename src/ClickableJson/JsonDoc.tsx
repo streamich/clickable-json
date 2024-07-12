@@ -9,7 +9,7 @@ import {JsonArrayInsert} from './JsonArrayInsert';
 import {ObjectLayout} from '../ObjectLayout';
 import {useFocus} from '../context/focus';
 import {useStyles} from '../context/style';
-import {escapeComponent} from 'json-joy/es2020/json-pointer';
+import {escapeComponent} from 'json-joy/lib/json-pointer';
 import type {OnChange} from './types';
 
 interface JsonObjectProps {

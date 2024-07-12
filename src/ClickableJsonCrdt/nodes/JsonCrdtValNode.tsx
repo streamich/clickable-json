@@ -7,7 +7,7 @@ import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonCrdtObjectLayout} from '../JsonCrdtObjectLayout';
 import {JsonAtom} from '../../JsonAtom';
 import {useRerenderModel} from '../hooks';
-import type {ValNode} from 'json-joy/es2020/json-crdt';
+import type {ValNode} from 'json-joy/lib/json-crdt';
 
 export interface JsonCrdtValNodeProps {
   node: NodeRef<ValNode>;

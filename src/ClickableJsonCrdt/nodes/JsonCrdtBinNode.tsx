@@ -4,7 +4,7 @@ import {JsonCrdtRegion} from '../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../JsonCrdtProperty';
 import {JsonAtom} from '../../JsonAtom';
 import {useStyles} from '../../context/style';
-import type {BinNode} from 'json-joy/es2020/json-crdt';
+import type {BinNode} from 'json-joy/lib/json-crdt';
 
 export interface JsonCrdtBinNodeProps {
   node: NodeRef<BinNode>;

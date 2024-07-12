@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ClickableJsonCrdt, ClickableJsonCrdtProps} from '.';
-import {Model} from 'json-joy/es2020/json-crdt';
-import {s} from 'json-joy/es2020/json-crdt-patch';
+import {Model} from 'json-joy/lib/json-crdt';
+import {s} from 'json-joy/lib/json-crdt-patch';
 import type {Meta, StoryObj} from '@storybook/react';
 
 const meta: Meta<typeof Text> = {

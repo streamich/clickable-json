@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {theme} from 'nano-theme';
-import {StrBinding} from 'collaborative-input';
+import {bind} from 'collaborative-input';
 import {FlexibleInput} from 'flexible-input';
 import {useT} from 'use-t';
 import {NodeRef} from '../../NodeRef';
@@ -10,7 +10,7 @@ import {inputStyle} from '../../../ClickableJson/utils';
 import {CancelAction} from '../../../buttons/Action/CancelAction';
 import {SubmitAction} from '../../../buttons/Action/SubmitAction';
 import {useJsonCrdt} from '../../context';
-import type {StrNode} from 'json-joy/es2020/json-crdt';
+import type {StrNode} from 'json-joy/lib/json-crdt';
 
 export interface StrEditProps {
   node: NodeRef<StrNode>;
@@ -33,7 +33,7 @@ export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
 
   React.useEffect(() => {
     if (!inputRef.current) return;
-    const unbind = StrBinding.bind(api, inputRef.current);
+    const unbind = bind(api, inputRef.current);
     return () => {
       unbind();
     };

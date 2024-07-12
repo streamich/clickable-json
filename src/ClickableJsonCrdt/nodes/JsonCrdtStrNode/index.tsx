@@ -10,7 +10,7 @@ import {useFocus} from '../../../context/focus';
 import {id} from '../../utils';
 import * as css from '../../../css';
 import {StrEdit} from './StrEdit';
-import type {StrNode} from 'json-joy/es2020/json-crdt';
+import type {StrNode} from 'json-joy/lib/json-crdt';
 
 const atomClass = rule({
   d: 'inline-block',

@@ -8,7 +8,7 @@ import {useStyles} from '../context/style';
 import {createValue, isContainer} from './utils';
 import {useJsonCrdt} from './context';
 import type {NodeRef} from './NodeRef';
-import type {JsonNode, ObjApi, ValApi, VecApi} from 'json-joy/es2020/json-crdt';
+import type {JsonNode, ObjApi, ValApi, VecApi} from 'json-joy/lib/json-crdt';
 
 export interface JsonCrdtRegionEditProps extends ObjectLayoutProps {
   node: NodeRef<JsonNode>;
@@ -23,15 +23,15 @@ export const JsonCrdtRegionEdit: React.FC<JsonCrdtRegionEditProps> = ({node, onC
     const parent = node.parent;
     if (parent && parent.node.name() === 'obj') {
       const valueId = createValue(model, json, type as any, true);
-      const nodeApi = model.api.wrap(parent.node) as ObjApi;
+      const nodeApi = model.api.wrap(parent.node) as ObjApi<any>;
       nodeApi.set({[node.step]: valueId});
     } else if (parent && (parent.node.name() === 'val' || parent.node.name() === 'root')) {
       const valueId = createValue(model, json, type as any, true);
-      const nodeApi = model.api.wrap(parent.node) as ValApi;
+      const nodeApi = model.api.wrap(parent.node) as ValApi<any>;
       nodeApi.set(valueId);
     } else if (parent && parent.node.name() === 'vec') {
       const valueId = createValue(model, json, type as any, true);
-      const nodeApi = model.api.wrap(parent.node) as VecApi;
+      const nodeApi = model.api.wrap(parent.node) as VecApi<any>;
       nodeApi.set([[+node.step, valueId]]);
     }
     if (onCancel) onCancel();
