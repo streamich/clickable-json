@@ -7,7 +7,7 @@ import {TypeAndId} from './TypeAndId';
 import {NodeRef} from './NodeRef';
 import {id} from './utils';
 import {JsonCrdtRegionEdit} from './JsonCrdtRegionEdit';
-import type {ArrNode, ConNode, JsonNode, ObjNode, ValNode, VecNode} from 'json-joy/es2020/json-crdt';
+import type {ArrNode, ConNode, JsonNode, ObjNode, ValNode, VecNode} from 'json-joy/lib/json-crdt';
 
 const isObjTombstone = (node: NodeRef<JsonNode>): boolean => {
   const parent = node.parent;

@@ -4,7 +4,7 @@ import {ObjectInsert} from '../../../inserts/ObjectInsert';
 import {useIsFocused} from '../../../context/focus';
 import {createValue, id} from '../../utils';
 import {useJsonCrdt} from '../../context';
-import type {ObjNode} from 'json-joy/es2020/json-crdt';
+import type {ObjNode} from 'json-joy/lib/json-crdt';
 
 export interface AddKeyProps {
   node: NodeRef<ObjNode>;

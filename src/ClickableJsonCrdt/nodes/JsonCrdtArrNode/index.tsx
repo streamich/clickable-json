@@ -7,7 +7,7 @@ import {JsonCrdtProperty} from '../../JsonCrdtProperty';
 import {JsonCrdtObjectLayout} from '../../JsonCrdtObjectLayout';
 import {useRerender} from '../../hooks';
 import {InsertElement} from './InsertElement';
-import type {ArrNode} from 'json-joy/es2020/json-crdt';
+import type {ArrNode} from 'json-joy/lib/json-crdt';
 
 export interface JsonCrdtArrNodeProps {
   node: NodeRef<ArrNode>;

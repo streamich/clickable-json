@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {PropertyLayout} from '../PropertyLayout';
-import type {JsonNode} from 'json-joy/es2020/json-crdt';
+import type {JsonNode} from 'json-joy/lib/json-crdt';
 import type {NodeRef} from './NodeRef';
 
 export interface JsonCrdtPropertyProps {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {rule, theme, useTheme} from 'nano-theme';
 import {NodeRef} from './NodeRef';
-import type {JsonNode} from 'json-joy/es2020/json-crdt';
+import type {JsonNode} from 'json-joy/lib/json-crdt';
 
 const blockClass = rule({
   ...theme.font.mono,

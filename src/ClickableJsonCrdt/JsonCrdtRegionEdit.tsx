@@ -8,7 +8,7 @@ import {useStyles} from '../context/style';
 import {createValue, isContainer} from './utils';
 import {useJsonCrdt} from './context';
 import type {NodeRef} from './NodeRef';
-import type {JsonNode, ObjApi, ValApi, VecApi} from 'json-joy/es2020/json-crdt';
+import type {JsonNode, ObjApi, ValApi, VecApi} from 'json-joy/lib/json-crdt';
 
 export interface JsonCrdtRegionEditProps extends ObjectLayoutProps {
   node: NodeRef<JsonNode>;

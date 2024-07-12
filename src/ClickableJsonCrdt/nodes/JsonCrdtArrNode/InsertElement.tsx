@@ -4,7 +4,7 @@ import {ArrayInsert} from '../../../inserts/ArrayInsert';
 import {useIsFocused} from '../../../context/focus';
 import {createValue, id} from '../../utils';
 import {useJsonCrdt} from '../../context';
-import type {ArrNode} from 'json-joy/es2020/json-crdt';
+import type {ArrNode} from 'json-joy/lib/json-crdt';
 
 export interface InsertElementProps {
   node: NodeRef<ArrNode>;

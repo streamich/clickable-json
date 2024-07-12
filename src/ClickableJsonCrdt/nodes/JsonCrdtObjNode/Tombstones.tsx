@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {rule, theme} from 'nano-theme';
 import {useT} from 'use-t';
-import {MiniTitle} from 'p4-ui/lib/src/3-list-item/MiniTitle';
+import {MiniTitle} from 'nice-ui/lib/3-list-item/MiniTitle';
 
 const blockClass = rule({
   d: 'block',

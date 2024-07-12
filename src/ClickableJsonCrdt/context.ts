@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type {Model} from 'json-joy/es2020/json-crdt';
+import type {Model} from 'json-joy/lib/json-crdt';
 import type {NodeRef} from './NodeRef';
 
 export interface ClickableJsonCrdtContextValue {

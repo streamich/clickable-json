@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useJsonCrdt} from './context';
-import type {JsonNode} from 'json-joy/es2020/json-crdt';
+import type {JsonNode} from 'json-joy/lib/json-crdt';
 import type {NodeRef} from './NodeRef';
 
 export const useNodeApi = <N extends JsonNode>(node: NodeRef<N>) => {

@@ -4,7 +4,7 @@ import {ArrayInsert} from '../../../inserts/ArrayInsert';
 import {useIsFocused} from '../../../context/focus';
 import {createValue, id} from '../../utils';
 import {useJsonCrdt} from '../../context';
-import type {VecNode} from 'json-joy/es2020/json-crdt';
+import type {VecNode} from 'json-joy/lib/json-crdt';
 
 export interface PushElementProps {
   node: NodeRef<VecNode>;

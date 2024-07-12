@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ConNode, type JsonNode, type ObjNode} from 'json-joy/es2020/json-crdt';
+import {ConNode, type JsonNode, type ObjNode} from 'json-joy/lib/json-crdt';
 import * as css from '../../../css';
 import {useJsonCrdt} from '../../context';
 import {NodeRef, nodeRef} from '../../NodeRef';

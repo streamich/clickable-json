@@ -6,7 +6,7 @@ import {useStyles} from '../../context/style';
 import {ClickableJson} from '../../ClickableJson';
 import {id} from '../utils';
 import {useFocus} from '../../context/focus';
-import type {ConNode} from 'json-joy/es2020/json-crdt';
+import type {ConNode} from 'json-joy/lib/json-crdt';
 import type {NodeRef} from '../NodeRef';
 
 export interface JsonCrdtConNodeProps {

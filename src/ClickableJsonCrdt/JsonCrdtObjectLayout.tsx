@@ -3,7 +3,7 @@ import {ObjectLayout, ObjectLayoutProps} from '../ObjectLayout';
 import {useStyles} from '../context/style';
 import {useFocus} from '../context/focus';
 import type {NodeRef} from './NodeRef';
-import type {JsonNode} from 'json-joy/es2020/json-crdt';
+import type {JsonNode} from 'json-joy/lib/json-crdt';
 import {id} from './utils';
 
 export interface JsonCrdtObjectLayoutProps extends ObjectLayoutProps {
