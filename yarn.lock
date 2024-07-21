@@ -6143,15 +6143,15 @@ __metadata:
     "@types/react": "npm:^18.2.38"
     "@typescript-eslint/eslint-plugin": "npm:^6.12.0"
     "@typescript-eslint/parser": "npm:^6.12.0"
-    collaborative-input: "npm:^1.2.0"
+    collaborative-input: "npm:^1.3.0"
     eslint: "npm:^8.54.0"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-storybook: "npm:^0.6.15"
     flexible-input: "npm:^1.0.3"
     jest: "npm:^29.7.0"
-    json-joy: "npm:^16.13.0"
-    nano-theme: "npm:^1.4.1"
-    nice-ui: "npm:^1.9.0"
+    json-joy: "npm:^16.13.2"
+    nano-theme: "npm:^1.4.2"
+    nice-ui: "npm:^1.9.1"
     prettier: "npm:^3.1.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
@@ -6250,28 +6250,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"collaborative-editor@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "collaborative-editor@npm:1.0.1"
+"collaborative-editor@npm:^2.2.0":
+  version: 2.3.0
+  resolution: "collaborative-editor@npm:2.3.0"
   dependencies:
     fast-diff: "npm:^1.3.0"
   peerDependencies:
     json-joy: "*"
     tslib: 2
-  checksum: 10c0/d51d11cc636a5ea06fb75f06c57f0f2ee9aa32411bff23371d0fe5512b3c7744dd48eaf6e1411f1ec5b997c7b0250c614fa7e06e6321a2cbb8fe3f69adcbdca1
+  checksum: 10c0/0d770a6a75c308be7d81bac3c9f0dc9df8fff300ebd0d2bb0efb0e66b509ce8b8217dde3bcd65288b606ae3f2081b6064635a60aabcb379e85958652928da217
   languageName: node
   linkType: hard
 
-"collaborative-input@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "collaborative-input@npm:1.2.0"
+"collaborative-input@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "collaborative-input@npm:1.3.0"
   dependencies:
-    collaborative-editor: "npm:^1.0.1"
-    fast-diff: "npm:^1.3.0"
+    collaborative-editor: "npm:^2.2.0"
   peerDependencies:
     json-joy: "*"
     tslib: 2
-  checksum: 10c0/dc578dbcfd9852374be7087788ac33d799972b4266a1215f7a21bf8299b1d63c9256930e0b3082fdd64bbecb29df3acc5a79c33bdb42e66eddde471acd2e78a6
+  checksum: 10c0/d895fbc4ea63a2dbee807362c11b41fae039ca5c656d8e1645720e2e25844212c4aaf3bb018bc93ef9bd77f331431e436c94cbc306b5a4c7f77e81d97d88232d
   languageName: node
   linkType: hard
 
@@ -8967,7 +8966,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inline-style-prefixer@npm:^7.0.0":
+"inline-style-prefixer@npm:^7.0.0, inline-style-prefixer@npm:^7.0.1":
   version: 7.0.1
   resolution: "inline-style-prefixer@npm:7.0.1"
   dependencies:
@@ -10141,9 +10140,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-joy@npm:^16.13.0":
-  version: 16.13.0
-  resolution: "json-joy@npm:16.13.0"
+"json-joy@npm:^16.13.2":
+  version: 16.13.2
+  resolution: "json-joy@npm:16.13.2"
   dependencies:
     "@jsonjoy.com/base64": "npm:^1.1.1"
     "@jsonjoy.com/json-pack": "npm:^1.0.2"
@@ -10168,7 +10167,7 @@ __metadata:
     json-pointer: bin/json-pointer.js
     json-pointer-test: bin/json-pointer-test.js
     json-unpack: bin/json-unpack.js
-  checksum: 10c0/ccdbe8ee77e2ae469bf388885284de28604b2ef088ddf6278b4e9805363fffadec34028dffeb38eac2f04619e8769ce17ef2bed01d7841b9249965af6feedb95
+  checksum: 10c0/60300120566a9fb2f6de86df057d60edaf066bc1bdbba552c137dfde0a7705ae0725f4c25558eaa895c44f9892454921169580c641bddaa4c03648c3cc403dc4
   languageName: node
   linkType: hard
 
@@ -11044,6 +11043,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nano-css@npm:^5.6.2":
+  version: 5.6.2
+  resolution: "nano-css@npm:5.6.2"
+  dependencies:
+    "@jridgewell/sourcemap-codec": "npm:^1.4.15"
+    css-tree: "npm:^1.1.2"
+    csstype: "npm:^3.1.2"
+    fastest-stable-stringify: "npm:^2.0.2"
+    inline-style-prefixer: "npm:^7.0.1"
+    rtl-css-js: "npm:^1.16.1"
+    stacktrace-js: "npm:^2.0.2"
+    stylis: "npm:^4.3.0"
+  peerDependencies:
+    react: "*"
+    react-dom: "*"
+  checksum: 10c0/566fb9403815d78a110d68f011e1125cbeeb7299e2e6c60700f316ba0c48dc702c039163eae7a8f213a1390e45cedfdeccc203794d61a61116598adbb83029ec
+  languageName: node
+  linkType: hard
+
 "nano-theme@npm:^1.3.0, nano-theme@npm:^1.4.1":
   version: 1.4.1
   resolution: "nano-theme@npm:1.4.1"
@@ -11054,6 +11072,19 @@ __metadata:
   peerDependencies:
     react: "*"
   checksum: 10c0/19d9159fd86a294d3b940fcca37281e49c8ebbb45ad66c831cdb6474abef6e6730a0531addb6ad4dbccd733bd0d7023cf801dd4540e0873eb41a554f38e19275
+  languageName: node
+  linkType: hard
+
+"nano-theme@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "nano-theme@npm:1.4.2"
+  dependencies:
+    nano-css: "npm:^5.6.2"
+    react-use: "npm:^17.4.0"
+    thingies: "npm:^2.0.0"
+  peerDependencies:
+    react: "*"
+  checksum: 10c0/e07cbc7fa1677421ca606e4e3f18f458f8f81560d8fbb51cb0b78ebdbf6b9fa71e7277fb19fce24eed849c68c5174f0068b18e4887a916a24f267b3eba0539a4
   languageName: node
   linkType: hard
 
@@ -11087,9 +11118,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nice-ui@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "nice-ui@npm:1.9.0"
+"nice-ui@npm:^1.9.1":
+  version: 1.9.1
+  resolution: "nice-ui@npm:1.9.1"
   dependencies:
     "@material-ui/core": "npm:^4.12.4"
     clipboard-copy: "npm:^4.0.1"
@@ -11117,7 +11148,7 @@ __metadata:
     react-dom: "*"
     rxjs: 7
     tslib: 2
-  checksum: 10c0/6b8de6b4bcb86b47bb40510dee38161b9adae0262f127eb365a772d5ec72cc67784820cb76f7b895638da2645444f3738061ae6e3947b95be2dfaba987794acf
+  checksum: 10c0/bd27f7d5ec98f7c7943841d7f8e89069f6465ea794a70cd4255c338b136e08f103063ec6144532f1bde3ebf61b76b74ee6c11fd12654ec641868576df34eb0dd
   languageName: node
   linkType: hard
 
