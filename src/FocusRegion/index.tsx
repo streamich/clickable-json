@@ -50,7 +50,7 @@ const toolbarClass = rule({
   d: 'inline-block',
   pos: 'absolute',
   top: '-11px',
-  l: 'calc(100% - 16px)',
+  l: 'calc(100% - 24px)',
 });
 
 export interface FocusRegionProps {
