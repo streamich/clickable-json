@@ -6,9 +6,10 @@ import {JsonCrdtRegion} from '../../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../../JsonCrdtProperty';
 import {JsonCrdtObjectLayout} from '../../JsonCrdtObjectLayout';
 import {useRerenderModel} from '../../hooks';
-import type {VecNode} from 'json-joy/lib/json-crdt';
 import {PushElement} from './PushElement';
 import {useStyles} from '../../../context/style';
+import {JsonCrdtExtNode} from './JsonCrdtExtNode';
+import type {VecNode} from 'json-joy/lib/json-crdt';
 
 export interface JsonCrdtVecNodeProps {
   node: NodeRef<VecNode>;
@@ -18,6 +19,12 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
   const {readonly} = useStyles();
   const {render} = useJsonCrdt();
   useRerenderModel();
+
+  const isExtension = node.node.isExt();
+
+  if (isExtension) {
+    return <JsonCrdtExtNode node={node} />;
+  }
 
   const entries: React.ReactNode[] = [];
   let i = 0;
@@ -41,6 +48,7 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
         brackets={['[', ']']}
         header={<span style={{opacity: 0.5, display: 'inline-block', margin: '0.25em 0 0 -0.3em'}}>→</span>}
       >
+        {isExtension ? 'extension!' : null}
         {entries}
         {!readonly && <PushElement node={node} />}
       </JsonCrdtObjectLayout>
