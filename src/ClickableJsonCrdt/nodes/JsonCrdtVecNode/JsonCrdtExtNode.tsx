@@ -24,7 +24,11 @@ export const JsonCrdtExtNode: React.FC<JsonCrdtExtNodeProps> = ({node, onViewCha
   const view = vec.view();
 
   return (
-    <JsonCrdtRegion node={node} extension toolbar={<SwitchAction onClick={onViewChange} tooltip={t('Show "vec" node')} />}>
+    <JsonCrdtRegion
+      node={node}
+      extension
+      toolbar={<SwitchAction onClick={onViewChange} tooltip={t('Show "vec" node')} />}
+    >
       <JsonCrdtObjectLayout
         node={node}
         property={<JsonCrdtProperty node={node} />}

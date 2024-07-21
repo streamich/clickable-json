@@ -17,7 +17,11 @@ const meta: Meta<typeof Text> = {
 
 export default meta;
 
-const Demo: React.FC<{view?: unknown, withExtensions?: boolean} & Omit<ClickableJsonCrdtProps, 'model'>> = ({view, withExtensions, ...rest}) => {
+const Demo: React.FC<{view?: unknown; withExtensions?: boolean} & Omit<ClickableJsonCrdtProps, 'model'>> = ({
+  view,
+  withExtensions,
+  ...rest
+}) => {
   const model = React.useMemo(() => {
     const model = (withExtensions ? ModelWithExt : Model).create();
     if (view !== undefined) model.api.root(view);
@@ -178,10 +182,15 @@ export const MultivalueRegisterExtension: StoryObj<typeof meta> = {
 };
 
 export const PeritextExtension: StoryObj<typeof meta> = {
-  render: () => <Demo view={s.obj({
-    extension: ModelWithExt.ext.peritext.new('text...'),
-    vector: s.vec(s.con(123), s.con('abc'), s.con(null)),
-  })} withExtensions />,
+  render: () => (
+    <Demo
+      view={s.obj({
+        extension: ModelWithExt.ext.peritext.new('text...'),
+        vector: s.vec(s.con(123), s.con('abc'), s.con(null)),
+      })}
+      withExtensions
+    />
+  ),
   parameters: {
     layout: 'fullscreen',
   },

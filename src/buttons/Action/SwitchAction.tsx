@@ -14,10 +14,7 @@ const blockClass = drule({
 
 export const SwitchAction: React.FC<Omit<ActionProps, 'children' | 'className'>> = (props) => {
   return (
-    <Action
-      {...props}
-      className={blockClass()}
-    >
+    <Action {...props} className={blockClass()}>
       {'~'}
     </Action>
   );

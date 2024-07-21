@@ -17,7 +17,7 @@ export const JsonCrdtConNode: React.FC<JsonCrdtConNodeProps> = ({node}) => {
   return (
     <JsonCrdtRegion node={node}>
       <JsonCrdtProperty node={node} />
-        <JsonCrdtConstant id={id(node)} view={node.node.view()} />
+      <JsonCrdtConstant id={id(node)} view={node.node.view()} />
       {!!formal && ','}
     </JsonCrdtRegion>
   );
