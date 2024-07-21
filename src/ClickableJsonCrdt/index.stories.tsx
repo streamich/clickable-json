@@ -161,3 +161,10 @@ export const LongValues: StoryObj<typeof meta> = {
     layout: 'fullscreen',
   },
 };
+
+export const VectorNode: StoryObj<typeof meta> = {
+  render: () => <Demo view={s.vec(s.con(123), s.str('abc'))} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
