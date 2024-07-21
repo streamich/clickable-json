@@ -48,11 +48,11 @@ export const JsonCrdtStrNode: React.FC<JsonCrdtStrNodeProps> = ({node}) => {
         <StrEdit node={node} onCancel={() => setEditing(false)} onDone={() => setEditing(false)} />
       ) : (
         <span
-          className={atomClass + (isFocused ? atomFocusedClass : '')}
+          className={atomClass + (isFocused && !readonly ? atomFocusedClass : '')}
           onClick={isFocused && !readonly ? () => setEditing(true) : undefined}
         >
           <JsonAtom value={node.node.view()} />
-          <span className={css.tooltip}>{t('Edit')}</span>
+          {!readonly && <span className={css.tooltip}>{t('Edit')}</span>}
         </span>
       )}
       {!!formal && ','}
