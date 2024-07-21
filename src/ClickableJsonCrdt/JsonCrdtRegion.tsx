@@ -20,11 +20,12 @@ export interface JsonCrdtRegionProps {
   node: NodeRef<any>;
   editing?: boolean;
   aside?: React.ReactNode;
+  toolbar?: React.ReactNode;
   extension?: boolean;
   children: React.ReactNode;
 }
 
-export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, editing, extension, children}) => {
+export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, editing, extension, toolbar, children}) => {
   const {model} = useJsonCrdt();
   const {compact, readonly} = useStyles();
   const {focused, focus, pointed, point} = useFocus();
@@ -77,6 +78,7 @@ export const JsonCrdtRegion: React.FC<JsonCrdtRegionProps> = ({node, editing, ex
       compact={compact}
       negative={isTombstone}
       aside={aside}
+      toolbar={toolbar}
       onClick={onClick}
       onMouseMove={onMouseMove}
       onMouseEnter={onMouseEnter}

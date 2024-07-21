@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useT} from 'use-t';
 import * as css from '../../../css';
 import {useJsonCrdt} from '../../context';
 import {NodeRef, nodeRef} from '../../NodeRef';
@@ -10,20 +11,23 @@ import {PushElement} from './PushElement';
 import {useStyles} from '../../../context/style';
 import {JsonCrdtExtNode} from './JsonCrdtExtNode';
 import type {VecNode} from 'json-joy/lib/json-crdt';
+import {SwitchAction} from '../../../buttons/Action/SwitchAction';
 
 export interface JsonCrdtVecNodeProps {
   node: NodeRef<VecNode>;
 }
 
 export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
+  const [t] = useT();
+  const [renderExtAsVec, setRenderExtAsVec] = React.useState(false);
   const {readonly} = useStyles();
   const {render} = useJsonCrdt();
   useRerenderModel();
 
   const isExtension = node.node.isExt();
 
-  if (isExtension) {
-    return <JsonCrdtExtNode node={node} />;
+  if (isExtension && !renderExtAsVec) {
+    return <JsonCrdtExtNode node={node} onViewChange={() => setRenderExtAsVec(true)} />;
   }
 
   const entries: React.ReactNode[] = [];
@@ -40,7 +44,7 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
   });
 
   return (
-    <JsonCrdtRegion node={node}>
+    <JsonCrdtRegion node={node} toolbar={isExtension ? <SwitchAction onClick={() => setRenderExtAsVec(false)} tooltip={t('Show "ext" view')} /> : undefined}>
       <JsonCrdtObjectLayout
         node={node}
         property={<JsonCrdtProperty node={node} />}
@@ -48,7 +52,6 @@ export const JsonCrdtVecNode: React.FC<JsonCrdtVecNodeProps> = ({node}) => {
         brackets={['[', ']']}
         header={<span style={{opacity: 0.5, display: 'inline-block', margin: '0.25em 0 0 -0.3em'}}>→</span>}
       >
-        {isExtension ? 'extension!' : null}
         {entries}
         {!readonly && <PushElement node={node} />}
       </JsonCrdtObjectLayout>

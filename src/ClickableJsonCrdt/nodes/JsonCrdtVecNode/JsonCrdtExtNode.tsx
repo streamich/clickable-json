@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useT} from 'use-t';
 import {NodeRef} from '../../NodeRef';
 import {JsonCrdtRegion} from '../../JsonCrdtRegion';
 import {JsonCrdtProperty} from '../../JsonCrdtProperty';
@@ -8,19 +9,22 @@ import {JsonCrdtConstant} from '../../JsonCrdtConstant';
 import {id} from '../../utils';
 import {VecNode} from 'json-joy/lib/json-crdt';
 import {JsonAtom} from '../../../JsonAtom';
+import {SwitchAction} from '../../../buttons/Action/SwitchAction';
 
 export interface JsonCrdtExtNodeProps {
   node: NodeRef<VecNode>;
+  onViewChange?: () => void;
 }
 
-export const JsonCrdtExtNode: React.FC<JsonCrdtExtNodeProps> = ({node}) => {
+export const JsonCrdtExtNode: React.FC<JsonCrdtExtNodeProps> = ({node, onViewChange}) => {
+  const [t] = useT();
   useRerenderModel();
 
   const vec = node.node as VecNode<any>;
   const view = vec.view();
 
   return (
-    <JsonCrdtRegion node={node} extension>
+    <JsonCrdtRegion node={node} extension toolbar={<SwitchAction onClick={onViewChange} tooltip={t('Show "vec" node')} />}>
       <JsonCrdtObjectLayout
         node={node}
         property={<JsonCrdtProperty node={node} />}

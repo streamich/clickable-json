@@ -46,11 +46,19 @@ const asideClass = rule({
   l: 'calc(100% + 0.5em)',
 });
 
+const toolbarClass = rule({
+  d: 'inline-block',
+  pos: 'absolute',
+  top: '-11px',
+  l: 'calc(100% - 16px)',
+});
+
 export interface FocusRegionProps {
   focused?: boolean;
   pointed?: boolean;
   compact?: boolean;
   aside?: React.ReactNode;
+  toolbar?: React.ReactNode;
   negative?: boolean;
   children: React.ReactNode;
   onClick?: React.MouseEventHandler;
@@ -67,6 +75,7 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
     pointed,
     compact,
     aside,
+    toolbar,
     negative,
     children,
     onClick,
@@ -115,6 +124,7 @@ export const FocusRegion: React.FC<FocusRegionProps> = (props) => {
         </span>
       )}
       {!!aside && <span className={asideClass}>{aside}</span>}
+      {!!focused && !!toolbar && <span className={toolbarClass}>{toolbar}</span>}
     </span>
   );
 };
