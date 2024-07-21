@@ -2,6 +2,7 @@ import * as React from 'react';
 import {ClickableJsonCrdt, ClickableJsonCrdtProps} from '.';
 import {Model} from 'json-joy/lib/json-crdt';
 import {s} from 'json-joy/lib/json-crdt-patch';
+import {ModelWithExt} from 'json-joy/lib/json-crdt-extensions';
 import type {Meta, StoryObj} from '@storybook/react';
 
 const meta: Meta<typeof Text> = {
@@ -16,9 +17,9 @@ const meta: Meta<typeof Text> = {
 
 export default meta;
 
-const Demo: React.FC<{view?: unknown} & Omit<ClickableJsonCrdtProps, 'model'>> = ({view, ...rest}) => {
+const Demo: React.FC<{view?: unknown, withExtensions?: boolean} & Omit<ClickableJsonCrdtProps, 'model'>> = ({view, withExtensions, ...rest}) => {
   const model = React.useMemo(() => {
-    const model = Model.withLogicalClock();
+    const model = (withExtensions ? ModelWithExt : Model).create();
     if (view !== undefined) model.api.root(view);
     return model;
   }, []);
@@ -164,6 +165,27 @@ export const LongValues: StoryObj<typeof meta> = {
 
 export const VectorNode: StoryObj<typeof meta> = {
   render: () => <Demo view={s.vec(s.con(123), s.str('abc'))} />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const MultivalueRegisterExtension: StoryObj<typeof meta> = {
+  render: () => <Demo view={s.obj({mval: ModelWithExt.ext.mval.new(123)})} withExtensions />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const PeritextExtension: StoryObj<typeof meta> = {
+  render: () => <Demo view={s.obj({extension: ModelWithExt.ext.peritext.new('')})} withExtensions />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};
+
+export const QuillExtension: StoryObj<typeof meta> = {
+  render: () => <Demo view={s.obj({quill: ModelWithExt.ext.quill.new('abc')})} withExtensions />,
   parameters: {
     layout: 'fullscreen',
   },
