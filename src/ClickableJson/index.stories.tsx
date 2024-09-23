@@ -129,7 +129,7 @@ const pkg = {
     eslint: 'eslint src',
     clean: 'rimraf dist lib es6 es2019 es2020 esm typedocs storybook-static',
     build: 'tsc --project tsconfig.build.json',
-    jest: 'jest',
+    test: 'jest',
     test: 'yarn jest --maxWorkers 7',
     'test:all': 'yarn lint && yarn test',
     'test:ci': 'yarn jest --maxWorkers 3 --no-cache',
@@ -168,7 +168,7 @@ const pkg = {
     eslint: '^8.54.0',
     'eslint-plugin-react': '^7.33.2',
     'eslint-plugin-storybook': '^0.6.15',
-    jest: '^29.7.0',
+    test: '^29.7.0',
     prettier: '^3.1.0',
     react: '^18.2.0',
     'react-dom': '^18.2.0',
@@ -178,7 +178,7 @@ const pkg = {
     tslib: '^2.6.2',
     typescript: '^5.3.2',
   },
-  jest: {
+  test: {
     verbose: true,
     testEnvironmentOptions: {
       url: 'http://localhost/',
