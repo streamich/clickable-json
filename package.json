@@ -43,7 +43,8 @@
   ],
   "dependencies": {
     "collaborative-input": "^1.6.0",
-    "flexible-input": "^1.0.3"
+    "flexible-input": "^1.0.3",
+    "use-t": "^1.6.3"
   },
   "peerDependencies": {
     "json-joy": "*",

@@ -33,7 +33,7 @@ export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
 
   React.useEffect(() => {
     if (!inputRef.current) return;
-    const unbind = bind(api, inputRef.current);
+    const unbind = bind(() => api, inputRef.current);
     return () => {
       unbind();
     };
