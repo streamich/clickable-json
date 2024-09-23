@@ -27,9 +27,11 @@ export const JsonCrdtObjNode: React.FC<JsonCrdtObjNodeProps> = ({node}) => {
 
   node.node.nodes((child, key) => {
     if (!child) return;
+    const childRef = nodeRef(child, node, key);
+    if (!childRef) return;
     const element = (
       <span key={key} className={css.line}>
-        {render(nodeRef(child, node, key))}
+        {render(childRef)}
       </span>
     );
     if (isTombstone(child)) tombstones.push(element);

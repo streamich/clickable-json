@@ -202,3 +202,31 @@ export const QuillExtension: StoryObj<typeof meta> = {
     layout: 'fullscreen',
   },
 };
+
+const ResetDemo: React.FC = () => {
+  const [model1, model2] = React.useMemo(() => {
+    const model = Model.create();
+    return [model, model.clone()];
+  }, []);
+
+  return (
+    <div style={{padding: '32px 64px', boxSizing: 'border-box'}}>
+      <button
+        onClick={() => {
+          model1.reset(model2);
+        }}
+      >
+        Reset
+      </button>
+      <br />
+      <ClickableJsonCrdt model={model1} showRoot />
+    </div>
+  );
+};
+
+export const Reset: StoryObj<typeof meta> = {
+  render: () => <ResetDemo />,
+  parameters: {
+    layout: 'fullscreen',
+  },
+};

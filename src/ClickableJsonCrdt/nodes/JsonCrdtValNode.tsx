@@ -18,7 +18,10 @@ export const JsonCrdtValNode: React.FC<JsonCrdtValNodeProps> = ({node}) => {
   useRerenderModel();
 
   const childNode = node.node.node();
-  const child = <span className={css.line}>{render(nodeRef(childNode, node, ''))}</span>;
+  if (!childNode) return null;
+  const childNodeRef = nodeRef(childNode, node, '');
+  if (!childNodeRef) return null;
+  const child = <span className={css.line}>{render(childNodeRef)}</span>;
 
   let collapsedView: React.ReactNode = '…';
   if (childNode.name() === 'con') {

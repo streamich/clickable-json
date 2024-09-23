@@ -38,7 +38,7 @@ export interface ClickableJsonCrdtProps extends StyleContextValue, Pick<FocusPro
   /**
    * The JSON CRDT model to display.
    */
-  model: Model;
+  model: Model<any>;
 
   /**
    * Whether to display the root node.
@@ -48,14 +48,17 @@ export interface ClickableJsonCrdtProps extends StyleContextValue, Pick<FocusPro
 
 export const ClickableJsonCrdt: React.FC<ClickableJsonCrdtProps> = (props) => {
   const {model, compact, readonly, showRoot, onFocus} = props;
-  const node = React.useMemo(() => nodeRef(showRoot ? model.root : model.root.node(), null, ''), [model]);
+  const [reset, setReset] = React.useState(0);
+  React.useEffect(() => {
+    const unsubscribe = model.api.onReset.listen(() => setReset((r) => r + 1));
+    return () => unsubscribe();
+  }, [model]);
+  const node = React.useMemo(() => nodeRef(showRoot ? model.root : model.root.node(), null, ''), [model, reset]);
 
   return (
     <styles.Provider value={{compact, readonly}}>
       <crdt.Provider value={{model, render}}>
-        <FocusProvider onFocus={onFocus}>
-          <Root>{render(node)}</Root>
-        </FocusProvider>
+        <FocusProvider onFocus={onFocus}>{!!node && <Root key={reset}>{render(node)}</Root>}</FocusProvider>
       </crdt.Provider>
     </styles.Provider>
   );
