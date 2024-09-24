@@ -40,7 +40,11 @@ export const StrEdit: React.FC<StrEditProps> = ({node, onCancel, onDone}) => {
   }, [model]);
 
   const handleSubmit = () => {
-    model.applyPatch(clone.api.flush());
+    const hasPatches = !!clone.api.builder.patch.ops.length;
+    if (hasPatches) {
+      const patch = clone.api.flush();
+      model.applyLocalPatch(patch);
+    }
     onDone();
   };
 
