@@ -43,13 +43,13 @@ export const ValueInput: React.FC<ValueInputProps> = ({
   const style = inputStyle(theme, !theme.isLight, value);
   style.display = visible ? undefined : 'none';
   style.margin = '-1px 0 -1px -2px';
-  style.padding = '3px 4px';
+  style.padding = '3px 4px 3px 5px';
   style.border = `1px solid ${theme.g(0.85)}`;
 
-  let beforeValue: React.ReactNode = null;
+  let afterValue: React.ReactNode = null;
 
   if (types && types.length && withType) {
-    beforeValue = (
+    afterValue = (
       <CrdtTypeSwitch
         type={type}
         onSubmit={handleSubmit}
@@ -62,7 +62,6 @@ export const ValueInput: React.FC<ValueInputProps> = ({
 
   return (
     <span className={css.input} style={style}>
-      {beforeValue}
       <FlexibleInput
         focus={focus}
         inp={(el) => {
@@ -86,6 +85,7 @@ export const ValueInput: React.FC<ValueInputProps> = ({
           }
         }}
       />
+      {afterValue}
     </span>
   );
 };
