@@ -36,7 +36,7 @@ export const CrdtTypeSwitch: React.FC<CrdtTypeSwitchProps> = ({
   };
 
   return (
-    <span style={{display: 'inline-block', padding: '0 4px 0 0', margin: '-1px 0'}}>
+    <span style={{display: 'inline-block', padding: '0 0 0 4px', margin: '-1px 0'}}>
       <TypeSwitch
         value={types[typeIndex]}
         onClick={(e) => {
