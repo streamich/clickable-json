@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {escapeComponent} from 'json-joy/lib/json-pointer';
+import {escapeComponent} from '@jsonjoy.com/json-pointer';
 import {context} from './context';
 import {ObjectInsert} from '../inserts/ObjectInsert';
 

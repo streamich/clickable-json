@@ -2084,6 +2084,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jsonjoy.com/json-pointer@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@jsonjoy.com/json-pointer@npm:1.0.0"
+  dependencies:
+    "@jsonjoy.com/util": "npm:^1.3.0"
+  peerDependencies:
+    tslib: 2
+  checksum: 10c0/be9b15505a63e8e59e87e565b4a8ab709a944cf9a8ca295b7c6c13c5e947925c485daa06be8a607fbc98978972f133841d457626d9b3c218c7f056c677c15282
+  languageName: node
+  linkType: hard
+
 "@jsonjoy.com/reactive-rpc@npm:^1.3.0":
   version: 1.7.0
   resolution: "@jsonjoy.com/reactive-rpc@npm:1.7.0"
@@ -4753,6 +4764,8 @@ __metadata:
     "@babel/preset-react": "npm:^7.24.7"
     "@babel/preset-typescript": "npm:^7.24.7"
     "@chromatic-com/storybook": "npm:^2.0.2"
+    "@jsonjoy.com/json-pointer": "npm:^1.0.0"
+    "@jsonjoy.com/util": "npm:^1.3.0"
     "@storybook/addon-essentials": "npm:^8.3.2"
     "@storybook/addon-interactions": "npm:^8.3.2"
     "@storybook/addon-links": "npm:^8.3.2"
@@ -4766,15 +4779,15 @@ __metadata:
     "@types/react": "npm:^18.3.8"
     "@typescript-eslint/eslint-plugin": "npm:^6.12.0"
     "@typescript-eslint/parser": "npm:^6.12.0"
-    collaborative-input: "npm:^1.6.0"
+    collaborative-input: "npm:^1.6.1"
     eslint: "npm:^8.54.0"
     eslint-plugin-react: "npm:^7.33.2"
     eslint-plugin-storybook: "npm:^0.8.0"
     flexible-input: "npm:^1.0.3"
     jest: "npm:^29.7.0"
-    json-joy: "npm:^16.25.0"
+    json-joy: "npm:^16.27.1"
     nano-theme: "npm:^1.4.2"
-    nice-ui: "npm:^1.9.2"
+    nice-ui: "npm:^1.13.0"
     prettier: "npm:^3.3.3"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
@@ -4785,6 +4798,8 @@ __metadata:
     typescript: "npm:^5.6.2"
     use-t: "npm:^1.6.3"
   peerDependencies:
+    "@jsonjoy.com/json-pointer": "*"
+    "@jsonjoy.com/util": "*"
     json-joy: "*"
     nano-theme: "*"
     nice-ui: "*"
@@ -4859,26 +4874,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"collaborative-editor@npm:^2.7.0":
-  version: 2.7.0
-  resolution: "collaborative-editor@npm:2.7.0"
+"collaborative-editor@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "collaborative-editor@npm:2.8.0"
   dependencies:
     fast-diff: "npm:^1.3.0"
   peerDependencies:
     json-joy: "*"
     tslib: 2
-  checksum: 10c0/eeb448ea9fa5f603e75d479dc07e6beff55709788c0d0324aee222f7c0cf1ae651ed8b441b490973dc9fdaddef3b5f033920ddbf2279c95b27114c3c3cdd3ab6
+  checksum: 10c0/a865597853b92ebbff2246b29cf4c68e45029213d7989d1e97ee59086302d2eab78a06b219d628f664d634392cdbe77afe99f1f0e08edd8b5f7afbd2f147c877
   languageName: node
   linkType: hard
 
-"collaborative-input@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "collaborative-input@npm:1.6.0"
+"collaborative-input@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "collaborative-input@npm:1.6.1"
   dependencies:
-    collaborative-editor: "npm:^2.7.0"
+    collaborative-editor: "npm:^2.8.0"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/e556cd5901b52a745b514bbf82cc1264a8b8131fe4b8e0bc8bd213a0fbec5e09f6012d97eb1ce34bd8ab79e8608657c435a57e9b41159f792542623616139cd3
+  checksum: 10c0/8cc52a85a81f3099a47b738d145e1e445dea223eb638ed47b777b04d18eefd997c41780942d283fc0d2945134f34816a3e6268fd8f6c2accf3287dafd058d808
   languageName: node
   linkType: hard
 
@@ -8293,6 +8308,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"json-joy@npm:^16.27.1":
+  version: 16.27.1
+  resolution: "json-joy@npm:16.27.1"
+  dependencies:
+    arg: "npm:^5.0.2"
+    hyperdyperid: "npm:^1.2.0"
+    sonic-forest: "npm:^1.0.3"
+    thingies: "npm:^2.1.1"
+    tree-dump: "npm:^1.0.2"
+  peerDependencies:
+    "@jsonjoy.com/base64": ^1.1.2
+    "@jsonjoy.com/json-pack": ^1.0.4
+    "@jsonjoy.com/json-pointer": ^1.0.0
+    "@jsonjoy.com/util": ^1.3.0
+    rxjs: 7
+    tslib: 2
+  peerDependenciesMeta:
+    rxjs:
+      optional: true
+  bin:
+    jj: bin/jj.js
+    json-pack: bin/json-pack.js
+    json-pack-test: bin/json-pack-test.js
+    json-patch: bin/json-patch.js
+    json-patch-test: bin/json-patch-test.js
+    json-pointer: bin/json-pointer.js
+    json-pointer-test: bin/json-pointer-test.js
+    json-unpack: bin/json-unpack.js
+  checksum: 10c0/29d50fd1b254e018474220b151e55eb15fdc7f53d5af88bd572be8c91dbe071b501b06ded12295bc6ecd030f5b4f02dc8ef287d7853dc42387448d4504527779
+  languageName: node
+  linkType: hard
+
 "json-parse-even-better-errors@npm:^2.3.0, json-parse-even-better-errors@npm:^2.3.1":
   version: 2.3.1
   resolution: "json-parse-even-better-errors@npm:2.3.1"
@@ -9147,9 +9194,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nice-ui@npm:^1.9.2":
-  version: 1.9.2
-  resolution: "nice-ui@npm:1.9.2"
+"nice-ui@npm:^1.13.0":
+  version: 1.13.0
+  resolution: "nice-ui@npm:1.13.0"
   dependencies:
     "@material-ui/core": "npm:^4.12.4"
     clipboard-copy: "npm:^4.0.1"
@@ -9177,7 +9224,7 @@ __metadata:
     react-dom: "*"
     rxjs: 7
     tslib: 2
-  checksum: 10c0/b234a852c978838fa68e0310ee7f7b04978b65540116ecbfa7aabb5a580aede36b10d31f5bda35c26af9fbdb6773cacf7adc205ad781a07bb9cb177cfcd00534
+  checksum: 10c0/39aefb21f4685f03497c26c71654eb3971c8a6af7d72ed602e6513bf6e281237cce509fc23d46278baed6e104e8754748f382446a41aafdaa73c2b4e0e79dcc1
   languageName: node
   linkType: hard
 
