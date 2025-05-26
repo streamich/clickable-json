@@ -1383,16 +1383,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@chromatic-com/storybook@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@chromatic-com/storybook@npm:2.0.2"
+"@chromatic-com/storybook@npm:^3.0.0":
+  version: 3.2.6
+  resolution: "@chromatic-com/storybook@npm:3.2.6"
   dependencies:
-    chromatic: "npm:^11.4.0"
+    chromatic: "npm:^11.15.0"
     filesize: "npm:^10.0.12"
     jsonfile: "npm:^6.1.0"
     react-confetti: "npm:^6.1.0"
     strip-ansi: "npm:^7.1.0"
-  checksum: 10c0/a997e8247168d9c30030966877836839951b6acd65899a4bb683d78d37e549a3285ca14a721893d75bef5b89e075d7090d084023c142680efaef60c9db64e7fa
+  peerDependencies:
+    storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
+  checksum: 10c0/3388de20d12b1003990520726b0b4a20570c81d017292afa72f9ce88ab5146935663db7e5e8e7d58b5e94893c83bc1447d77c3cbc3ddc8c807325f9613d346d8
   languageName: node
   linkType: hard
 
@@ -4529,7 +4531,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromatic@npm:^11.4.0":
+"chromatic@npm:^11.15.0":
   version: 11.29.0
   resolution: "chromatic@npm:11.29.0"
   peerDependencies:
@@ -4599,7 +4601,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.25.4"
     "@babel/preset-react": "npm:^7.24.7"
     "@babel/preset-typescript": "npm:^7.24.7"
-    "@chromatic-com/storybook": "npm:^2.0.2"
+    "@chromatic-com/storybook": "npm:^3.0.0"
     "@jsonjoy.com/json-pointer": "npm:^1.0.0"
     "@jsonjoy.com/util": "npm:^1.3.0"
     "@storybook/addon-essentials": "npm:^8.3.2"
